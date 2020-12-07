@@ -1,25 +1,27 @@
+import "./App.css";
+import Home from "./page/Login_Signup/Home";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+// import Profile from "./page/Profile";
+import {PrivateRoute, NormalRoute} from './PrivateRoute';
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Dashboard from "./components/DashBoard/DashBoard";
-import SignIn from "./components/Account/SignIn";
-import SignUp from "./components/Account/SignUp";
+import PageNotFound from "./page/PageNotFound";
+
 function App() {
+  
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route exact path="/">
-            <SignIn />
-          </Route>
-          <Route exact path="/signup">
-            <SignUp />
-          </Route>
-          <Route path="/home">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+      <Router>
+        <div className="App">
+            <Switch>
+              <NormalRoute exact path="/" component={Home} />
+              <NormalRoute path="/login" component={Home} />
+              <NormalRoute path="/signup" component={Home} />
+              {/* <PrivateRoute path="/profile" component={Profile} /> */}
+
+              <Route path="/404" component={PageNotFound} />
+              <Redirect from='*' to='/404' />
+            </Switch>
+        </div>
+      </Router>
   );
 }
 
