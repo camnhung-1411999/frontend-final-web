@@ -42,22 +42,29 @@ function Alert(props) {
 
 export default function SignIn() {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const history = useHistory();
   const [open, setOpen] = useState(false);
 
   async function handleButton() {
-    await Auth.login(email, password).then(
+    const data = {
+      user: username,
+      password: password,
+    }
+    await Auth.login(data).then(
       () => {
         window.history.state && window.history.state.state
           ? history.push(window.history.state.state.referer.pathname)
           : history.push("/home");
-      },
-      (error) => {
-        setOpen(true);
       }
-    );
+    ).catch(error => {
+      if(error.response.status === 404) {
+        console.log("user not found");
+      } else {
+        console.log("Password not match");
+      }
+    });
   }
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -66,31 +73,35 @@ export default function SignIn() {
     setOpen(false);
   };
 
-  async function loginSocial(display_name, socialId) {
+  async function loginSocial(data) {
     const path =
       window.history.state && window.history.state.state
         ? window.history.state.state.referer.pathname
         : "/home";
 
-    await Auth.googleLogin(socialId, socialId).then(
+    await Auth.login(data).then(
       () => {
         history.push(path);
-      },
-      async (error) => {
-       
       }
     );
   }
 
   const responseGoogle = async (response) => {
-    var res = response.profileObj;
-    if (res) {
-      loginSocial(res.name, res.googleId);
-    }
+      const data = {
+        user: response.profileObj.email,
+        name: response.profileObj.name,
+        password: response.googleId,
+      };
+      loginSocial(data);
   };
   const responseFacebook = async (response) => {
     if (response) {
-      loginSocial(response.name, response.id);
+      const data ={
+        user: response.email,
+        name: response.name,
+        password: response.id,
+      }
+      loginSocial(data);
     }
   };
 
@@ -107,12 +118,11 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="username"
             label="Username"
-            name="email"
-            autoComplete="email"
+            name="username"
             autoFocus
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
           ,
           <TextField
@@ -154,7 +164,7 @@ export default function SignIn() {
           <FacebookLogin
             appId=""
             autoLoad={false}
-            fields="name,email,picture"
+            fields="name,username,picture"
             callback={responseFacebook}
             version="1.0"
             cssClass="btnFacebook"
