@@ -1,7 +1,7 @@
 import React from "react";
 import "./assets/css/page.css";
 import { useHistory } from "react-router-dom";
-import CustomizedBreadcrumbs from "../components/Breadcrumb";
+import {CustomizedBreadcrumbs} from "../components";
 
 export default function PageNotFound() {
   const history = useHistory();

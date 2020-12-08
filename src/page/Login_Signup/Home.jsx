@@ -4,8 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../assets/css/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../../assets/image/123.png";
-import SignIn from "./component/SignIn";
-import SignUp from "./component/SignUp";
+import {SignIn, SignUp} from "./component";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 
