@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Redirect, useHistory } from "react-router-dom";
-import Auth from "../../../services/AuthRepository";
+import Auth from "../../../services/user.service";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -40,7 +40,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function SignIn() {
+function SignIn() {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -153,7 +153,7 @@ export default function SignIn() {
             Login
           </Button>
           <GoogleLogin
-            clientId=""
+            clientId="928943518451-hh0kebio5mu156lkiv7t00ims91k8eek.apps.googleusercontent.com"
             className="btnGoogle"
             icon={false}
             onSuccess={responseGoogle}
@@ -188,3 +188,4 @@ export default function SignIn() {
     </Container>
   );
 }
+export {SignIn};

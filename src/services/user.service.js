@@ -1,10 +1,11 @@
 import axios from "axios";
-import authHeader from "./AuthHeader";
+import { authHeader } from '../helpers';
+
 
 const API_URL = "http://localhost:8000/users/";
 
 
-class Auth {
+class UserService {
 
   login(data) {
     return axios
@@ -21,8 +22,7 @@ class Auth {
     localStorage.removeItem("user");
   }
 
-  register(name, user, password) {
-    console.log("register");
+  signup(display_name, username, password,googleId) {
     return axios.post(API_URL + "signup", {
       user,
       password,
@@ -75,4 +75,4 @@ class Auth {
     return JSON.parse(localStorage.getItem('user'));
   }
 }
-export default new Auth();
+export default new UserService();

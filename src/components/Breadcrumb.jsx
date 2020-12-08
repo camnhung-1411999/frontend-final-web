@@ -26,7 +26,7 @@ function handleClick(event) {
   console.info('You clicked a breadcrumb.');
 }
 
-export default function CustomizedBreadcrumbs(props) {
+function CustomizedBreadcrumbs(props) {
   return (
     <Breadcrumbs aria-label="breadcrumb" style ={ props.style ? props.style : {margin: '20px 0px 0px 50px'}}>
       <StyledBreadcrumb
@@ -43,3 +43,5 @@ export default function CustomizedBreadcrumbs(props) {
     </Breadcrumbs>
   );
 }
+
+export {CustomizedBreadcrumbs};

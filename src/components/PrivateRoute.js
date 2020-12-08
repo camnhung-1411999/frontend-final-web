@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import Auth from "./services/AuthRepository";
-import Header from "./components/Header";
+import Auth from "../services/user.service";
+import {Header} from "./Header";
 
 
 function PrivateRoute({ component: Component, ...rest }) {
