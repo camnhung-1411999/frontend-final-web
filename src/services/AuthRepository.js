@@ -6,18 +6,12 @@ const API_URL = "http://localhost:8000/users/";
 
 class Auth {
 
-  login(username, password) {
+  login(data) {
     return axios
-      .post(API_URL + "signin", {
-        username,
-        password,
-      })
-      .then((response) => {
+      .post(API_URL + "login", data).then((response) => {
         if (response.data) {
-          const data = {
-            accessToken: response.data.accessToken,
-          }
-          localStorage.setItem("user", JSON.stringify(data));
+          localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
+          localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
         }
         return response.data;
       });
