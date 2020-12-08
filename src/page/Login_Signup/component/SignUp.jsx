@@ -59,21 +59,13 @@ export default function SignUp() {
         (firstName + " " + lastName).trim(),
         username,
         password,
-        "",
       ).then(
-        () => {
-          window.history.state && window.history.state.state
-            ? history.push(window.history.state.state.referer.pathname)
-            : history.push("/home");
-        },
-        (error) => {
-          setStatus(
-            error.response.data.message.length > 0
-              ? error.response.data.message
-              : error.response.data.message[0]
-          );
-          setOpen(true);
-        }
+        history.push("/signin")
+        // () => {
+        //   window.history.state && window.history.state.state
+        //     ? history.push(window.history.state.state.referer.pathname)
+        //     : history.push("/home");
+        // },
       );
     } else setOpen(true);
   }

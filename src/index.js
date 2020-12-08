@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import Axios from 'axios';
 
-Axios.defaults.baseURL = "http://localhost:8080";
+Axios.defaults.baseURL = "http://localhost:8000";
 
 ReactDOM.render(
   <React.StrictMode>

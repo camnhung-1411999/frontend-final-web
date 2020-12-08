@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./AuthHeader";
 
-const API_URL = "http://localhost:8080/auth/";
+const API_URL = "http://localhost:8000/users/";
 
 
 class Auth {
@@ -27,12 +27,12 @@ class Auth {
     localStorage.removeItem("user");
   }
 
-  register(display_name, username, password,googleId) {
+  register(name, user, password) {
+    console.log("register");
     return axios.post(API_URL + "signup", {
-      display_name,
-      username,
+      user,
       password,
-      googleId
+      name,
     }).then((response) => {
       if (response.data) {
         const data = {
@@ -43,6 +43,23 @@ class Auth {
       return response.data;
     });
   }
+
+  // register(display_name, username, password,googleId) {
+  //   return axios.post(API_URL + "signup", {
+  //     display_name,
+  //     username,
+  //     password,
+  //     googleId
+  //   }).then((response) => {
+  //     if (response.data) {
+  //       const data = {
+  //         accessToken: response.data.accessToken,
+  //       }
+  //       localStorage.setItem("user", JSON.stringify(data));
+  //     }
+  //     return response.data;
+  //   });
+  // }
 
   update(display_name, old_password, new_password) {
     return axios.post(API_URL + "update", {
