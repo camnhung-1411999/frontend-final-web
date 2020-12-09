@@ -26,8 +26,8 @@ import Person from "@material-ui/icons/Person";
 // import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 // import DashboardPage from "./Dashboard/Dashboard";
-import UserProfile from "./UserProfile/UserProfile";
-// import TableList from "views/TableList/TableList.js";
+// import UserProfile from "./UserProfile/UserProfile";
+import TableList from "./ListUser/TableList";
 // import Typography from "views/Typography/Typography.js";
 // import Icons from "views/Icons/Icons.js";
 // import Maps from "views/Maps/Maps.js";
@@ -45,22 +45,22 @@ const dashboardRoutes = [
   //   component: DashboardPage,
   //   layout: "/admin"
   // },
-  {
-    path: "/user",
-    name: "Manage User",
-    rtlName: "ملف تعريفي للمستخدم",
-    icon: Person,
-    component: UserProfile,
-    layout: "/admin"
-  },
   // {
-  //   path: "/table",
-  //   name: "Table List",
-  //   rtlName: "قائمة الجدول",
-  //   icon: "content_paste",
-  //   component: TableList,
+  //   path: "/user",
+  //   name: "Manage User",
+  //   rtlName: "ملف تعريفي للمستخدم",
+  //   icon: Person,
+  //   component: UserProfile,
   //   layout: "/admin"
   // },
+  {
+    path: "/table",
+    name: "User manage",
+    rtlName: "قائمة الجدول",
+    icon: Person,
+    component: TableList,
+    layout: "/admin"
+  },
   // {
   //   path: "/typography",
   //   name: "Typography",

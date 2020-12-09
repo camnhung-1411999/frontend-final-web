@@ -23,7 +23,7 @@ function App() {
               {/* <PrivateRoute path="/profile" component={Profile} /> */}
 
               <Route path="/404" component={PageNotFound} />
-              <Redirect from='*' to='/404' />
+              {/* <Redirect from='*' to='/404' /> */}
             </Switch>
         </div>
       </Router>
