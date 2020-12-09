@@ -79,8 +79,8 @@ function SignIn() {
         ? window.history.state.state.referer.pathname
         : "/home";
 
-    await Auth.login(data).then(
-      () => {
+    await Auth.loginSocial(data).then(
+      (response) => {
         history.push(path);
       }
     );
@@ -91,6 +91,7 @@ function SignIn() {
         user: response.profileObj.email,
         name: response.profileObj.name,
         password: response.googleId,
+        role: 'user',
       };
       loginSocial(data);
   };
@@ -99,6 +100,7 @@ function SignIn() {
       const data ={
         user: response.email,
         name: response.name,
+        role: 'user',
         password: response.id,
       }
       loginSocial(data);

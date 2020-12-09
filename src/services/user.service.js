@@ -18,22 +18,28 @@ class UserService {
       });
   }
 
-  logout() {
-    localStorage.removeItem("user");
+  loginSocial(data) {
+    return axios
+      .post(API_URL + "social", data).then((response) => {
+        if (response.data) {
+          localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
+          localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
+        }
+        return response.data;
+      });
   }
 
-  signup(display_name, username, password,googleId) {
-    return axios.post(API_URL + "signup", {
+  logout(user) {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    return axios.put(API_URL, {
       user,
-      password,
-      name,
-    }).then((response) => {
-      if (response.data) {
-        const data = {
-          accessToken: response.data.accessToken,
-        }
-        localStorage.setItem("user", JSON.stringify(data));
-      }
+      status: false,
+    });
+  }
+
+  signup(data) {
+    return axios.post(API_URL, data).then((response) => {
       return response.data;
     });
   }

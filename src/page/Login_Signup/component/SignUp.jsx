@@ -55,12 +55,16 @@ function SignUp() {
 
   async function handleButton() {
     if (handelPassword()) {
-      await Auth.register(
-        (firstName + " " + lastName).trim(),
-        username,
+      const data = {
+        name: (firstName + " " + lastName).trim(),
+        user: username,
+        role: 'user',
         password,
+      }
+      await Auth.signup(
+        data
       ).then(
-        history.push("/signin")
+        history.push("/")
         // () => {
         //   window.history.state && window.history.state.state
         //     ? history.push(window.history.state.state.referer.pathname)
