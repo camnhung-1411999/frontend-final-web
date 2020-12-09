@@ -148,7 +148,7 @@ function SignIn() {
             <GoogleIcon style={{ width: "40px" }} color="red" />
           </GoogleLogin>
           <FacebookLogin
-            appId=""
+            appId="190986092743852"
             autoLoad={false}
             fields="name,username,picture"
             callback={responseFacebook}

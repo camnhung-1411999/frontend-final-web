@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import {UserService} from '../../services';
+import Online from "../../socket/Online";
 
 const columns = [
   { id: 'name', label: 'Name', minWidth: 170 },
@@ -19,8 +20,8 @@ function createData(name) {
 }
 
 const rows = [
-  createData('Pham Minh'),
-  createData('Nhung'),
+  // createData('Pham Minh'),
+  // createData('Nhung'),
 ];
 
 const useStyles = makeStyles({
@@ -42,21 +43,27 @@ function DashBoard() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const { messages, sendMessage } = Online(1);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    console.log("ssss")
+    sendMessage('Minh');
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+
+    console.log("ssss")
+    sendMessage('Minh');
   };
 
   useEffect(() => {
 
     async function getUserOnline(){
       await UserService.getUserOnline().then((reponsive)=>{
-        console.log('ssssssss',reponsive.data)
+        console.log('data',reponsive.data)
       })
     }
     getUserOnline();
