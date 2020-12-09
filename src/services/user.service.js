@@ -2,8 +2,8 @@ import axios from "axios";
 import { authHeader } from '../helpers';
 
 
-// const API_URL = "https://api-caro-web.herokuapp.com/users/";
-const API_URL = "http://localhost:8000/users/";
+const API_URL = "https://api-caro-web.herokuapp.com/users/";
+// const API_URL = "http://localhost:8000/users/";
 
 
 class UserService {
