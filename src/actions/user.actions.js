@@ -19,6 +19,7 @@ function login(data, from) {
     await UserService.login(data).then(
       (user) => {
         dispatch(success(user));
+        window.location.reload();
         history.push(from);
       },
       (error) => {
@@ -45,6 +46,7 @@ function loginSocial(data, from) {
     await UserService.loginSocial(data).then(
       (user) => {
         dispatch(success(user));
+        window.location.reload();
         history.push(from);
       },
       (error) => {
