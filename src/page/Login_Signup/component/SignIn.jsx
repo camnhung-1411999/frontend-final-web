@@ -1,21 +1,18 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Typography from "@material-ui/core/Typography";
+import { Snackbar, Container, Typography, Button, TextField, CssBaseline, FormControlLabel, Checkbox } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { Redirect, useHistory } from "react-router-dom";
-import Auth from "../../../services/user.service";
+import { useHistory } from "react-router-dom";
+import { UserService } from "../../../services/";
 import MuiAlert from "@material-ui/lab/Alert";
-import Snackbar from "@material-ui/core/Snackbar";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GoogleIcon } from "../../../assets/image/google.svg";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import { IconButton } from "@material-ui/core";
+import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../../actions';
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,25 +43,19 @@ function SignIn() {
   const [password, setPassword] = useState("");
   const history = useHistory();
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-  async function handleButton() {
+  function handleButton() {
     const data = {
       user: username,
       password: password,
     }
-    await Auth.login(data).then(
-      () => {
-        window.history.state && window.history.state.state
-          ? history.push(window.history.state.state.referer.pathname)
-          : history.push("/home");
-      }
-    ).catch(error => {
-      if(error.response.status === 404) {
-        console.log("user not found");
-      } else {
-        console.log("Password not match");
-      }
-    });
+
+    if (username && password) {
+      const { from } = location.state || { from: { pathname: "/home" } };
+      dispatch(userActions.login(data, from));
+    }
   }
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -73,31 +64,24 @@ function SignIn() {
     setOpen(false);
   };
 
-  async function loginSocial(data) {
-    const path =
-      window.history.state && window.history.state.state
-        ? window.history.state.state.referer.pathname
-        : "/home";
+  function loginSocial(data) {
+    const { from } = location.state || { from: { pathname: "/home" } };
+    dispatch(userActions.loginSocial(data, from));
 
-    await Auth.loginSocial(data).then(
-      (response) => {
-        history.push(path);
-      }
-    );
   }
 
   const responseGoogle = async (response) => {
-      const data = {
-        user: response.profileObj.email,
-        name: response.profileObj.name,
-        password: response.googleId,
-        role: 'user',
-      };
-      loginSocial(data);
+    const data = {
+      user: response.profileObj.email,
+      name: response.profileObj.name,
+      password: response.googleId,
+      role: 'user',
+    };
+    loginSocial(data);
   };
   const responseFacebook = async (response) => {
     if (response) {
-      const data ={
+      const data = {
         user: response.email,
         name: response.name,
         role: 'user',
@@ -149,7 +133,7 @@ function SignIn() {
             fullWidth
             variant="contained"
             color="primary"
-            onClick={() => handleButton()}
+            onClick={handleButton}
             className={classes.submit}
           >
             Login
@@ -171,9 +155,9 @@ function SignIn() {
             version="1.0"
             cssClass="btnFacebook"
             icon={false}
-              textButton={<FacebookIcon style={{ fontSize: 50 , height: '64px', margin: '0px 4px 0px 4px' }} />}
+            textButton={<FacebookIcon style={{ fontSize: 50, height: '64px', margin: '0px 4px 0px 4px' }} />}
           >
-            
+
           </FacebookLogin>
         </form>
         <Snackbar
@@ -190,4 +174,4 @@ function SignIn() {
     </Container>
   );
 }
-export {SignIn};
+export { SignIn };

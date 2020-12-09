@@ -1,10 +1,10 @@
 import "./App.css";
 import Home from "./page/Login_Signup/Home";
-import SignIn from "./page/Login_Signup/component/SignIn";
 import Admin from "./page/Admin/Admin";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 // import Profile from "./page/Profile";
-import {PrivateRoute, NormalRoute} from './components/PrivateRoute';
+import {DashBoard} from "./page/DashBoard";
+import {PrivateRoute, NormalRoute} from './components';
 import React from "react";
 import PageNotFound from "./page/PageNotFound";
 
@@ -18,6 +18,7 @@ function App() {
               <NormalRoute path="/login" component={Home} />
               <NormalRoute path="/signup" component={Home} />
               <NormalRoute path="/admin" component={Admin} />
+              <PrivateRoute path="/home" component={DashBoard} />
               
 
               {/* <PrivateRoute path="/profile" component={Profile} /> */}

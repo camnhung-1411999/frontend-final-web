@@ -13,7 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from "react-router-dom";
-// import Auth from "../services/AuthRepository";
+import {UserService} from "../services";
 import Link from '@material-ui/core/Link';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -112,7 +112,7 @@ function Header() {
   };
 
   const handelLogout = (event => {
-    // Auth.logout()
+    UserService.logout()
     history.push("/login");
   })
 

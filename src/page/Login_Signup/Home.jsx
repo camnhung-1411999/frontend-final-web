@@ -7,6 +7,7 @@ import logo from "../../assets/image/123.png";
 import {SignIn, SignUp} from "./component";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {

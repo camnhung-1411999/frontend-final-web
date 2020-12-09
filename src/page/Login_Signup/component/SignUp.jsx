@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
+import { Button, CssBaseline, TextField, Grid, Typography, Container, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Auth from "../../../services/user.service";
+import { UserService } from "../../../services";
 import MuiAlert from "@material-ui/lab/Alert";
-import Snackbar from "@material-ui/core/Snackbar";
 import { useHistory } from "react-router-dom";
 
 function Alert(props) {
@@ -61,15 +55,11 @@ function SignUp() {
         role: 'user',
         password,
       }
-      await Auth.signup(
+      await UserService.signup(
         data
       ).then(
         history.push("/")
-        // () => {
-        //   window.history.state && window.history.state.state
-        //     ? history.push(window.history.state.state.referer.pathname)
-        //     : history.push("/home");
-        // },
+       
       );
     } else setOpen(true);
   }
@@ -179,4 +169,4 @@ function SignUp() {
     </Container>
   );
 }
-export {SignUp};
+export { SignUp };
