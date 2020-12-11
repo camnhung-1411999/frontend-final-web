@@ -8,7 +8,7 @@ export const userActions = {
   loginSocial,
   logout,
   register,
-  getAll,
+  getUserOnline,
   delete: _delete,
 };
 
@@ -99,11 +99,11 @@ function register(user) {
   }
 }
 
-function getAll() {
+function getUserOnline() {
   return (dispatch) => {
     dispatch(request());
 
-    UserService.getAll().then(
+    UserService.getUserOnline().then(
       (users) => dispatch(success(users)),
       (error) => dispatch(failure(error.toString()))
     );

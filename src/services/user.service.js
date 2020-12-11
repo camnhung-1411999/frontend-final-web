@@ -2,8 +2,8 @@ import axios from "axios";
 import { authHeader } from '../helpers';
 
 
-const API_URL = "https://api-caro-web.herokuapp.com/users/";
-// const API_URL = "http://localhost:8000/users/";
+// const API_URL = "https://api-caro-web.herokuapp.com/users/";
+const API_URL = "http://localhost:8000/users/";
 
 
 class UserService {
@@ -11,7 +11,6 @@ class UserService {
   login(data) {
     return axios
       .post(API_URL + "login", {data}).then((response) => {
-        console.log('login', response)
         if (response.data) {
           localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
           localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
@@ -23,7 +22,6 @@ class UserService {
   loginSocial(data) {
     return axios
       .post(API_URL + "social", {data}).then((response) => {
-        console.log('sssssssss', response)
         if (response.data) {
           localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
           localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));

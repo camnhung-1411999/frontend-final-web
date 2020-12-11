@@ -1,8 +1,18 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../assets/css/online.css'
+import { useDispatch, useSelector } from 'react-redux';
 import List from '@material-ui/core/List';
+import {userActions} from '../actions/user.actions';
 export default function Online() {
+
+    //list user online
+  const users = useSelector(state => state.users.items);
+  const dispatch = useDispatch();
+  useEffect(() => {
+     dispatch(userActions.getUserOnline())
+  }, [])
+
     return (
         <div className="live-chat">
 		<header className="clearfix">
@@ -10,7 +20,6 @@ export default function Online() {
 			<span className="chat-message-counter">3</span>
 
 		</header>
-
 		<div className="chat">
             <div className="chatbox">
                 <div className="friendslist">
