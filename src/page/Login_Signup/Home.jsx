@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import "../assets/css/login.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -7,7 +6,6 @@ import logo from "../../assets/image/123.png";
 import {SignIn, SignUp} from "./component";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   button: {
