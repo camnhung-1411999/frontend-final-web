@@ -183,7 +183,6 @@ function Header() {
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             Caroro
-            {/* <Link href="/home" style = {{color: "white"}}>FunRetro</Link> */}
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

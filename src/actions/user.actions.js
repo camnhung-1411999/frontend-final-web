@@ -7,8 +7,8 @@ export const userActions = {
   login,
   loginSocial,
   logout,
-  register,
   getUserOnline,
+  signup,
   delete: _delete,
 };
 
@@ -19,7 +19,7 @@ function login(data, from) {
     await UserService.login(data).then(
       (user) => {
         dispatch(success(user));
-        window.location.reload();
+        // window.location.reload();
         history.push(from);
       },
       (error) => {
@@ -46,7 +46,7 @@ function loginSocial(data, from) {
     await UserService.loginSocial(data).then(
       (user) => {
         dispatch(success(user));
-        window.location.reload();
+        // window.location.reload();
         history.push(from);
       },
       (error) => {
@@ -71,15 +71,15 @@ function logout() {
   return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
+function signup(data , from) {
   return (dispatch) => {
-    dispatch(request(user));
+    dispatch(request(data));
 
-    UserService.register(user).then(
+    UserService.signup(data).then(
       (user) => {
-        dispatch(success());
-        history.push("/login");
         dispatch(alertActions.success("Registration successful"));
+        window.location.reload();
+        history.push(from);
       },
       (error) => {
         dispatch(failure(error.toString()));

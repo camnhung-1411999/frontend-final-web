@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Button, CssBaseline, TextField, Grid, Typography, Container, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { UserService } from "../../../services";
 import MuiAlert from "@material-ui/lab/Alert";
-import { useHistory } from "react-router-dom";
+import {useLocation} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+
+import { userActions } from '../../../actions';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -37,7 +39,9 @@ function SignUp() {
   const [lastName, setLastName] = useState();
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState();
-  const history = useHistory();
+  const location = useLocation()
+  const dispatch = useDispatch();
+
 
   function handelPassword() {
     if (password !== repeat_password) {
@@ -55,12 +59,10 @@ function SignUp() {
         role: 'user',
         password,
       }
-      await UserService.signup(
-        data
-      ).then(
-        history.push("/")
-       
-      );
+
+      const {from} = location.state || { from: { pathname: "/home" } };
+
+      dispatch(userActions.signup(data, from));
     } else setOpen(true);
   }
   const handleClose = (event, reason) => {

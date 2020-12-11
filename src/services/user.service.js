@@ -19,9 +19,15 @@ class UserService {
       });
   }
 
-  loginSocial(data) {
+  loginSocial(input) {
+    console.log('ssss', input)
     return axios
-      .post(API_URL + "social", {data}).then((response) => {
+      .post(API_URL + "social", {
+        user: input.user,
+        password: input.password,
+        name: input.name,
+        role: input.role,
+        status: false,}).then((response) => {
         if (response.data) {
           localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
           localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
@@ -39,8 +45,14 @@ class UserService {
     });
   }
 
-  signup(data) {
-    return axios.post(API_URL + 'signup', {data}).then((response) => {
+  signup(input) {
+    return axios.post(API_URL + 'signup', {
+      user: input.user,
+      password: input.password,
+      name: input.name,
+      role: input.role,
+      status: false,
+    }).then((response) => {
       return response.data;
     });
   }
