@@ -1,0 +1,48 @@
+.dashBoard {
+  background: #eff5f6;
+  height: 100vh;
+}
+
+.plus {
+  font-size: 3em;
+  color: rgb(133, 182, 247);
+  margin-left: 9%;
+  padding-top: 2%;
+}
+.plus:hover{
+  cursor: pointer;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+}
+.ibr {
+  border-bottom: 1px solid rgb(213, 220, 224);
+  margin-top: 50px;
+  width: 75%;
+  margin-left: 13%;
+}
+.inline {
+  width: 80%;
+  margin-top: 1%;
+  margin-bottom: 3%;
+}
+
+.main {
+  width: 75%;
+  margin-left: 6%;
+}
+
+.custom:hover {
+  cursor: pointer;
+  border: 1px solid;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  outline-color: rgba(255, 255, 255, 0);
+  text-shadow: 1px 1px 2px #427388;
+}
+.room:hover{
+  cursor: pointer;
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px #427388;
+  outline-color: rgba(255, 255, 255, 0);
+}

@@ -1,7 +1,7 @@
 import "./App.css";
 import Home from "./page/Login_Signup/Home";
 import Admin from "./page/Admin/Admin";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // import Profile from "./page/Profile";
 import {DashBoard} from "./page/DashBoard";
 import {PrivateRoute, NormalRoute} from './components';

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Snackbar, Container, Typography, Button, TextField, CssBaseline, FormControlLabel, Checkbox } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { UserService } from "../../../services/";
 import MuiAlert from "@material-ui/lab/Alert";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GoogleIcon } from "../../../assets/image/google.svg";
