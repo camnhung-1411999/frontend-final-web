@@ -1,21 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import {UserService} from '../../services';
-import Online from "../../socket/Online";
-
-
-function createData(name) {
-  return { name,};
-}
-
+import React, { useEffect } from "react";
+import { fade, makeStyles } from "@material-ui/core/styles";
+import "../assets/css/dashboard.css";
+import { UserService } from "../../services";
+import Online from "../../components/Online";
+import SearchIcon from "@material-ui/icons/Search";
+import Grid from "@material-ui/core/Grid";
+import InputBase from "@material-ui/core/InputBase";
+import Rooms from "./components/Rooms";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -83,30 +74,11 @@ const useStyles = makeStyles((theme) => ({
 
 function DashBoard() {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const { messages, sendMessage } = Online(1);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-    console.log("ssss")
-    sendMessage('Minh');
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-
-    console.log("ssss")
-    sendMessage('Minh');
-  };
-
   useEffect(() => {
-
-    async function getUserOnline(){
-      await UserService.getUserOnline().then((reponsive)=>{
-        console.log('data',reponsive.data)
-      })
+    async function getUserOnline() {
+      await UserService.getUserOnline().then((reponsive) => {
+        console.log("ssssssss", reponsive.data);
+      });
     }
     getUserOnline();
   }, []);
