@@ -20,7 +20,6 @@ class UserService {
   }
 
   loginSocial(input) {
-    console.log('ssss', input)
     return axios
       .post(API_URL + "social", {
         user: input.user,

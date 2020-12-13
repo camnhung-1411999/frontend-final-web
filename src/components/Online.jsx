@@ -24,16 +24,18 @@ export default function Online() {
             <div className="chatbox">
                 <div className="friendslist">
                     <List className="friends" style={{maxHeight: '100%', overflow: 'auto'}}>
-                        <div className="friend">
+                        {users?.data.map((element) => (
+                            <div className="friend">
                             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
                             <p>
-                                <strong>Miro Badev</strong>
-                                <span>mirobadev@gmail.com</span>
+                                <strong>{element.name}</strong>
+                                <span>{element.user}</span>
                             </p>
                             <div className="status available"></div>
                         </div>
+                        ))}
 
-                        <div className="friend">
+                        {/* <div className="friend">
                             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
                             <p>
                                 <strong>Miro Badev</strong>
@@ -180,11 +182,9 @@ export default function Online() {
                                 <span>darnellstrickland@gmail.com</span>
                             </p>
                             <div className="status inactive"></div>
-                        </div>
+                        </div> */}
 
-                       
-
-                    </List>                
+                    </List>
 
                     <div className="search">
                             <input type="text" className="searchfield" value="Search contacts..." />

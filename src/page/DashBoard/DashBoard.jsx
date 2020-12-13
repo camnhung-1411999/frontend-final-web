@@ -7,6 +7,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 import InputBase from "@material-ui/core/InputBase";
 import Rooms from "./components/Rooms";
+import RoomService from "../../services/room.service";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -83,13 +84,17 @@ function DashBoard() {
     getUserOnline();
   }, []);
 
+  const handleClick = async () => {
+    await RoomService.createRoom();
+  }
+
   return (
     <div className="dashBoard">
       <Grid container spacing={1}>
         <Grid container item xs={12} spacing={3}>
           <Grid item xs={3}>
-            <div className="plus">
-              <i class="fas fa-plus "></i>
+            <div className="plus" >
+              <i class="fas fa-plus " onClick={handleClick}></i>
             </div>
           </Grid>
           <Grid item xs={3}>
@@ -115,7 +120,6 @@ function DashBoard() {
                 inputProps={{ "aria-label": "search" }}
               />
             </div>
-            
           </Grid>
           <Grid item xs={3}>
             <button style={{
