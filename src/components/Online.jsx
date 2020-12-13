@@ -1,20 +1,30 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../assets/css/online.css'
 import { useDispatch, useSelector } from 'react-redux';
 import List from '@material-ui/core/List';
 import {userActions} from '../actions/user.actions';
+import io from 'socket.io-client';
+
+const socket = io('localhost:8080');
 export default function Online() {
 
     //list user online
   const users = useSelector(state => state.users.items);
+  const [msg, setMsg] = useState(1);
   const dispatch = useDispatch();
+  useEffect(()=> {
+    socket.on('accept', ()=> {
+        setMsg(msg +1);
+    })
+  },[])
   useEffect(() => {
      dispatch(userActions.getUserOnline())
-  }, [])
+  }, [msg])
 
     return (
         <div className="live-chat">
+            <h1>{msg}</h1>
 		<header className="clearfix">
 			<h4><span aria-hidden="true" className="icon-bubble"></span> Chat</h4>
 			<span className="chat-message-counter">3</span>
@@ -23,7 +33,7 @@ export default function Online() {
 		<div className="chat">
             <div className="chatbox">
                 <div className="friendslist">
-                    <List className="friends" style={{maxHeight: '100%', overflow: 'auto'}}>
+                    <List className="friends" style={{maxHeight: '100%', overflow: 'auto !important'}}>
                         {users?.data.map((element) => (
                             <div className="friend">
                             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />

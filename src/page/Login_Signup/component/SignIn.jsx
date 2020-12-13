@@ -10,8 +10,9 @@ import FacebookLogin from "react-facebook-login";
 import { useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userActions } from '../../../actions';
+import io from 'socket.io-client';
 
-
+const socket = io('localhost:8080');
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -45,7 +46,7 @@ function SignIn() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  function handleButton() {
+  async function  handleButton() {
     const data = {
       user: username,
       password: password,
@@ -53,7 +54,8 @@ function SignIn() {
 
     if (username && password) {
       const { from } = location.state || { from: { pathname: "/home" } };
-      dispatch(userActions.login(data, from));
+     await dispatch(await userActions.login(data, from));
+      socket.emit('getUsers');
     }
   }
   const handleClose = (event, reason) => {
@@ -70,13 +72,15 @@ function SignIn() {
   }
 
   const responseGoogle = async (response) => {
-    const data = {
-      user: response.profileObj.email,
-      name: response.profileObj.name,
-      password: response.googleId,
-      role: 'user',
-    };
-    loginSocial(data);
+    if(response?.profileObj) {
+      const data = {
+        user: response.profileObj.email,
+        name: response.profileObj.name,
+        password: response.googleId,
+        role: 'user',
+      };
+      loginSocial(data);
+    }
   };
   const responseFacebook = async (response) => {
     if (response) {
