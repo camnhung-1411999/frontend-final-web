@@ -1,277 +1,105 @@
-/* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from 'react'
-import '../assets/css/online.css'
-import { useDispatch, useSelector } from 'react-redux';
-import List from '@material-ui/core/List';
-import {userActions} from '../actions/user.action';
-import io from 'socket.io-client';
+import React, {useState, useEffect} from "react";
+import clsx from "clsx";
+import PropTypes from "prop-types";
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Typography,
+  colors,
+  makeStyles,
+  useTheme,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+} from "@material-ui/core";
+import { FixedSizeList } from "react-window";
+import PersonIcon from "@material-ui/icons/Person";
+import AutoSizer from "react-virtualized-auto-sizer";
+import TimelineDot from '@material-ui/lab/TimelineDot';
+import {socket} from '../helpers'
+import {UserService} from '../services'
 
-const socket = io('localhost:8080');
-export default function Online() {
+const useStyles = makeStyles(() => ({
+  root: {
+    height: "100%",
+  },
+  box: {
+    height: "100%",
+  },
+  item: {
+    margin: "10px",
+  },
+}));
+const renderRow = data =>props => {
+  const { index, style } = props;
+  return (
+      <ListItem button style={style} key={index}>
+        <ListItemAvatar key={index}>
+          <Avatar key={index}>
+            <PersonIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary={`${data.users[index].name}`} />
+        <TimelineDot style={{marginTop:'20px', backgroundColor:'#31a24c'}} />
+      </ListItem>
+  );
+};
 
-    //list user online
-  const users = useSelector(state => state.users.items);
-  const [msg, setMsg] = useState(1);
-  const dispatch = useDispatch();
-  useEffect(()=> {
-    socket.on('accept', ()=> {
-        setMsg(msg +1);
-    })
+renderRow.propTypes = {
+  index: PropTypes.number.isRequired,
+  style: PropTypes.object.isRequired,
+};
+
+const Online = ({ className, ...rest }) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [users, setUser]= useState([])
+
+  useEffect(()=>{
+    async function getUserOnline(){
+      const data = await UserService.getUserOnline();
+      setUser(data.data)
+    }
+    getUserOnline();
   },[])
-  useEffect(() => {
-     dispatch(userActions.getUserOnline())
-  }, [msg])
 
-    return (
-        <div className="live-chat">
-		<header className="clearfix">
-			<h4><span aria-hidden="true" className="icon-bubble"></span> Chat</h4>
-			<span className="chat-message-counter">3</span>
+  useEffect(()=>{
+    socket.on('online', async (data) => {
+      const reponsive = await UserService.getUserOnline();
+      setUser(reponsive.data)
+    });
+  },[users])
 
-		</header>
-		<div className="chat">
-            <div className="chatbox">
-                <div className="friendslist">
-                    <List className="friends" style={{maxHeight: '100%', overflow: 'auto'}}>
-                        {users?.data.map((element) => (
-                            <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
-                            <p>
-                                <strong>{element.name}</strong>
-                                <span>{element.user}</span>
-                            </p>
-                            <div className="status available"></div>
-                        </div>
-                        ))}
+  return (
+    <Card className={clsx(classes.root, className)} {...rest}>
+      <CardHeader title="Online" style = {{color: '#31a24c'}} />
+      <Divider />
+      <CardContent className={classes.box}>
+        <Box className={classes.box} position="relative">
+          <AutoSizer>
+            {({ height, width }) => (
+              <FixedSizeList
+                height={height}
+                width={width}
+                itemSize={70}
+                itemCount={users? users.length : 0}
+              >
+                {renderRow({users : users})}
+              </FixedSizeList>
+            )}
+          </AutoSizer>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
 
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
-                            <p>
-                                <strong>Miro Badev</strong>
-                                <span>mirobadev@gmail.com</span>
-                            </p>
-                            <div className="status available"></div>
-                        </div>
+Online.propTypes = {
+  className: PropTypes.string,
+};
 
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
-                            <p>
-                                <strong>Miro Badev</strong>
-                                <span>mirobadev@gmail.com</span>
-                            </p>
-                            <div className="status available"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
-                            <p>
-                                <strong>Miro Badev</strong>
-                                <span>mirobadev@gmail.com</span>
-                            </p>
-                            <div className="status available"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2_copy.jpg" />
-                            <p>
-                                <strong>Martin Joseph</strong>
-                                <span>marjoseph@gmail.com</span>
-                            </p>
-                            <div className="status away"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/3_copy.jpg" />
-                            <p>
-                                <strong>Tomas Kennedy</strong>
-                                <span>tomaskennedy@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/4_copy.jpg" />
-                            <p>
-                                <strong>Enrique	Sutton</strong>
-                                <span>enriquesutton@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/5_copy.jpg" />
-                            <p>
-                            <strong>	Darnell	Strickland</strong>
-                                <span>darnellstrickland@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div><div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/4_copy.jpg" />
-                            <p>
-                                <strong>Enrique	Sutton</strong>
-                                <span>enriquesutton@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/5_copy.jpg" />
-                            <p>
-                            <strong>	Darnell	Strickland</strong>
-                                <span>darnellstrickland@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div><div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/4_copy.jpg" />
-                            <p>
-                                <strong>Enrique	Sutton</strong>
-                                <span>enriquesutton@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/5_copy.jpg" />
-                            <p>
-                            <strong>	Darnell	Strickland</strong>
-                                <span>darnellstrickland@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/4_copy.jpg" />
-                            <p>
-                                <strong>Enrique	Sutton</strong>
-                                <span>enriquesutton@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/5_copy.jpg" />
-                            <p>
-                            <strong>	Darnell	Strickland</strong>
-                                <span>darnellstrickland@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/4_copy.jpg" />
-                            <p>
-                                <strong>Enrique	Sutton</strong>
-                                <span>enriquesutton@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/5_copy.jpg" />
-                            <p>
-                            <strong>	Darnell	Strickland</strong>
-                                <span>darnellstrickland@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/4_copy.jpg" />
-                            <p>
-                                <strong>Enrique	Sutton</strong>
-                                <span>enriquesutton@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                        <div className="friend">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/5_copy.jpg" />
-                            <p>
-                            <strong>	Darnell	Strickland</strong>
-                                <span>darnellstrickland@gmail.com</span>
-                            </p>
-                            <div className="status inactive"></div>
-                        </div>
-
-                    </List>
-
-                    <div className="search">
-                            <input type="text" className="searchfield" value="Search contacts..." />
-                        </div>
-                </div>	
-
-                {/* <div className="chatview" className="p1">    	
-                    <div className="profile">
-
-                        <div className="close">
-                            <div className="cy"></div>
-                            <div className="cx"></div>
-                        </div>
-
-                        <p>Miro Badev</p>
-                        <span>miro@badev@gmail.com</span>
-                    </div>
-                    <div className="chat-messages">
-                        <label>Thursday 02</label>
-
-                        <div className="message">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
-                            <div className="bubble">
-                                Really cool stuff!
-                                <div className="corner"></div>
-                                <span>3 min</span>
-                            </div>
-                        </div>
-
-                        <div className="message right">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2_copy.jpg" />
-                            <div className="bubble">
-                                Can you share a link for the tutorial?
-                                <div className="corner"></div>
-                                <span>1 min</span>
-                            </div>
-                        </div>
-
-                        <div className="message">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
-                            <div className="bubble">
-                                Yeah, hold on
-                                <div className="corner"></div>
-                                <span>Now</span>
-                            </div>
-                        </div>
-
-                        <div className="message right">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/2_copy.jpg" />
-                            <div className="bubble">
-                                Can you share a link for the tutorial?
-                                <div className="corner"></div>
-                                <span>1 min</span>
-                            </div>
-                        </div>
-
-                        <div className="message">
-                            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
-                            <div className="bubble">
-                                Yeah, hold on
-                                <div className="corner"></div>
-                                <span>Now</span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div className="sendmessage">
-                        <input type="text" value="Send message..." />
-                        <button id="send"></button>
-                    </div>
-
-                </div> */}       
-            </div>	 
-
-		</div> 
-
-	</div>
-
-    )
-}
+export { Online };
