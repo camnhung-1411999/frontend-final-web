@@ -7,6 +7,7 @@ const API_URL = "http://localhost:8000/rooms/";
 class RoomService {
 
     createRoom(data) {
+        console.log('vooooooo');
         return axios.post(API_URL, {
             player: data,
         }, {

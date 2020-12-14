@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import {UserService} from "../services";
+import {UserService} from "../services/index";
 import {Header} from "./Header";
 
 

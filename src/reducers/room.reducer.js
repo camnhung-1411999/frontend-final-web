@@ -1,16 +1,30 @@
-import { roomConstants } from '../room';
+import { roomConstants } from '../constants';
 
-export function rooms(state = {}, action) {
+export default function rooms(state = {}, action) {
     switch (action.type) {
         case roomConstants.CREATE_REQUEST:
             return {
-                items: action.room
+                loading: true,
             };
         case roomConstants.CREATE_SUCCESS:
             return {
-                items: action.room
+                item: action.room,
             };
         case roomConstants.CREATE_FAILURE:
+            // add 'deleting:true' property to user being deleted
+            return {
+                error: action.error
+            };
+
+        case roomConstants.GET_REQUEST:
+            return {
+                loading: true,
+            };
+        case roomConstants.GET_SUCCESS:
+            return {
+                items: action.rooms,
+            };
+        case roomConstants.GET_FAILURE:
             // add 'deleting:true' property to user being deleted
             return {
                 error: action.error

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import '../assets/css/online.css'
 import { useDispatch, useSelector } from 'react-redux';
 import List from '@material-ui/core/List';
-import {userActions} from '../actions/user.actions';
+import {userActions} from '../actions/user.action';
 import io from 'socket.io-client';
 
 const socket = io('localhost:8080');
@@ -24,7 +24,6 @@ export default function Online() {
 
     return (
         <div className="live-chat">
-            <h1>{msg}</h1>
 		<header className="clearfix">
 			<h4><span aria-hidden="true" className="icon-bubble"></span> Chat</h4>
 			<span className="chat-message-counter">3</span>
@@ -33,7 +32,7 @@ export default function Online() {
 		<div className="chat">
             <div className="chatbox">
                 <div className="friendslist">
-                    <List className="friends" style={{maxHeight: '100%', overflow: 'auto !important'}}>
+                    <List className="friends" style={{maxHeight: '100%', overflow: 'auto'}}>
                         {users?.data.map((element) => (
                             <div className="friend">
                             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
@@ -45,7 +44,7 @@ export default function Online() {
                         </div>
                         ))}
 
-                        {/* <div className="friend">
+                        <div className="friend">
                             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/1_copy.jpg" />
                             <p>
                                 <strong>Miro Badev</strong>
@@ -192,7 +191,7 @@ export default function Online() {
                                 <span>darnellstrickland@gmail.com</span>
                             </p>
                             <div className="status inactive"></div>
-                        </div> */}
+                        </div>
 
                     </List>
 

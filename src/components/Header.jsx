@@ -13,7 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { useHistory } from "react-router-dom";
-import {UserService} from "../services";
+import { UserService } from "../services";
 import Link from '@material-ui/core/Link';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 

@@ -44,7 +44,7 @@ class UserService {
     });
   }
 
-  signup(input) {
+  register(input) {
     return axios.post(API_URL + 'signup', {
       user: input.user,
       password: input.password,

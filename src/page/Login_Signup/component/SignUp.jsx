@@ -62,7 +62,7 @@ function SignUp() {
 
       const {from} = location.state || { from: { pathname: "/home" } };
 
-      dispatch(userActions.signup(data, from));
+      dispatch(userActions.register(data, from));
     } else setOpen(true);
   }
   const handleClose = (event, reason) => {

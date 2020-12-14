@@ -1,9 +1,9 @@
 export function authHeader() {
-  const user = JSON.parse(localStorage.getItem("accessToken"));
+  const accessToken = JSON.parse(localStorage.getItem("accessToken"));
 
-  if (user && user.accessToken) {
+  if (accessToken) {
     return {
-      Authorization: "Bearer " + user.accessToken,
+      Authorization: "Bearer " + accessToken,
       "Content-Type": "application/json",
     }; // for Node.js Express back-end
   } else {

@@ -1,14 +1,14 @@
 import { userConstants } from "../constants";
-import { UserService } from "../services";
-import { alertActions } from "./";
+import { UserService } from "../services/index";
+import { alertActions } from ".";
 import { history } from "../helpers";
 
 export const userActions = {
   login,
   loginSocial,
   logout,
+  register,
   getUserOnline,
-  signup,
   delete: _delete,
 };
 
@@ -71,15 +71,15 @@ function logout() {
   return { type: userConstants.LOGOUT };
 }
 
-function signup(data , from) {
+function register(user) {
   return (dispatch) => {
-    dispatch(request(data));
+    dispatch(request(user));
 
-    UserService.signup(data).then(
+    UserService.register(user).then(
       (user) => {
+        dispatch(success());
+        history.push("/login");
         dispatch(alertActions.success("Registration successful"));
-        window.location.reload();
-        history.push(from);
       },
       (error) => {
         dispatch(failure(error.toString()));

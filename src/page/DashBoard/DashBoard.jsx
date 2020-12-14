@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import "../assets/css/dashboard.css";
-import { UserService } from "../../services";
 import Online from "../../components/Online";
 import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 import InputBase from "@material-ui/core/InputBase";
 import Rooms from "./components/Rooms";
-import RoomService from "../../services/room.service";
+import { roomActions } from '../../actions/room.action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -74,18 +74,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function DashBoard() {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
+
   useEffect(() => {
-    async function getUserOnline() {
-      await UserService.getUserOnline().then((reponsive) => {
-        console.log("ssssssss", reponsive.data);
-      });
-    }
-    getUserOnline();
   }, []);
 
   const handleClick = async () => {
-    await RoomService.createRoom();
+    dispatch(roomActions.create('data'))
   }
 
   return (
