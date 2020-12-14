@@ -1,0 +1,108 @@
+.move {
+  border: 1px solid orange;
+  border-radius: 5px;
+  font-size: 15px;
+  font-family: "arial";
+  background-color:white;
+}
+
+.move:focus {
+  outline: none;
+  background: rgb(86, 184, 197);
+  font-weight: bold;
+}
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+.game {
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  margin-left: 75px;
+}
+
+.game-info {
+  margin-left: 20px;
+}
+
+.playagain {
+  background: rgb(86, 184, 197);
+  border: 3px solid orange;
+  border-radius: 5px;
+  font-size: 20px;
+  height: 50px;
+  width: 150px;
+  font-family: "arial";
+}
+.winner {
+  border-color: black;
+  border: 2px solid black;
+  color: red;
+}
+
+
+.status {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-family: "arial";
+  margin-top: 10px;
+  color: black;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid orange;
+  border-radius: 5px;
+  float: left;
+  font-size: 30px;
+  font-weight: none;
+  line-height: 34px;
+  height: 84px;
+  margin-right: 1px;
+  margin-top: 1px;
+  padding: 0;
+  text-align: center;
+  width: 84px;
+}
+
+.square:hover {
+  background: orange;
+}
+
+.square:focus {
+  outline: none;
+  background: papayawhip;
+}
+
+@media screen and (max-width:700px){
+  .square {
+    background: #fff;
+    border: 1px solid orange;
+    border-radius: 5px;
+    float: left;
+    font-size: 20px;
+    font-weight: none;
+    line-height: 34px;
+    height: 35px;
+    margin-right: 1px;
+    margin-top: 1px;
+    padding: 0;
+    text-align: center;
+    width: 35px;
+  }
+
+  .game {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    margin-left: 10px;
+  }
+}

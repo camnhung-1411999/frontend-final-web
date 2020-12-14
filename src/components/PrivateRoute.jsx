@@ -6,7 +6,6 @@ import {Header} from "./Header";
 
 function PrivateRoute({ component: Component, ...rest }) {
   const auth = UserService.getCurrentUser();
-  console.log('sssss', auth)
   return (
     <Route
       {...rest}

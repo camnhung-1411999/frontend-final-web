@@ -1,91 +1,64 @@
-import React, { useEffect } from "react";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import { roomActions } from '../../../actions/room.action';
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import clsx from "clsx";
+import PropTypes from "prop-types";
+import Board from "./Board";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  useTheme,
+  makeStyles,
+  colors,
+  IconButton,
+} from "@material-ui/core";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
+import AddIcon from "@material-ui/icons/Add";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
+    height: "100%",
   },
 }));
 
-export default function Rooms() {
-  const rooms = useSelector(state => state.rooms.items);
-  const dispatch = useDispatch();
-
+const Rooms = ({ className, ...rest }) => {
   const classes = useStyles();
-  useEffect(() => {
-    dispatch(roomActions.listRooms());
-  }, []);
-
-  function FormRow() {
-    return (
-      <React.Fragment>
-        {rooms?.data.map((element) => (
-          <Grid item xs={4} className='room'>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #{element.idroom}
-          </Paper>
-        </Grid>
-        ))}
-        {/* <Grid item xs={4} className='room'>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid>
-        <Grid item xs={4} className='room'>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid>
-        <Grid item xs={4} className='room'>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid>
-        <Grid item xs={4}>
-          <Paper className={classes.paper} style={{ width: "70%" }}>
-            ID: #1001
-          </Paper>
-        </Grid> */}
-      </React.Fragment>
-    );
-  }
+  const theme = useTheme();
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={1}>
-        <Grid container item xs={12} spacing={3} style={{ marginTop: "1%" }}>
-          <FormRow />
-        </Grid>
-      </Grid>
-    </div>
+    <Card className={clsx(classes.root, className)} {...rest}>
+      <CardHeader
+        title="Rooms"
+        action={
+          <IconButton style = {{padding: '12px 12px 0px 12px'}} aria-label="new room" onClick={() => console.log('Minh')}>
+            <AddIcon style={{ fontSize: 30}} color="primary" />
+          </IconButton>
+        }
+      />
+      <Divider />
+      <CardContent>
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+        <Board />
+      </CardContent>
+    </Card>
   );
-}
+};
+
+Rooms.propTypes = {
+  className: PropTypes.string,
+};
+
+export default Rooms;

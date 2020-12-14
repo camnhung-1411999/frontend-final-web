@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Snackbar, Container, Typography, Button, TextField, CssBaseline, FormControlLabel, Checkbox } from "@material-ui/core";
+import {
+  Snackbar,
+  Container,
+  Typography,
+  Button,
+  TextField,
+  CssBaseline,
+  FormControlLabel,
+  Checkbox,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -7,12 +16,10 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GoogleIcon } from "../../../assets/image/google.svg";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
-import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { userActions } from '../../../actions';
-import io from 'socket.io-client';
-
-const socket = io('localhost:8080');
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../../actions";
+import { socket } from "../../../helpers";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,16 +53,15 @@ function SignIn() {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  async function  handleButton() {
+  function handleButton() {
     const data = {
       user: username,
       password: password,
-    }
+    };
 
     if (username && password) {
       const { from } = location.state || { from: { pathname: "/home" } };
-     await dispatch(await userActions.login(data, from));
-      socket.emit('getUsers');
+      dispatch(userActions.login(socket, data, from));
     }
   }
   const handleClose = (event, reason) => {
@@ -68,16 +74,15 @@ function SignIn() {
   function loginSocial(data) {
     const { from } = location.state || { from: { pathname: "/home" } };
     dispatch(userActions.loginSocial(data, from));
-
   }
 
   const responseGoogle = async (response) => {
-    if(response?.profileObj) {
+    if (response?.profileObj) {
       const data = {
         user: response.profileObj.email,
         name: response.profileObj.name,
         password: response.googleId,
-        role: 'user',
+        role: "user",
       };
       loginSocial(data);
     }
@@ -87,9 +92,9 @@ function SignIn() {
       const data = {
         user: response.email,
         name: response.name,
-        role: 'user',
+        role: "user",
         password: response.id,
-      }
+      };
       loginSocial(data);
     }
   };
@@ -158,10 +163,16 @@ function SignIn() {
             version="1.0"
             cssClass="btnFacebook"
             icon={false}
-            textButton={<FacebookIcon style={{ fontSize: 50, height: '64px', margin: '0px 4px 0px 4px' }} />}
-          >
-
-          </FacebookLogin>
+            textButton={
+              <FacebookIcon
+                style={{
+                  fontSize: 50,
+                  height: "64px",
+                  margin: "0px 4px 0px 4px",
+                }}
+              />
+            }
+          ></FacebookLogin>
         </form>
         <Snackbar
           open={open}

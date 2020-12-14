@@ -12,13 +12,18 @@ export const userActions = {
   delete: _delete,
 };
 
-function login(data, from) {
+function login(socket, data, from) {
   return async (dispatch) => {
     dispatch(request({ username: data.user }));
 
     await UserService.login(data).then(
       (user) => {
         dispatch(success(user));
+         console.log('ss', socket)
+        socket.emit('online', {
+          body: user,
+          senderId: socket.id,
+        });
         window.location.reload();
         history.push(from);
       },
