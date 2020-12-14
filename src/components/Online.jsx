@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect} from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -7,10 +7,7 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Typography,
-  colors,
   makeStyles,
-  useTheme,
   ListItem,
   ListItemText,
   ListItemAvatar,
@@ -20,8 +17,10 @@ import { FixedSizeList } from "react-window";
 import PersonIcon from "@material-ui/icons/Person";
 import AutoSizer from "react-virtualized-auto-sizer";
 import TimelineDot from '@material-ui/lab/TimelineDot';
-import {socket} from '../helpers'
-import {UserService} from '../services'
+import {socket} from '../helpers';
+import {userActions} from '../actions';
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -36,6 +35,7 @@ const useStyles = makeStyles(() => ({
 }));
 const renderRow = data =>props => {
   const { index, style } = props;
+  console.log('dataaaaa:', data.items[0] )
   return (
       <ListItem button style={style} key={index}>
         <ListItemAvatar key={index}>
@@ -43,7 +43,7 @@ const renderRow = data =>props => {
             <PersonIcon />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={`${data.users[index].name}`} />
+        <ListItemText primary={`${data.items[index].name}`} />
         <TimelineDot style={{marginTop:'20px', backgroundColor:'#31a24c'}} />
       </ListItem>
   );
@@ -56,23 +56,24 @@ renderRow.propTypes = {
 
 const Online = ({ className, ...rest }) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const [users, setUser]= useState([])
+  const dispatch = useDispatch();
+  const users = useSelector(state => state.users);
 
   useEffect(()=>{
-    async function getUserOnline(){
-      const data = await UserService.getUserOnline();
-      setUser(data.data)
-    }
-    getUserOnline();
+    dispatch(userActions.getUserOnline());
   },[])
 
   useEffect(()=>{
-    socket.on('online', async (data) => {
-      const reponsive = await UserService.getUserOnline();
-      setUser(reponsive.data)
+    socket.on('online', (data) => {
+      dispatch(userActions.userOnline(data));
     });
-  },[users])
+  },[])
+
+  useEffect(()=>{
+    socket.on('offline', (data) => {
+      dispatch(userActions.userOffline(data));
+    });
+  },[])
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
@@ -86,9 +87,9 @@ const Online = ({ className, ...rest }) => {
                 height={height}
                 width={width}
                 itemSize={70}
-                itemCount={users? users.length : 0}
+                itemCount={users.items? users.items.length : 0}
               >
-                {renderRow({users : users})}
+                {renderRow({items : users.items})}
               </FixedSizeList>
             )}
           </AutoSizer>

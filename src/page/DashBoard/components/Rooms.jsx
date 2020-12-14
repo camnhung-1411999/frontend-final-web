@@ -14,9 +14,9 @@ import {
   colors,
   IconButton,
 } from "@material-ui/core";
-import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import AddIcon from "@material-ui/icons/Add";
+import {roomActions} from '../../../actions';
+import {useDispatch, useSelector} from 'react-redux';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,33 +24,31 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+
 const Rooms = ({ className, ...rest }) => {
   const classes = useStyles();
   const theme = useTheme();
+  const dispatch = useDispatch();
 
+  const handleRoom = () => {
+    dispatch(roomActions.create())
+  };
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardHeader
         title="Rooms"
         action={
-          <IconButton style = {{padding: '12px 12px 0px 12px'}} aria-label="new room" onClick={() => console.log('Minh')}>
-            <AddIcon style={{ fontSize: 30}} color="primary" />
+          <IconButton
+            style = {{paddingBottom: '0px'}}
+            aria-label="new room"
+            onClick={handleRoom}
+          >
+            <AddIcon style={{ fontSize: 30 }} color="primary" />
           </IconButton>
         }
       />
       <Divider />
       <CardContent>
-        <Board />
-        <Board />
-        <Board />
-        <Board />
-        <Board />
-        <Board />
-        <Board />
-        <Board />
-        <Board />
-        <Board />
-        <Board />
         <Board />
       </CardContent>
     </Card>

@@ -10,6 +10,8 @@ export const userActions = {
   register,
   getUserOnline,
   delete: _delete,
+  userOnline,
+  userOffline
 };
 
 function login(socket, data, from) {
@@ -19,9 +21,8 @@ function login(socket, data, from) {
     await UserService.login(data).then(
       (user) => {
         dispatch(success(user));
-         console.log('ss', socket)
         socket.emit('online', {
-          body: user,
+          body: ({username: user.user, name: user.name}),
           senderId: socket.id,
         });
         window.location.reload();
@@ -71,8 +72,16 @@ function loginSocial(data, from) {
   }
 }
 
-function logout() {
-  UserService.logout();
+async function logout(socket, from ) {
+  await UserService.logout().then((user)=>{
+    socket.emit('offline', {
+      body: user,
+      senderId: socket.id,
+    });
+    window.location.reload();
+    history.push(from);
+  });
+
   return { type: userConstants.LOGOUT };
 }
 
@@ -109,7 +118,7 @@ function getUserOnline() {
     dispatch(request());
 
     UserService.getUserOnline().then(
-      (users) => dispatch(success(users)),
+      (users) => dispatch(success(users.data)),
       (error) => dispatch(failure(error.toString()))
     );
   };
@@ -125,6 +134,38 @@ function getUserOnline() {
   }
 }
 
+function userOnline(user) {
+  return (dispatch) => {
+    dispatch(request());
+    dispatch(success(user));
+  };
+
+  function request() {
+    return { type: userConstants.USER_ONLINE_REQUEST };
+  }
+  function success(user) {
+    return { type: userConstants.USER_ONLINE, user };
+  }
+  function failure(error) {
+    return { type: userConstants.GETALL_FAILURE, error };
+  }
+}
+function userOffline(user) {
+  return (dispatch) => {
+    dispatch(request());
+    dispatch(success(user))
+  };
+
+  function request() {
+    return { type: userConstants.USER_OFF_REQUEST };
+  }
+  function success(user) {
+    return { type: userConstants.USER_OFFLINE, user };
+  }
+  function failure(error) {
+    return { type: userConstants.GETALL_FAILURE, error };
+  }
+}
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
   return (dispatch) => {

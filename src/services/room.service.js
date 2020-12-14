@@ -1,8 +1,10 @@
 import axios from "axios";
 import { authHeader } from '../helpers';
+import { urlConstants} from '../constants'
+    
 
-// const API_URL = "https://api-caro-web.herokuapp.com/users/";
-const API_URL = "http://localhost:8000/rooms/";
+// const API_URL = "http://localhost:8000/rooms/";
+const API_URL = urlConstants.API_URL_ROOM;
 
 class RoomService {
 
