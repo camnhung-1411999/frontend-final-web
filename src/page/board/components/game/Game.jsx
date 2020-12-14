@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Board from "./Board";
 import './game.css';
 
-export default function Game() {
+function Game() {
 
     const [xIsNext, setXIsNext] = useState(true);
     const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
@@ -76,6 +76,8 @@ export default function Game() {
     );
 
 }
+
+export {Game} 
 
 function calculateWinner(squares) {
     const lines = [

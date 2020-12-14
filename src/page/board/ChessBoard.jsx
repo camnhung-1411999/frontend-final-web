@@ -5,8 +5,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import {Page, Online} from '../../components';
-import Board from './components/Board';
-import Game from './components/Game';
+import {Game, TabChat} from './components';
 
 
 
@@ -59,8 +58,7 @@ const ChessBoard = () => {
             xl={3}
             xs={12}
           >
-            {/* <Online /> */}
-            Minh
+            <TabChat />
           </Grid>
          
         </Grid>

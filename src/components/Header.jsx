@@ -1,21 +1,24 @@
-import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Button from '@material-ui/core/Button';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import React from "react";
+import { fade, makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import {
+  IconButton,
+  Typography,
+  InputBase,
+  MenuItem,
+  Menu,
+  Button,
+} from "@material-ui/core";
+import {Menu as MenuIcon,Search as SearchIcon, AccountCircle, MoreVert as MoreIcon  } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
-import { UserService } from "../services";
-import Link from '@material-ui/core/Link';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { userActions } from "../actions";
+import Link from "@material-ui/core/Link";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {socket} from "../helpers"
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -25,58 +28,58 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
     },
   },
   search: {
-    position: 'relative',
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
+    "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginRight: theme.spacing(2),
     marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(3),
-      width: 'auto',
+      width: "auto",
     },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputRoot: {
-    color: 'inherit',
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
     },
   },
   sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
     },
   },
   sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
     },
   },
 }));
@@ -85,10 +88,12 @@ function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  const location = useLocation();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();
+  const dispatch = useDispatch();
+
 
   const handelProfile = (event) => {
     return history.push("/profile");
@@ -111,19 +116,19 @@ function Header() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handelLogout = (event => {
-    UserService.logout()
-    history.push("/login");
-  })
+  const handelLogout = (event) => {
+    const { from } = location.state || { from: { pathname: "/login" } };
+    dispatch(userActions.logout(socket, from));
+  };
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -132,14 +137,14 @@ function Header() {
     </Menu>
   );
 
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -152,7 +157,7 @@ function Header() {
         >
           <AccountCircle />
         </IconButton>
-        <p style ={{ margin: '0'}}>Profile</p>
+        <p style={{ margin: "0" }}>Profile</p>
       </MenuItem>
       <MenuItem onClick={handelLogout}>
         <IconButton
@@ -163,7 +168,7 @@ function Header() {
         >
           <ExitToAppIcon />
         </IconButton>
-        <p style ={{ margin: '0'}}>Logout</p>
+        <p style={{ margin: "0" }}>Logout</p>
       </MenuItem>
     </Menu>
   );
@@ -194,12 +199,11 @@ function Header() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              inputProps={{ 'aria-label': 'search' }}
+              inputProps={{ "aria-label": "search" }}
             />
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -207,11 +211,13 @@ function Header() {
               aria-haspopup="true"
               onClick={handelProfile}
               color="inherit"
-              style={{marginRight:'10px'}}
+              style={{ marginRight: "10px" }}
             >
               <AccountCircle />
             </IconButton>
-            <Button color="inherit" onClick = {handelLogout}>Logout</Button>
+            <Button color="inherit" onClick={handelLogout}>
+              Logout
+            </Button>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -231,4 +237,4 @@ function Header() {
     </div>
   );
 }
-export {Header};
+export { Header };

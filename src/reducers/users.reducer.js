@@ -14,6 +14,17 @@ export function users(state = {}, action) {
             return {
                 error: action.error
             };
+        case userConstants.USER_ONLINE:
+            return {
+                ...state,
+                items: [
+                  ...state.items, action.user
+                ]
+              };
+        case userConstants.USER_OFFLINE:
+            return {
+                items: state.items.filter(user => user.username !== action.user.username)
+              };
         case userConstants.DELETE_REQUEST:
             // add 'deleting:true' property to user being deleted
             return {

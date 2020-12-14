@@ -14,9 +14,9 @@ function create(from) {
 
     RoomService.createRoom().then(
       (room) => {
-        dispatch(success(room));
+        dispatch(success(room.idroom));
         window.location.reload();
-        history.push(from);
+        history.push(`/room/${room.idroom}`);
       },
       (error) => {
         dispatch(failure(error.toString()));
