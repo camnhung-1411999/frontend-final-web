@@ -2,16 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Axios from 'axios';
-
-Axios.defaults.baseURL = "http://localhost:8000";
+import { Provider } from 'react-redux';
+import { store } from './helpers';
+import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+     <Provider store={store}>
+        <App />
+    </Provider>,
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-
+serviceWorker.unregister();
 
