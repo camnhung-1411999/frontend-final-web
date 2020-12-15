@@ -1,20 +1,21 @@
 import "./App.css";
 import Home from "./page/auth/Home";
-import Admin from "./page/Admin/Admin";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Admin from "./page/admin/Admin";
+import { Router, Switch, Route } from "react-router-dom";
 // import Profile from "./page/Profile";
-import {DashBoard} from "./page/DashBoard";
+import {DashBoard} from "./page/dashboard";
 import {PrivateRoute, NormalRoute} from './components';
 import React from "react";
 import PageNotFound from "./page/error/PageNotFound";
 import {ChessBoard} from "./page/board";
 import {Redirect} from "react-router-dom";
 import {Account} from "./page/account"
+import { history } from './helpers';
 
 function App() {
   
   return (
-      <Router>
+      <Router history={history}>
         <div className="App">
             <Switch>
               <NormalRoute exact path="/" component={Home} />

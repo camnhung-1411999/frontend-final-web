@@ -57,7 +57,7 @@ function TabChat() {
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Chat" {...a11yProps(0)} />
           <Tab label="Followers" {...a11yProps(1)} />
-          {/* <Tab label="Online" {...a11yProps(2)} /> */}
+          <Tab label="Online" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -66,9 +66,9 @@ function TabChat() {
       <TabPanel value={value} index={1}>
         Followers
       </TabPanel>
-      {/* <TabPanel value={value} index={2}>
+      <TabPanel value={value} index={2}>
         Online
-      </TabPanel> */}
+      </TabPanel>
     </div>
   );
 }

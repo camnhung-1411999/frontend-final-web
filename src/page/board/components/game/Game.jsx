@@ -5,7 +5,7 @@ import './game.css';
 function Game() {
 
     const [xIsNext, setXIsNext] = useState(true);
-    const [history, setHistory] = useState([{ squares: Array(9).fill(null) }]);
+    const [history, setHistory] = useState([{ squares: Array(9*9).fill(null) }]);
     const [stepNumber, setStepNumber] = useState(0);
     const [historyIndex, setHistoryIndex] = useState([{ index: null }]);
     const [sort, setSort] = useState(false);
@@ -64,13 +64,8 @@ function Game() {
                     <div className="status">{status}</div>
                     <div>
                         <Board squares={current.squares} indexs={winner ? winner.indexs : null} onClick={(i) => handleClick(i)} />
-                        {/* <button className="playagain mt-3" onClick={playAgain}> Play Again</button> */}
                     </div>
                 </div>
-                {/* <div className="game-info">
-                    <button id="sort" className="btn btn-info ml-5 mt-5" onClick={() => setSort(!sort)}> Sort</button>
-                    <ul id='move-list'>{moves}</ul>
-                </div> */}
             </div>
         </div>
     );

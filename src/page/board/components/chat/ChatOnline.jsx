@@ -8,10 +8,7 @@ import {
   CardHeader,
   Divider,
   Typography,
-  colors,
   makeStyles,
-  useTheme,
-  TextareaAutosize,
   TextField,
   IconButton,
   Grid,
@@ -31,14 +28,31 @@ const useStyles = makeStyles(() => ({
 const ChatOnline = ({ className, ...rest }) => {
   const classes = useStyles();
   const [flag, setFlag] = useState(true);
+  const  addEmoji = e => {
+    // console.log(e.native);
+    let emoji = e.native;
+    //setmessage
+  };
+
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardHeader title="Username" />
       <Divider />
       <CardContent>
-        <Box style= {{borderRadius: '10px', border: '1px solid blue', marginBottom: '5px'}} height={"300px"} position="relative">
-          {flag ? <BoxMessage /> : <Picker />}
+        <Box
+          style={{
+            borderRadius: "10px",
+            marginBottom: "5px",
+          }}
+          height={"450px"}
+          position="relative"
+        >
+          {flag ? (
+            <BoxMessage style={{ height: "450px", border: "1px solid blue" }} />
+          ) : (
+            <Picker style={{ width: "100%" }} onSelect={()=> addEmoji()} />
+          )}
         </Box>
         <Divider />
         <Box style={{ marginTop: "10px" }}>
@@ -54,16 +68,16 @@ const ChatOnline = ({ className, ...rest }) => {
             </Grid>
             <Grid item xs={3}>
               <Grid item xs={12} spacing={3}>
-                <IconButton style={{ marginLeft: "15px" }}>
+                <IconButton style={{ marginLeft: "15px" }} onClick= {()=> console.log('Send')}>
                   <SendIcon color="primary" style={{ fontSize: 40 }} />
                 </IconButton>
               </Grid>
               <Grid item xs={12} spacing={3}>
-                <IconButton
+                <IconButton 
                   style={{ marginLeft: "15px", marginTop: "5px" }}
                   onClick={() => setFlag(!flag)}
                 >
-                  <MoodIcon  style={{ fontSize: 40, color :"orange" }} />
+                  <MoodIcon style={{ fontSize: 40, color: "orange" }} />
                 </IconButton>
               </Grid>
             </Grid>
