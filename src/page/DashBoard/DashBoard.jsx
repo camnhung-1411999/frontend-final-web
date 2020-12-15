@@ -17,11 +17,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const DashBoard = () => {
+const DashBoard = (props) => {
   const classes = useStyles();
-
-  
-
   return (
     <Page
       className={classes.root}
