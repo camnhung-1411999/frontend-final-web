@@ -1,16 +1,15 @@
 import axios from "axios";
 import { authHeader } from '../helpers';
-import { urlConstants} from '../constants'
-    
+import { urlConstants } from '../constants'
+import jwt from "jwt-decode";
 
-// const API_URL = "http://localhost:8000/users/";
 const API_URL = urlConstants.API_URL_USER;
 
 class UserService {
 
   login(data) {
     return axios
-      .post(API_URL + "login", {data}).then((response) => {
+      .post(API_URL + "login", { data }).then((response) => {
         if (response.data) {
           localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
           localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
@@ -26,7 +25,8 @@ class UserService {
         password: input.password,
         name: input.name,
         role: input.role,
-        status: false,}).then((response) => {
+        status: false,
+      }).then((response) => {
         if (response.data) {
           localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
           localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
@@ -72,14 +72,20 @@ class UserService {
     });
   }
 
-  getUserOnline(){
-    return axios.get(API_URL + "online",{
+  getUserOnline() {
+    return axios.get(API_URL + "online", {
       headers: authHeader(),
     })
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('accessToken'));
+    const token = localStorage.getItem('accessToken');
+    if(token)
+    {
+      const username = jwt(token).toString();
+      return username;
+    }
+    return token;
   }
 }
 export default new UserService();

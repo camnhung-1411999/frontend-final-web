@@ -17,6 +17,7 @@
     "bootstrap": "^4.5.3",
     "dateformat": "^3.0.3",
     "emoji-mart": "^3.0.0",
+    "jwt-decode": "^3.1.2",
     "perfect-scrollbar": "^1.5.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.0",

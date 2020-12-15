@@ -60,8 +60,17 @@ const Online = ({ className, ...rest }) => {
 
   useEffect(()=>{
     dispatch(userActions.getUserOnline());
-    socket.on('ionline', () => {
-        dispatch(userActions.getUserOnline());
+  },[])
+
+  useEffect(()=>{
+    socket.on('online', (data) => {
+      dispatch(userActions.userOnline(data));
+    });
+  },[])
+
+  useEffect(()=>{
+    socket.on('offline', (data) => {
+      dispatch(userActions.userOffline(data));
     });
   },[])
 

@@ -19,10 +19,12 @@ function login(data, from) {
     dispatch(request({ username: data.user }));
 
     await UserService.login(data).then(
-      async (user) => {
+      (user) => {
         dispatch(success(user));
-        await socket.emit('online');
-        window.location.reload();
+        socket.emit('online', {
+          body: ({ username: user.user, name: user.name }),
+          senderId: socket.id,
+        });
         history.push(from);
       },
       (error) => {
@@ -50,7 +52,6 @@ function loginSocial(data, from) {
       async (user) => {
         dispatch(success(user));
         await socket.emit('online');
-        window.location.reload();
         history.push(from);
       },
       (error) => {
@@ -70,14 +71,17 @@ function loginSocial(data, from) {
   }
 }
 
-async function logout(from ) {
-  await UserService.logout().then(async (user)=>{
-    await socket.emit('online');
-    window.location.reload();
-    history.push(from);
-  });
-
-  return { type: userConstants.LOGOUT };
+function logout(from) {
+  return async (dispatch) => {
+    await UserService.logout().then(async (reponsive) => {
+      const user = reponsive.data;
+       socket.emit('offline', {
+        body: ({ username: user.user, name: user.name }),
+        senderId: socket.id,
+      });
+      history.push(from);
+    });
+  }
 }
 
 function register(user) {
