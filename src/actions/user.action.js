@@ -1,7 +1,7 @@
 import { userConstants } from "../constants";
 import { UserService } from "../services/index";
 import { alertActions } from ".";
-import { history } from "../helpers";
+import { history, socket } from "../helpers";
 
 export const userActions = {
   login,
@@ -14,17 +14,14 @@ export const userActions = {
   userOffline
 };
 
-function login(socket, data, from) {
+function login(data, from) {
   return async (dispatch) => {
     dispatch(request({ username: data.user }));
 
     await UserService.login(data).then(
-      (user) => {
+      async (user) => {
         dispatch(success(user));
-        socket.emit('online', {
-          body: ({username: user.user, name: user.name}),
-          senderId: socket.id,
-        });
+        await socket.emit('online');
         window.location.reload();
         history.push(from);
       },
@@ -50,8 +47,9 @@ function loginSocial(data, from) {
   return async (dispatch) => {
     dispatch(request({ username: data.user }));
     await UserService.loginSocial(data).then(
-      (user) => {
+      async (user) => {
         dispatch(success(user));
+        await socket.emit('online');
         window.location.reload();
         history.push(from);
       },
@@ -72,12 +70,9 @@ function loginSocial(data, from) {
   }
 }
 
-async function logout(socket, from ) {
-  await UserService.logout().then((user)=>{
-    socket.emit('offline', {
-      body: user,
-      senderId: socket.id,
-    });
+async function logout(from ) {
+  await UserService.logout().then(async (user)=>{
+    await socket.emit('online');
     window.location.reload();
     history.push(from);
   });

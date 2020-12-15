@@ -112,13 +112,14 @@ function Header() {
     handleMobileMenuClose();
   };
 
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
-  const handelLogout = (event) => {
-    const { from } = location.state || { from: { pathname: "/login" } };
-    dispatch(userActions.logout(socket, from));
+  const handleLogout = (event) => {
+    const { from } = { from: { pathname: "/login" } };
+    dispatch(userActions.logout(from));
   };
 
   const menuId = "primary-search-account-menu";
@@ -133,7 +134,7 @@ function Header() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );
 
@@ -159,7 +160,7 @@ function Header() {
         </IconButton>
         <p style={{ margin: "0" }}>Profile</p>
       </MenuItem>
-      <MenuItem onClick={handelLogout}>
+      <MenuItem onClick={handleLogout}>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -215,7 +216,7 @@ function Header() {
             >
               <AccountCircle />
             </IconButton>
-            <Button color="inherit" onClick={handelLogout}>
+            <Button color="inherit" onClick={handleLogout}>
               Logout
             </Button>
           </div>

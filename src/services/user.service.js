@@ -36,10 +36,11 @@ class UserService {
   }
 
   logout() {
+    const auth = authHeader()
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    return axios.put(API_URL + 'logout',  {
-      headers: authHeader(),
+    return axios.put(API_URL + 'logout', null, {
+      headers: auth,
     });
   }
 

@@ -42,6 +42,7 @@ function create(from) {
   
       RoomService.listRoom().then(
         (rooms) => {
+          console.log('rooms:',rooms);
           dispatch(success(rooms));
         },
         (error) => {

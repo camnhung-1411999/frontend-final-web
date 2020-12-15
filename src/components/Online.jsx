@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -35,7 +35,6 @@ const useStyles = makeStyles(() => ({
 }));
 const renderRow = data =>props => {
   const { index, style } = props;
-  console.log('dataaaaa:', data.items[0] )
   return (
       <ListItem button style={style} key={index}>
         <ListItemAvatar key={index}>
@@ -61,17 +60,8 @@ const Online = ({ className, ...rest }) => {
 
   useEffect(()=>{
     dispatch(userActions.getUserOnline());
-  },[])
-
-  useEffect(()=>{
-    socket.on('online', (data) => {
-      dispatch(userActions.userOnline(data));
-    });
-  },[])
-
-  useEffect(()=>{
-    socket.on('offline', (data) => {
-      dispatch(userActions.userOffline(data));
+    socket.on('ionline', () => {
+        dispatch(userActions.getUserOnline());
     });
   },[])
 

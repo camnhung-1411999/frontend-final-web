@@ -19,7 +19,6 @@ import FacebookLogin from "react-facebook-login";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../actions";
-import { socket } from "../../../helpers";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,7 +60,7 @@ function SignIn() {
 
     if (username && password) {
       const { from } = location.state || { from: { pathname: "/home" } };
-      dispatch(userActions.login(socket, data, from));
+      dispatch(userActions.login(data, from));
     }
   }
   const handleClose = (event, reason) => {

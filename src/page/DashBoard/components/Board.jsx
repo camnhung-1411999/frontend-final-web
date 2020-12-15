@@ -41,13 +41,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Board(props) {
+export default function Board({id}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const history = useHistory();
 
   function handelCard() {
-    history.push(`/board/${props.board.id}`);
+    history.push(`/board/${id}`);
   }
 
   return (
@@ -55,7 +55,7 @@ export default function Board(props) {
       <Card className={classes.root}>
         <CardHeader
           style={{ textAlign: "left" }}
-          title={'id'}
+          title={`ID: #${id}`}
           onClick={handelCard}
         />
         <CardContent onClick={handelCard}>
