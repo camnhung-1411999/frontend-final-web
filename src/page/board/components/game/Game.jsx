@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Board from "./Board";
 import './game.css';
+import {roomActions} from '../../../../actions';
+// import {useDispatch, useSelector} from 'react-redux';
+import useRoom from '../../../../sockets/useRoom';
+import {useParams} from "react-router-dom"
+
 
 function Game() {
 
@@ -9,20 +14,33 @@ function Game() {
     const [stepNumber, setStepNumber] = useState(0);
     const [historyIndex, setHistoryIndex] = useState([{ index: null }]);
     const [sort, setSort] = useState(false);
+    // const current = useSelector(state=>state.rooms);
+    const {id} = useParams();
+    const {isNext, boards, playTo } = useRoom(id);
+    // const [isNext, setisNext] = useState(true)
+    console.log("ssssssssssssss", isNext)
 
-    function handleClick(i) {
-        const his = history.slice(0, stepNumber + 1);
-        const hisIndex = historyIndex.slice(0, stepNumber + 1);
-        const current = his[his.length - 1];
-        const squares = current.squares.slice();
-        if (calculateWinner(squares) || squares[i]) {
-            return;
+    function handleClick(i, isFlag) {
+        // const his = history.slice(0, stepNumber + 1);
+        // const hisIndex = historyIndex.slice(0, stepNumber + 1);
+        // const current = his[his.length - 1];
+        // const squares = current.squares.slice();
+        // if (calculateWinner(squares) || squares[i]) {
+        //     return;
+        // }
+        // squares[i] = xIsNext ? 'X' : 'O';
+        // setHistory(his.concat([{ squares: squares }]))
+        // setXIsNext(!xIsNext)
+        // setStepNumber(his.length)
+        // setHistoryIndex(hisIndex.concat([{ index: i }]))
+        const data = {
+            roomId: id, 
+            index: i,
+            chessman: true
         }
-        squares[i] = xIsNext ? 'X' : 'O';
-        setHistory(his.concat([{ squares: squares }]))
-        setXIsNext(!xIsNext)
-        setStepNumber(his.length)
-        setHistoryIndex(hisIndex.concat([{ index: i }]))
+        if(isFlag)
+            playTo(data)
+        // setisNext(false)
     }
     const playAgain = () => {
         setHistory([{ squares: Array(9).fill(null) }])
@@ -36,8 +54,8 @@ function Game() {
         setXIsNext((step % 2) === 0)
     }
 
-    const current = history[stepNumber];
-    const winner = calculateWinner(current.squares);
+    // const current = history[stepNumber];
+    const winner = calculateWinner(boards);
     let status;
     if (winner) {
         status = winner && winner.name ? 'Winner: ' + winner.name : winner;
@@ -62,8 +80,8 @@ function Game() {
             <div className="game">
                 <div className="game-board">
                     <div className="status">{status}</div>
-                    <div>
-                        <Board squares={current.squares} indexs={winner ? winner.indexs : null} onClick={(i) => handleClick(i)} />
+                    <div >
+                        <Board squares={boards} indexs={winner ? winner.indexs : null} onClick={(i) => handleClick(i, isNext)} />
                     </div>
                 </div>
             </div>
@@ -102,3 +120,4 @@ function calculateWinner(squares) {
     if (j === 9) return "Equal";
     return null;
 }
+

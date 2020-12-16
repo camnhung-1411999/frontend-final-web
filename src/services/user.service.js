@@ -80,9 +80,8 @@ class UserService {
     const token = localStorage.getItem('accessToken');
     if(token)
     {
-      const username = jwt(token).toString();
-      console.log('username', username);
-      return username;
+      const {user} = jwt(token);
+      return user;
     }
     console.log('token',token);
     return token;

@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
 const renderRow = (props) => {
   const { index, data } = props;
   var css = {
-    "justify-content": data[index].ownl ? "flex-end" : "flex-start",
+    justifyContent: data[index].ownl ? "flex-end" : "flex-start",
     height: "max-content",
     top: 80 * index,
     position: "absolute",
@@ -58,6 +58,7 @@ const renderRow = (props) => {
               marginLeft: "2px",
               background: "#e4e6eb",
             }}
+            component={'div'}
             variant="body2"
             gutterBottom
           >
@@ -74,6 +75,7 @@ const renderRow = (props) => {
               marginLeft: "2px",
               color: "white",
             }}
+            component={'div'}
             variant="body2"
             gutterBottom
           >
@@ -101,7 +103,6 @@ renderRow.propTypes = {
 
 const BoxMessage = ({ messages, className, ...rest }) => {
   const classes = useStyles();
-
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent className={classes.box}>

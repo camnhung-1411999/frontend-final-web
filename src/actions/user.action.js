@@ -142,8 +142,8 @@ function userOnline(user) {
   function request() {
     return { type: userConstants.USER_ONLINE_REQUEST };
   }
-  function success(iuser) {
-    return { type: userConstants.USER_ONLINE, iuser };
+  function success(user) {
+    return { type: userConstants.USER_ONLINE, user };
   }
 
 }
@@ -156,8 +156,8 @@ function userOffline(user) {
   function request() {
     return { type: userConstants.USER_OFF_REQUEST };
   }
-  function success(iuser) {
-    return { type: userConstants.USER_OFFLINE, iuser };
+  function success(user) {
+    return { type: userConstants.USER_OFFLINE, user };
   }
 }
 // prefixed function name with underscore because delete is a reserved word in javascript

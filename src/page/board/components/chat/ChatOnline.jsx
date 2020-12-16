@@ -141,7 +141,7 @@ const ChatOnline = ({ idroom, className, ...rest }) => {
         </Box>
         <Divider />
         <Box style={{ marginTop: "10px" }}>
-          <Grid container spacing={3}>
+          <Grid container >
             <Grid item xs={9}>
               <TextField
                 id="outlined-multiline-static"
@@ -154,12 +154,12 @@ const ChatOnline = ({ idroom, className, ...rest }) => {
               />
             </Grid>
             <Grid item xs={3}>
-              <Grid item xs={12} spacing={3}>
+              <Grid item xs={12}>
                 <IconButton style={{ marginLeft: "15px" }} onClick={handleSend}>
                   <SendIcon color="primary" style={{ fontSize: 40 }} />
                 </IconButton>
               </Grid>
-              <Grid item xs={12} spacing={3}>
+              <Grid item xs={12}>
                 <IconButton
                   style={{ marginLeft: "15px", marginTop: "5px" }}
                   onClick={() => setFlag(!flag)}

@@ -40,7 +40,6 @@ const ChessBoard = ({match}) => {
             xs={12}
           >
             {/* <TotalProfit /> */}
-            Minh
           </Grid>
           <Grid
             item

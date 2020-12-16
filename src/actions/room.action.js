@@ -91,7 +91,29 @@ function listRooms() {
   function failure(errors) {
     return { type: roomConstants.GET_FAILURE, errors };
   }
-}
+
+};
+
+
+// function joinRoom(id, from) {
+//   return (dispatch) => {
+//     dispatch(request());
+//     dispatch(success(id));
+//     socket.emit('joinRoom', id)
+//     history.push(from);
+
+//   };
+
+//   function request(room) {
+//     return { type: roomConstants.CREATE_REQUEST, room };
+//   }
+//   function success(room) {
+//     return { type: roomConstants.CREATE_SUCCESS, room };
+//   }
+//   function failure(error) {
+//     return { type: roomConstants.CREATE_FAILURE, error };
+//   }
+// }
 
 function listMsg(arr) {
   return (dispatch) => {

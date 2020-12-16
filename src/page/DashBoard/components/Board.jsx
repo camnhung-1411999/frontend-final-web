@@ -10,10 +10,10 @@ import {
   Divider,
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
-import { useHistory } from "react-router-dom";
 import { ExitToAppRounded } from "@material-ui/icons";
 import { roomActions } from "../../../actions";
 import { useDispatch } from "react-redux";
+import { history } from "../../../helpers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,11 +53,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Board({ id }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-  const history = useHistory();
   const dispatch = useDispatch();
 
   function handelCard() {
     dispatch(roomActions.joinRoom(id));
+    // dispatch(roomActions.joinRoom(id, `/board/${id}`))
+    // history.push(`/board/${id}`);
   }
 
   return (
@@ -71,6 +72,7 @@ export default function Board({ id }) {
         <CardContent onClick={handelCard}>
           <Typography
             style={{ textAlign: "left" }}
+            component={"div"}
             className={classes.description}
           ></Typography>
         </CardContent>
