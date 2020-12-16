@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import History from './components/History';
 import Board from './components/Board';
-import {useParams} from "react-router-dom";
 import axios from "axios";    
 import { urlConstants } from "../../constants";
 
@@ -22,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 const HistoryBoard = () => {
   const classes = useStyles();
-  const {user} = useParams();
   const initdata =
   {
       "data": [
@@ -56,7 +54,7 @@ const HistoryBoard = () => {
     <div className={classes.root}>
       <Grid container>
         <Grid item xs={12} sm={4}>
-          <History userid ={user} onClick={(id) => handleClick(id)} ></History>
+          <History onClick={(id) => handleClick(id)} ></History>
         </Grid>
         <Grid item xs={12} sm={8}>
           <Board data ={boardData} ></Board>

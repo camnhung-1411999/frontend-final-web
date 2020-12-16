@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 import { urlConstants } from "../../../constants";
-
+import { authHeader } from '../../../helpers'
 const API_URL = urlConstants.API_URL_HISTORY;
 
 function HistoryItem(props) {
@@ -41,13 +41,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function History(props) {
-  const user = props.userid;
   const [listHistory, setListHistory] = useState([]);
   const classes = useStyles();
   useEffect(() => {
     console.log("props", props);
     axios
-      .get(`${API_URL}`+`${user}`)
+      .get(API_URL, {
+        headers: authHeader(),
+      } )
       .then(function (response) {
         setListHistory(response.data);
         console.log("get list history response.data: ", response.data);

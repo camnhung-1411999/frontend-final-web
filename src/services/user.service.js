@@ -81,8 +81,10 @@ class UserService {
     if(token)
     {
       const username = jwt(token).toString();
+      console.log('username', username);
       return username;
     }
+    console.log('token',token);
     return token;
   }
 }

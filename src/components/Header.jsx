@@ -2,6 +2,7 @@ import React from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import Dropdown from "./Dropdown";
 import {
   IconButton,
   Typography,
@@ -224,17 +225,8 @@ function Header() {
               </button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handelProfile}
-              color="inherit"
-              style={{ marginRight: "10px" }}
-            >
-              <AccountCircle />
-            </IconButton>
+      
+            <Dropdown />
             <Button color="inherit" onClick={handleLogout}>
               Logout
             </Button>
