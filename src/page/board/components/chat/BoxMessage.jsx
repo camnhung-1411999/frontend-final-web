@@ -11,9 +11,9 @@ import {
 } from "@material-ui/core";
 import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
-import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import FaceIcon from "@material-ui/icons/Face";
+import { socket } from '../../../../helpers';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -99,80 +99,9 @@ renderRow.propTypes = {
   style: PropTypes.object.isRequired,
 };
 
-const BoxMessage = ({ className, ...rest }) => {
+const BoxMessage = ({ messages, className, ...rest }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const messages = [
-    {
-      ownl: false,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: true,
-      message: "hi",
-    },
-    {
-      ownl: false,
-      message: "Who are you",
-    },
-    {
-      ownl: true,
-      message: "I'm Minh Blues",
-    },
-    {
-      ownl: false,
-      message: "How are you",
-    },
-    {
-      ownl: false,
-      message: "Test",
-    },
-    {
-      ownl: true,
-      message: "How  you",
-    },
-    {
-      ownl: true,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: true,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: false,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: true,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: false,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: false,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: true,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-    {
-      ownl: false,
-      message:
-        "subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur",
-    },
-  ];
+
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent className={classes.box}>

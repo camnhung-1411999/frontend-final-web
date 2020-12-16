@@ -13,12 +13,9 @@ import {
 import {Menu as MenuIcon,Search as SearchIcon, AccountCircle, MoreVert as MoreIcon  } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { userActions } from "../actions";
-import Link from "@material-ui/core/Link";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import {socket} from "../helpers"
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -88,7 +85,6 @@ function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const location = useLocation();
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();

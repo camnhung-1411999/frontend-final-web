@@ -8,15 +8,12 @@ import {
   IconButton,
   Typography,
   Divider,
-  Button,
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
-import ShareIcon from "@material-ui/icons/Share";
 import { useHistory } from "react-router-dom";
 import { ExitToAppRounded } from "@material-ui/icons";
 import { roomActions } from "../../../actions";
-import { useDispatch, useSelector } from "react-redux";
-import { history, socket } from "../../../helpers";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {

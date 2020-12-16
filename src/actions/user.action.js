@@ -84,11 +84,11 @@ function logout(from) {
   }
 }
 
-function register(user) {
+function register(iuser) {
   return (dispatch) => {
-    dispatch(request(user));
+    dispatch(request(iuser));
 
-    UserService.register(user).then(
+    UserService.register(iuser).then(
       (user) => {
         dispatch(success());
         history.push("/login");
@@ -142,12 +142,10 @@ function userOnline(user) {
   function request() {
     return { type: userConstants.USER_ONLINE_REQUEST };
   }
-  function success(user) {
-    return { type: userConstants.USER_ONLINE, user };
+  function success(iuser) {
+    return { type: userConstants.USER_ONLINE, iuser };
   }
-  function failure(error) {
-    return { type: userConstants.GETALL_FAILURE, error };
-  }
+
 }
 function userOffline(user) {
   return (dispatch) => {
@@ -158,11 +156,8 @@ function userOffline(user) {
   function request() {
     return { type: userConstants.USER_OFF_REQUEST };
   }
-  function success(user) {
-    return { type: userConstants.USER_OFFLINE, user };
-  }
-  function failure(error) {
-    return { type: userConstants.GETALL_FAILURE, error };
+  function success(iuser) {
+    return { type: userConstants.USER_OFFLINE, iuser };
   }
 }
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -176,13 +171,13 @@ function _delete(id) {
     );
   };
 
-  function request(id) {
-    return { type: userConstants.DELETE_REQUEST, id };
+  function request(_id) {
+    return { type: userConstants.DELETE_REQUEST, _id };
   }
-  function success(id) {
-    return { type: userConstants.DELETE_SUCCESS, id };
+  function success(_id) {
+    return { type: userConstants.DELETE_SUCCESS, _id };
   }
-  function failure(id, error) {
-    return { type: userConstants.DELETE_FAILURE, id, error };
+  function failure(_id, error) {
+    return { type: userConstants.DELETE_FAILURE, _id, error };
   }
 }

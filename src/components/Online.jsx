@@ -19,7 +19,6 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import TimelineDot from '@material-ui/lab/TimelineDot';
 import {socket} from '../helpers';
 import {userActions} from '../actions';
-import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({

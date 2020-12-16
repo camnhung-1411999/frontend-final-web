@@ -16,8 +16,9 @@ function create(from) {
     dispatch(request());
 
     RoomService.createRoom().then(
-      (room) => {
+      async (room) => {
         dispatch(success(room));
+        await socket.emit('joinRoom', room.data.idroom)
         history.push(`/board/${room.data.idroom}`);
       },
       (error) => {

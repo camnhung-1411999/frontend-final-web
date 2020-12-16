@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
@@ -7,7 +8,6 @@ import {
   CardContent,
   CardHeader,
   Divider,
-  Typography,
   makeStyles,
   TextField,
   IconButton,
@@ -18,8 +18,9 @@ import MoodIcon from "@material-ui/icons/Mood";
 import BoxMessage from "./BoxMessage";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
-import UserService from '../../../../services/user.service';
-import RoomService from '../../../../services/room.service';
+import UserService from "../../../../services/user.service";
+import RoomService from "../../../../services/room.service";
+import { socket } from "../../../../helpers";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -27,34 +28,98 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ChatOnline = ({ idroom, className, ...rest}) => {
+const ChatOnline = ({ idroom, className, ...rest }) => {
   const classes = useStyles();
   const [flag, setFlag] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [isSend, setIsSend] = useState(false);
+  const [list, setList] = useState([]);
   const [player, setPlayer] = useState();
+  const [temp, setTemp] = useState(0);
 
-  const  addEmoji = e => {
+
+  const addEmoji = (e) => {
     // console.log(e.native);
     let emoji = e.native;
     //setmessage
   };
+
+
   useEffect(() => {
     const iuser = async () => {
       await UserService.getUser().then(async (res) => {
+        localStorage.setItem(
+          "username",
+          JSON.stringify(res.data.user)
+        );
         await RoomService.getRoom(idroom).then((room) => {
           if (room.data.player1 !== res.data.user) {
-            setPlayer(room.data.player1)
+            setPlayer(room.data.player1);
+          } else {
+            setPlayer(room.data.player2);
           }
-          else {
-            setPlayer(room.data.player2)
-          }
-        })  
+        });
       });
-    }
+    };
     iuser();
-  }, [])
+    if (JSON.parse(localStorage.getItem("myMessage"))) {
+      setList(JSON.parse(localStorage.getItem("myMessage")));
+    }
+  }, [isSend, temp]);
+  
+  useEffect(() => {
+    let a = 0;
+    socket.on("recievedMsg", (data) => {
+      const username = JSON.parse(localStorage.getItem('username'));
+      if (username === data.user) {
+        const iMsg = JSON.parse(localStorage.getItem("myMessage"))
+        ? JSON.parse(localStorage.getItem("myMessage"))
+        : [];
+      localStorage.setItem(
+        "myMessage",
+        JSON.stringify([
+          ...iMsg,
+          {
+            ownl: false,
+            message: data.message,
+          },
+        ])
+      );
+      setTemp(a+1);
+      a+=1;
+      }
+    });
+      
+  }, []);
+
+  const handleSend = async () => {
+    if (message) {
+      const iMsg = JSON.parse(localStorage.getItem("myMessage"))
+        ? JSON.parse(localStorage.getItem("myMessage"))
+        : [];
+      localStorage.setItem(
+        "myMessage",
+        JSON.stringify([
+          ...iMsg,
+          {
+            ownl: true,
+            message,
+          },
+        ])
+      );
+      await socket.emit("sendMessage", {
+        roomId: idroom,
+        message,
+        user: player,
+      });
+      setIsSend(!isSend);
+      setMessage("");
+    }
+  };
+
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
+      <h1>{isSend+''}</h1>
       <CardHeader title={player} />
       <Divider />
       <CardContent>
@@ -67,9 +132,12 @@ const ChatOnline = ({ idroom, className, ...rest}) => {
           position="relative"
         >
           {flag ? (
-            <BoxMessage style={{ height: "450px", border: "1px solid blue" }} />
+            <BoxMessage
+              style={{ height: "450px", border: "1px solid blue" }}
+              messages={list}
+            />
           ) : (
-            <Picker style={{ width: "100%" }} onSelect={()=> addEmoji()} />
+            <Picker style={{ width: "100%" }} onSelect={() => addEmoji()} />
           )}
         </Box>
         <Divider />
@@ -83,17 +151,17 @@ const ChatOnline = ({ idroom, className, ...rest}) => {
                 variant="outlined"
                 value={message}
                 style={{ width: "100%" }}
-                onChange={(e)=>setMessage(e.target.value)}
+                onChange={(e) => setMessage(e.target.value)}
               />
             </Grid>
             <Grid item xs={3}>
               <Grid item xs={12} spacing={3}>
-                <IconButton style={{ marginLeft: "15px" }} onClick= {()=> console.log('Send')}>
+                <IconButton style={{ marginLeft: "15px" }} onClick={handleSend}>
                   <SendIcon color="primary" style={{ fontSize: 40 }} />
                 </IconButton>
               </Grid>
               <Grid item xs={12} spacing={3}>
-                <IconButton 
+                <IconButton
                   style={{ marginLeft: "15px", marginTop: "5px" }}
                   onClick={() => setFlag(!flag)}
                 >

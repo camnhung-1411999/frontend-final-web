@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import {AppBar, TextareaAutosize, Tabs, Tab , Typography, Box} from '@material-ui/core';
@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
 function TabChat({id}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
