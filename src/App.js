@@ -26,7 +26,7 @@ function App() {
               <PrivateRoute path="/home" component={DashBoard} />
               <PrivateRoute path="/board/:id" component={ChessBoard} />
               <PrivateRoute path="/profile" component={Account} />
-              <PrivateRoute path="/historyboard/:user" component={HistoryBoard} />
+              <PrivateRoute path="/historyboard" component={HistoryBoard} />
 
               <Route path="/404" component={PageNotFound} />
               <Redirect from='*' to='/404' />
