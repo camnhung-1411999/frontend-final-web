@@ -119,7 +119,6 @@ const ChatOnline = ({ idroom, className, ...rest }) => {
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
-      <h1>{isSend+''}</h1>
       <CardHeader title={player} />
       <Divider />
       <CardContent>

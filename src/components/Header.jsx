@@ -14,7 +14,7 @@ import {Menu as MenuIcon,Search as SearchIcon, AccountCircle, MoreVert as MoreIc
 import { useHistory } from "react-router-dom";
 import { userActions } from "../actions";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-
+import { roomActions } from "../actions";
 import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -84,6 +84,7 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [idroom, setIdroom] = React.useState();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -118,6 +119,10 @@ function Header() {
     dispatch(userActions.logout(from));
   };
 
+  const handleJoin = () => {
+    console.log(idroom)
+    dispatch(roomActions.joinRoom(idroom));
+  }
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -192,13 +197,31 @@ function Header() {
             </div>
             <InputBase
               placeholder="Search…"
+              value={idroom}
+              onChange={(e) => setIdroom(e.target.value)}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
             />
+            
           </div>
+          <button style={{
+                width: "5em",
+                height: "2em",
+                color: "rgb(133, 182, 247)",
+                marginRight: 'auto',
+                border: '1px solid ',
+                backgroundColor:'rgb(133, 182, 247)',
+                color: "#fff",
+                borderRadius:'0.1em'
+              }} className="custom"
+              onClick={handleJoin}
+              >
+
+                Join
+              </button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton
