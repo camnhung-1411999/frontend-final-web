@@ -1,11 +1,12 @@
 import { roomConstants } from "../constants/room.constant";
 import RoomService from "../services/room.service";
 import { alertActions } from "./";
-import { history } from "../helpers";
+import { history, socket } from "../helpers";
+
 
 export const roomActions = {
-    create,
-    listRooms,
+  create,
+  listRooms,
 };
 
 function create(from) {
@@ -15,7 +16,7 @@ function create(from) {
     RoomService.createRoom().then(
       (room) => {
         dispatch(success(room.idroom));
-        window.location.reload();
+        socket.emit('joinRoom', room.idroom)
         history.push(`/room/${room.idroom}`);
       },
       (error) => {
@@ -36,29 +37,29 @@ function create(from) {
   }
 }
 
-  function listRooms() {
-    return (dispatch) => {
-      dispatch(request());
-  
-      RoomService.listRoom().then(
-        (rooms) => {
-          console.log('rooms:',rooms);
-          dispatch(success(rooms));
-        },
-        (error) => {
-          dispatch(failure(error.toString()));
-          dispatch(alertActions.error(error.toString()));
-        }
-      );
-    };
-  
-    function request(rooms) {
-      return { type: roomConstants.GET_REQUEST, rooms };
-    }
-    function success(rooms) {
-      return { type: roomConstants.GET_SUCCESS, rooms };
-    }
-    function failure(errors) {
-      return { type: roomConstants.GET_FAILURE, errors };
-    }
+function listRooms() {
+  return (dispatch) => {
+    dispatch(request());
+
+    RoomService.listRoom().then(
+      (rooms) => {
+        console.log('rooms:', rooms);
+        dispatch(success(rooms));
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+
+  function request(rooms) {
+    return { type: roomConstants.GET_REQUEST, rooms };
+  }
+  function success(rooms) {
+    return { type: roomConstants.GET_SUCCESS, rooms };
+  }
+  function failure(errors) {
+    return { type: roomConstants.GET_FAILURE, errors };
+  }
 }
