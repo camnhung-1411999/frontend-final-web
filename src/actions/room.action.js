@@ -1,12 +1,14 @@
 import { roomConstants } from "../constants/room.constant";
 import RoomService from "../services/room.service";
 import { alertActions } from "./";
-import { history } from "../helpers";
+import { history, socket } from "../helpers";
+
 
 export const roomActions = {
   create,
   listRooms,
   listMsg,
+  joinRoom,
 };
 
 function create(from) {
@@ -15,9 +17,36 @@ function create(from) {
 
     RoomService.createRoom().then(
       (room) => {
-        dispatch(success(room.idroom));
-        window.location.reload();
-        history.push(`/room/${room.idroom}`);
+        dispatch(success(room));
+        history.push(`/board/${room.data.idroom}`);
+      },
+      (error) => {
+        dispatch(failure(error.toString()));
+        dispatch(alertActions.error(error.toString()));
+      }
+    );
+  };
+
+  function request(room) {
+    return { type: roomConstants.CREATE_REQUEST, room };
+  }
+  function success(room) {
+    return { type: roomConstants.CREATE_SUCCESS, room };
+  }
+  function failure(error) {
+    return { type: roomConstants.CREATE_FAILURE, error };
+  }
+}
+
+function joinRoom(id) {
+  return (dispatch) => {
+    dispatch(request());
+
+    RoomService.joinRoom(id).then(
+      async (room) => {
+        dispatch(success(room));
+        await socket.emit('joinRoom', id)
+        history.push(`/board/${id}`);
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -43,7 +72,6 @@ function listRooms() {
 
     RoomService.listRoom().then(
       (rooms) => {
-        console.log('rooms:', rooms);
         dispatch(success(rooms));
       },
       (error) => {

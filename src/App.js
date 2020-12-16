@@ -23,7 +23,7 @@ function App() {
               <NormalRoute path="/signup" component={Home} />
               <NormalRoute path="/admin" component={Admin} />
               <PrivateRoute path="/home" component={DashBoard} />
-              <PrivateRoute path="/room/:id" component={ChessBoard} />
+              <PrivateRoute path="/board/:id" component={ChessBoard} />
               <PrivateRoute path="/profile" component={Account} />
 
               <Route path="/404" component={PageNotFound} />

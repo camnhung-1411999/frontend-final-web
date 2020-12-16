@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
 }));
-function TabChat() {
+function TabChat({id}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -61,7 +61,7 @@ function TabChat() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-       <ChatOnline/>
+       <ChatOnline idroom ={id}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Followers

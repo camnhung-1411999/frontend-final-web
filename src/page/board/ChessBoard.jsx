@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ChessBoard = () => {
+const ChessBoard = ({match}) => {
   const classes = useStyles();
 
   return (
@@ -58,7 +58,7 @@ const ChessBoard = () => {
             xl={3}
             xs={12}
           >
-            <TabChat />
+            <TabChat id={match.params.id} />
           </Grid>
          
         </Grid>

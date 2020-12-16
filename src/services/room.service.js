@@ -9,26 +9,25 @@ const API_URL = urlConstants.API_URL_ROOM;
 class RoomService {
 
     createRoom(data) {
-        console.log('vooooooo');
-        return axios.post(API_URL, {
-            player: data,
-        }, {
+        return axios.post(API_URL+'create', null, {
             headers: authHeader(),
         });
     }
 
-    joinRoom(input) {
-        return axios.put(API_URL + `join/${input.idroom}`, {
-            player: input.player,
-        }, {
+    joinRoom(id) {
+        return axios.put(API_URL + `join/${id}`, null, {
+            headers: authHeader(),
+        });
+    }
+
+    getRoom(id) {
+        return axios.get(API_URL + `${id}`, {
             headers: authHeader(),
         });
     }
 
     outRoom(input) {
-        return axios.put(API_URL + `out/${input.idroom}`, {
-            player: input.player,
-        }, {
+        return axios.put(API_URL + `out/${input.idroom}`, null, {
             headers: authHeader(),
         });
     }

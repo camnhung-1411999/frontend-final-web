@@ -67,15 +67,13 @@ class UserService {
   }
 
   getUser() {
-    return axios.get(API_URL + "getUser", {
+    return axios.get(API_URL,{
       headers: authHeader(),
     });
   }
 
   getUserOnline() {
-    return axios.get(API_URL + "online", {
-      headers: authHeader(),
-    })
+    return axios.get(API_URL + "online");
   }
 
   getCurrentUser() {

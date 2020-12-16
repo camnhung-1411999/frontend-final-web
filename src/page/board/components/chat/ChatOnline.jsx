@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -18,6 +18,8 @@ import MoodIcon from "@material-ui/icons/Mood";
 import BoxMessage from "./BoxMessage";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
+import UserService from '../../../../services/user.service';
+import RoomService from '../../../../services/room.service';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,20 +27,35 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ChatOnline = ({ className, ...rest }) => {
+const ChatOnline = ({ idroom, className, ...rest}) => {
   const classes = useStyles();
   const [flag, setFlag] = useState(true);
   const [message, setMessage] = useState('');
+  const [player, setPlayer] = useState();
+
   const  addEmoji = e => {
     // console.log(e.native);
     let emoji = e.native;
     //setmessage
   };
-
-
+  useEffect(() => {
+    const iuser = async () => {
+      await UserService.getUser().then(async (res) => {
+        await RoomService.getRoom(idroom).then((room) => {
+          if (room.data.player1 !== res.data.user) {
+            setPlayer(room.data.player1)
+          }
+          else {
+            setPlayer(room.data.player2)
+          }
+        })  
+      });
+    }
+    iuser();
+  }, [])
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
-      <CardHeader title="Username" />
+      <CardHeader title={player} />
       <Divider />
       <CardContent>
         <Box
