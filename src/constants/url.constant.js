@@ -5,4 +5,5 @@ export const urlConstants = {
     SOCKET_SERVER_URL : "http://localhost:8080",
     API_URL_USER : "http://localhost:8000/users/",
     API_URL_ROOM : "http://localhost:8000/rooms/",
+    API_URL_HISTORY : "http://localhost:8000/history/",
 };
