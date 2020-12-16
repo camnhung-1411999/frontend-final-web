@@ -29,6 +29,18 @@ export default function rooms(state = {}, action) {
             return {
                 error: action.error
             };
+        case roomConstants.MESSAGE_REQUEST:
+            return {
+                loading: true,
+            };
+        case roomConstants.MESSAGE_SUCCESS:
+            return {
+                msgs: action.messages,
+            };
+        case roomConstants.MESSAGE_FAILURE:
+            return {
+                error: action.error
+            };
         default:
             return state
     }

@@ -28,6 +28,7 @@ const useStyles = makeStyles(() => ({
 const ChatOnline = ({ className, ...rest }) => {
   const classes = useStyles();
   const [flag, setFlag] = useState(true);
+  const [message, setMessage] = useState('');
   const  addEmoji = e => {
     // console.log(e.native);
     let emoji = e.native;
@@ -63,7 +64,9 @@ const ChatOnline = ({ className, ...rest }) => {
                 multiline
                 rows={5}
                 variant="outlined"
+                value={message}
                 style={{ width: "100%" }}
+                onChange={(e)=>setMessage(e.target.value)}
               />
             </Grid>
             <Grid item xs={3}>
