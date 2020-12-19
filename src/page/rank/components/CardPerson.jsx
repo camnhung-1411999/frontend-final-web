@@ -2,19 +2,16 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { Card, Avatar, CardHeader, CardMedia, CardContent, CardActions } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import image from "../../../assets/image/image.jpg"
 
 const useStyles = makeStyles((theme) => ({
     root: {
         width: "100%",
         height: "100%",
         // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+       
     },
     media: {
         height: 0,
@@ -65,12 +62,12 @@ export default function CardPerson(props) {
     };
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root, props.styleCss} >
             <CardContent style={{ padding: 0 }}>
                 <Typography  className={classes.cardHeader} variant="body2" component="h2">
                     Minh
                 </Typography>
-                <Avatar className={classes.large} src={props.image} />
+                <Avatar className={classes.large} src={image} />
                 <Typography  className={classes.cardHeader} variant="body2" component="h2">
                     5 cups
                 </Typography>
