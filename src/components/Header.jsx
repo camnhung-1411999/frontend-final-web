@@ -1,9 +1,9 @@
 import React from "react";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Dropdown from "./Dropdown";
 import {
+  AppBar,
+  Toolbar,
   IconButton,
   Typography,
   InputBase,
@@ -11,7 +11,7 @@ import {
   Menu,
   Button,
 } from "@material-ui/core";
-import {Menu as MenuIcon,Search as SearchIcon, AccountCircle, MoreVert as MoreIcon  } from "@material-ui/icons";
+import {Menu as MenuIcon,Search as SearchIcon, AccountCircle, MoreVert as MoreIcon, PlayForWork as PlayForWorkIcon  } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { userActions } from "../actions";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -67,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       width: "20ch",
     },
+    button: {
+    margin: theme.spacing(1),
+  },
   },
   sectionDesktop: {
     display: "none",
@@ -208,21 +211,15 @@ function Header() {
             />
             
           </div>
-          <button style={{
-                width: "5em",
-                height: "2em",
-                color: "rgb(133, 182, 247)",
-                marginRight: 'auto',
-                border: '1px solid ',
-                backgroundColor:'rgb(133, 182, 247)',
-                color: "#fff",
-                borderRadius:'0.1em'
-              }} className="custom"
-              onClick={handleJoin}
-              >
-
-                Join
-              </button>
+          <Button
+            variant="contained"
+            color="default"
+            className={classes.button}
+            onClick={handleJoin}
+            startIcon={<PlayForWorkIcon />}
+          >
+            Join
+          </Button>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
       
