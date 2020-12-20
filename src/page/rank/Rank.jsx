@@ -20,11 +20,15 @@ const useStyles = makeStyles((theme) => ({
         height: 240,
         width: 200,
         margin: '0 auto',
-        border: "5px solid #eb77c8",
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
         '@media (max-width: 780px)' : {
             height: 140,
             width: 100,
-            border: "3px solid #eb77c8"
+            // border: "3px solid #eb77c8"
           }
         
     },
@@ -33,11 +37,15 @@ const useStyles = makeStyles((theme) => ({
         width: 200,
         margin: '0 auto',
         marginTop: 20, 
-        border: "5px solid #4ad4e7",
+        background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+        color: 'white',
         '@media (max-width: 780px)' : {
             height: 120,
             width: 100,
-            border: "3px solid #4ad4e7",
+            // border: "3px solid #4ad4e7",
 
           }
         
@@ -46,13 +54,17 @@ const useStyles = makeStyles((theme) => ({
         height: 200,
         width: 200,
         margin: '0 auto',
-        marginTop: 40 , 
-        border: "5px solid #a287fc",
+        marginTop: 30 , 
+        background: 'linear-gradient(45deg, #008793 30%, #00bf72 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(0, 191, 114, .3)',
+        color: 'white',
         '@media (max-width: 780px)' : {
-            marginTop: 30 , 
+            marginTop: 20 , 
             height: 110,
             width: 100,
-            border: "3px solid #a287fc"
+            // border: "3px solid #a287fc"
           }
         
     },
@@ -93,7 +105,7 @@ const Rank = () => {
                             xs={4}
                         >
                             <Paper className={classes.paper1}>
-                                <CardPerson/>
+                                <CardPerson styleCss = {classes.paper1}/>
                             </Paper>
                         </Grid>
                         <Grid
@@ -103,8 +115,8 @@ const Rank = () => {
                             xl={4}
                             xs={4}
                         >
-                            <Paper className={classes.paper} style={{}} >
-                                <CardPerson/>
+                            <Paper className={classes.paper} >
+                                <CardPerson styleCss = {classes.paper}/>
                             </Paper>
                         </Grid>
                         <Grid
@@ -115,7 +127,7 @@ const Rank = () => {
                             xs={4}
                         >
                             <Paper className={classes.paper2} >
-                                <CardPerson/>
+                                <CardPerson styleCss = {classes.paper2}/>
                             </Paper>
                         </Grid>
                     </Grid>

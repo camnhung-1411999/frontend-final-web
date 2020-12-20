@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-// import moment from 'moment';
+import image from "../../../assets/image/image.jpg"
+
 import {
   Avatar,
   Box,
@@ -10,11 +11,17 @@ import {
   CardContent,
   Divider,
   Typography,
-  makeStyles
+  makeStyles,
+  Button,
+  IconButton,
+  Badge
 } from '@material-ui/core';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
+
+import {UserService} from "../../../services";
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
+  avatar: '/static/media/image.8131c036.jpg',
   city: 'Los Angeles',
   country: 'USA',
   jobTitle: 'Senior Developer',
@@ -27,11 +34,23 @@ const useStyles = makeStyles(() => ({
   avatar: {
     height: 100,
     width: 100
-  }
+  },
+  input: {
+    display: 'none',
+  },
 }));
 
 const Profile = ({ className, ...rest }) => {
   const classes = useStyles();
+  const [avatar, setAvatar] = useState();
+
+  const handelAvatar = async (file) => {
+    const formData = new FormData();
+    formData.append('myImage', file, file.name);
+    await UserService.uploadAvatar(formData).then((reponse) =>{
+      setAvatar(reponse.data.file);
+    })
+  }
 
   return (
     <Card
@@ -44,10 +63,28 @@ const Profile = ({ className, ...rest }) => {
           display="flex"
           flexDirection="column"
         >
-          <Avatar
-            className={classes.avatar}
-            src={user.avatar}
-          />
+          <Badge
+            overlap="circle"
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            badgeContent={
+              <>
+                <input accept="image/*" className={classes.input} id="icon-button-file" type="file" onChange={(e) => handelAvatar(e.target.files[0])}/>
+                <label htmlFor="icon-button-file">
+                  <IconButton color="secondary" aria-label="upload picture" component="span">
+                    <PhotoCamera />
+                  </IconButton>
+                </label>
+              </>
+            }
+          >
+            <Avatar
+              className={classes.avatar}
+              src={user.avatar}
+            />
+          </Badge>
           <Typography
             color="textPrimary"
             gutterBottom
@@ -55,24 +92,15 @@ const Profile = ({ className, ...rest }) => {
           >
             {user.name}
           </Typography>
-          <Typography
+          {/* <Typography
             color="textSecondary"
             variant="body1"
           >
             {`${user.city} ${user.country}`}
-          </Typography>
+          </Typography> */}
         </Box>
       </CardContent>
-      {/* <Divider />
-      <CardActions>
-        <Button
-          color="primary"
-          fullWidth
-          variant="text"
-        >
-          Upload picture
-        </Button>
-      </CardActions> */}
+      <Divider />
     </Card>
   );
 };
@@ -81,4 +109,4 @@ Profile.propTypes = {
   className: PropTypes.string
 };
 
-export {Profile};
+export { Profile };

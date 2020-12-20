@@ -24,7 +24,7 @@ function App() {
               <NormalRoute path="/login" component={Home} />
               <NormalRoute path="/signup" component={Home} />
               <PrivateRoute path="/admin" component={Admin} />
-              <PrivateRoute path="/rank" component={Rank} />
+              <Route path="/rank" component={Rank} />
               <PrivateRoute path="/home" component={DashBoard} />
               <PrivateRoute path="/board/:id" component={ChessBoard} />
               <PrivateRoute path="/profile" component={Account} />

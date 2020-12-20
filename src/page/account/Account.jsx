@@ -15,7 +15,7 @@ const Account = () => {
   const classes = useStyles();
 
   return (
-    <Page className={classes.root} title="Account">
+    <Page className={classes.root} title="Profile">
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item lg={4} md={6} xs={12}>
