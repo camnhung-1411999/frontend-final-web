@@ -1,6 +1,6 @@
 import "./App.css";
 import Home from "./page/auth/Home";
-import Admin from "./page/admin/Admin";
+import {Admin} from "./page/admin";
 import { Router, Switch, Route } from "react-router-dom";
 // import Profile from "./page/Profile";
 import {DashBoard} from "./page/dashboard";
