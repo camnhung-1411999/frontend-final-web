@@ -56,14 +56,14 @@ export default function TableList() {
           <CardBody>
             <Table
               tableHeaderColor="primary"
-              tableHead={["Name", "Username", "Role", "Status"]}
+              tableHead={["Username", "Name", "TotalMatch", "Status"]}
               tableData={[
-                ["Dakota Rice", "Niger111", "user", "Online"],
-                ["Minerva Hooper", "Curaçao111", "user", "Online"],
-                ["Sage Rodriguez", "Netherlands111", "user", "Offline"],
-                ["Philip Chaney", "aw11", "user", "Online"],
-                ["Doris Greene", "Malawi11", "user", "Offline"],
-                ["Mason Porter", "Chile11", "user", "Offline"]
+                ["Dakota Rice", "Niger111", "123", "Online"],
+                ["Minerva Hooper", "Curaçao111", "789", "Online"],
+                ["Sage Rodriguez", "Netherlands111", "4321", "Offline"],
+                ["Philip Chaney", "aw11", "1234", "Online"],
+                ["Doris Greene", "Malawi11", "987", "Offline"],
+                ["Mason Porter", "Chile11", "4567", "Offline"]
               ]}
             />
           </CardBody>
