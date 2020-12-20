@@ -88,6 +88,7 @@ function SignIn() {
   };
   const responseFacebook = async (response) => {
     if (response) {
+      console.log(response, '.........')
       const data = {
         user: response.email,
         name: response.name,
@@ -157,7 +158,7 @@ function SignIn() {
           <FacebookLogin
             appId="190986092743852"
             autoLoad={false}
-            fields="name,username,picture"
+            fields="name,email,picture"
             callback={responseFacebook}
             version="1.0"
             cssClass="btnFacebook"

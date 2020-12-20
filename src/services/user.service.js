@@ -1,7 +1,7 @@
 import axios from "axios";
 import { authHeader } from '../helpers';
 import { urlConstants } from '../constants'
-import jwt from "jwt-decode";
+// import jwt from "jwt-decode";
 
 const API_URL = urlConstants.API_URL_USER;
 
@@ -26,7 +26,7 @@ class UserService {
         name: input.name,
         role: input.role,
         status: false,
-      }).then((response) => {
+      }).then(async (response) => {
         if (response.data) {
           localStorage.setItem("accessToken", JSON.stringify(response.data.accessToken));
           localStorage.setItem("refreshToken", JSON.stringify(response.data.refreshToken));
@@ -80,8 +80,9 @@ class UserService {
     const token = localStorage.getItem('accessToken');
     if(token)
     {
-      const {user} = jwt(token);
-      return user;
+      return axios.get(API_URL,{
+        headers: authHeader(),
+      });
     }
     console.log('token',token);
     return token;

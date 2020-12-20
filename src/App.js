@@ -3,7 +3,7 @@ import Home from "./page/auth/Home";
 import Admin from "./page/admin/Admin";
 import { Router, Switch, Route } from "react-router-dom";
 // import Profile from "./page/Profile";
-import {DashBoard} from "./page/dashboard";
+import {DashBoard} from "./page/dashBoard";
 import {PrivateRoute, NormalRoute} from './components';
 import React from "react";
 import PageNotFound from "./page/error/PageNotFound";
