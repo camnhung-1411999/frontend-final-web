@@ -93,8 +93,17 @@ const  Admin = ({ ...rest }) => {
     };	
   }, [mainPanel]);	
   return (	
-
-	
+    <div className={classes.wrapper}>	
+      <Sidebar	
+        routes={routes}	
+        logoText={"ADMIN"}	
+        logo={logo}	
+        image={image}	
+        handleDrawerToggle={handleDrawerToggle}	
+        open={mobileOpen}	
+        color={color}	
+        {...rest}	
+      />	
       <div className={classes.mainPanel} ref={mainPanel}>	
         <Navbar	
           routes={routes}	
@@ -119,7 +128,7 @@ const  Admin = ({ ...rest }) => {
           fixedClasses={fixedClasses}	
         />	
       </div>	
-
+    </div>	
   );	
 }
 export {Admin}
