@@ -4,7 +4,7 @@ import TableList from "./ListUser/TableList";
 
 const dashboardRoutes = [	
   {	
-    path: "/table",	
+    path: "/",	
     name: "User manage",	
     rtlName: "قائمة الجدول",	
     icon: Person,	
