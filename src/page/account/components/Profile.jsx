@@ -47,7 +47,7 @@ const Profile = ({ className, ...rest }) => {
   const handelAvatar = async (file) => {
     const formData = new FormData();
     formData.append('myImage', file, file.name);
-    await UserService.uploadAvatar(formData).then((reponse) =>{
+    await UserService.updateAvatar(formData).then((reponse) =>{
       setAvatar(reponse.data.file);
     })
   }
