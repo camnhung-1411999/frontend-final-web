@@ -13,7 +13,6 @@ import { red } from "@material-ui/core/colors";
 import { ExitToAppRounded } from "@material-ui/icons";
 import { roomActions } from "../../../actions";
 import { useDispatch } from "react-redux";
-import { history } from "../../../helpers";
 
 const useStyles = makeStyles((theme) => ({
   root: {

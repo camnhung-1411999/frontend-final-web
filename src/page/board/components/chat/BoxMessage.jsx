@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -13,7 +13,6 @@ import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import Avatar from "@material-ui/core/Avatar";
 import FaceIcon from "@material-ui/icons/Face";
-import { socket } from '../../../../helpers';
 
 const useStyles = makeStyles(() => ({
   root: {

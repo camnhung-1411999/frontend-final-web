@@ -56,13 +56,15 @@ class UserService {
 
   register(input) {
     return axios
-      .post(API_URL + "signup", {
-        user: input.user,
-        password: input.password,
-        name: input.name,
-        role: input.role,
-        status: false,
-      })
+      .post(API_URL + "signup", input)
+      .then((response) => {
+        return response.data;
+      });
+  }
+
+  subRegiser(data){
+    return axios
+      .post(API_URL + "subsignup", data)
       .then((response) => {
         return response.data;
       });

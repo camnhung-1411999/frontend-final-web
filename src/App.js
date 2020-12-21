@@ -13,7 +13,7 @@ import {Account} from "./page/account"
 import {HistoryBoard} from "./page/historyboard";
 import {Rank} from "./page/rank"
 import { history } from './helpers';
-
+import Confirm from './components/Confirm';
 function App() {
   
   return (
@@ -22,6 +22,7 @@ function App() {
             <Switch>
               <NormalRoute exact path="/" component={Home} />
               <NormalRoute path="/login" component={Home} />
+              <NormalRoute path="/checkmail" component={Confirm} />
               <NormalRoute path="/signup" component={Home} />
               <PrivateRoute path="/admin" component={Admin} />
               <Route path="/rank" component={Rank} />

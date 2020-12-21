@@ -21,10 +21,10 @@ const useRoom = (roomId) => {
       const incomingBoard = data.board.map((item) =>
         {
           console.log("item", item)
-          console.log("item", item == "X")
+          console.log("item", item === "X")
 
-          if(item == "X") return "O" ;
-          if(item == "O") return "X" ;
+          if(item === "X") return "O" ;
+          if(item === "O") return "X" ;
         }
       )
       setNext(true);

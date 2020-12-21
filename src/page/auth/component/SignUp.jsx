@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, CssBaseline, TextField, Grid, Typography, Container, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
 import {useLocation} from "react-router-dom";
 import { useDispatch } from 'react-redux';
+import {socket} from '../../../helpers';
 
 import { userActions } from '../../../actions';
 
@@ -42,6 +43,12 @@ function SignUp() {
   const location = useLocation()
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    socket.on('success', () => {
+      console.log('okkkkkk');
+      window.alert('CONFIRM EMAIL SUCCESS')
+    })
+  }, [])
 
   function handelPassword() {
     if (password !== repeat_password) {
@@ -54,7 +61,8 @@ function SignUp() {
   async function handleButton() {
     if (handelPassword()) {
       const data = {
-        name: (firstName + " " + lastName).trim(),
+        firstName:firstName,
+        lastName:lastName,
         user: username,
         role: 'user',
         password,

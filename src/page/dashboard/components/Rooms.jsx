@@ -3,21 +3,17 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import Board from "./Board";
 import {
-  Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
   Divider,
   useTheme,
   makeStyles,
-  colors,
   IconButton,
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import {roomActions} from '../../../actions';
 import {useDispatch, useSelector} from 'react-redux';
-import { RoomActions } from '../../../actions'
 
 const useStyles = makeStyles(() => ({
   root: {

@@ -19,7 +19,6 @@ import FacebookLogin from "react-facebook-login";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../actions";
-
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -39,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -51,6 +51,8 @@ function SignIn() {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
+
+ 
 
   function handleButton() {
     const data = {
