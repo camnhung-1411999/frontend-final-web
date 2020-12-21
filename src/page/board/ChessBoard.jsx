@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import {Page, Online} from '../../components';
 import {Game, TabChat} from './components';
+import Player from './components/player/Player';
 
 
 
@@ -39,7 +40,7 @@ const ChessBoard = ({match}) => {
             xl={3}
             xs={12}
           >
-            {/* <TotalProfit /> */}
+            <Player/>
           </Grid>
           <Grid
             item

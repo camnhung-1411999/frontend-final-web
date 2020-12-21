@@ -5,7 +5,7 @@ const JOIN = "joinRoom";
 
 const useRoom = (roomId) => {
   const [messages, setMessages] = useState([]);
-  const [boards, setBoards] = useState(Array(9 * 9).fill(null))
+  const [boards, setBoards] = useState(Array(20 * 20).fill(null))
   const [isNext, setNext] = useState(true);
 
   const socketRef = useRef();

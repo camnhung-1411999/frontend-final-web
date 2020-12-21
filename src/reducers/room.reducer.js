@@ -8,7 +8,7 @@ export default function rooms(state = {}, action) {
             };
         case roomConstants.CREATE_SUCCESS:
             return {
-                squares: Array(9*9).fill(null),
+                squares: Array(20*20).fill(null),
             };
         case roomConstants.CREATE_FAILURE:
             // add 'deleting:true' property to user being deleted
