@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -12,7 +12,7 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
-
+import { useSelector } from 'react-redux';
 const states = [
   {
     value: 'alabama',
@@ -34,20 +34,10 @@ const useStyles = makeStyles(() => ({
 
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
+  const user = useSelector(state => state.users.profile); 
 
   const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
+  
   };
 
   return (
@@ -79,7 +69,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={user?.name.split(' ')[0] + ''}
                 variant="outlined"
               />
             </Grid>
@@ -94,7 +84,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={values.lastName}
+                value={user?.name.split(' ')[1] + ''}
                 variant="outlined"
               />
             </Grid>
@@ -110,7 +100,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 // onChange={handleChange}
                 disabled ={true}
                 required
-                value={values.email}
+                value={user?.user + ''}
                 variant="outlined"
               />
             </Grid>

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {Box,  Container, Grid, makeStyles } from "@material-ui/core";
 import {Page} from "../../components";
 import {Profile, ProfileDetails, Password} from "./components";
+import { useDispatch, useSelector } from 'react-redux';
+import { userActions } from '../../actions';
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -13,7 +15,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Account = () => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.users.iprofile)
+  // console.log(user);
+  useEffect(()=> {
+    dispatch(userActions.profile());
+  }, [user]);
+  
   return (
     <Page className={classes.root} title="Profile">
       <Container maxWidth="lg">

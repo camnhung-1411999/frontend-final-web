@@ -19,6 +19,7 @@ import FacebookLogin from "react-facebook-login";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../actions";
+import ForgotPwd from "./ForgotPwd";
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -90,7 +91,6 @@ function SignIn() {
   };
   const responseFacebook = async (response) => {
     if (response) {
-      console.log(response, '.........')
       const data = {
         user: response.email,
         name: response.name,
@@ -148,6 +148,10 @@ function SignIn() {
           >
             Login
           </Button>
+
+          
+        </form>
+        <ForgotPwd/>
           <GoogleLogin
             clientId="928943518451-hh0kebio5mu156lkiv7t00ims91k8eek.apps.googleusercontent.com"
             className="btnGoogle"
@@ -175,7 +179,6 @@ function SignIn() {
               />
             }
           ></FacebookLogin>
-        </form>
         <Snackbar
           open={open}
           autoHideDuration={2000}

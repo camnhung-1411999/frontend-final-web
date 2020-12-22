@@ -62,6 +62,9 @@ class UserService {
       });
   }
 
+  resetPassword(input){
+    return axios.post(API_URL + "reset", {user: input});
+  }
   subRegiser(data){
     return axios
       .post(API_URL + "subsignup", data)
@@ -70,20 +73,19 @@ class UserService {
       });
   }
 
-  update(display_name, old_password, new_password) {
-    return axios.post(
-      API_URL + "update",
-      {
-        display_name,
-        old_password,
-        new_password,
-      },
+  async update(data) {
+    return await axios.put(
+      API_URL,
+      data,
       {
         headers: authHeader(),
       }
     );
   }
 
+  updatePwd(data) {
+    return axios.put(API_URL + 'resetpassword', data)
+  }
   getUser() {
     return axios.get(API_URL, {
       headers: authHeader(),

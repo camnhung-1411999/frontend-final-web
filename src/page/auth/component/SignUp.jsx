@@ -5,7 +5,11 @@ import MuiAlert from "@material-ui/lab/Alert";
 import {useLocation} from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import {socket} from '../../../helpers';
-
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import { userActions } from '../../../actions';
 
 function Alert(props) {
@@ -39,6 +43,7 @@ function SignUp() {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [open, setOpen] = useState(false);
+  const [iopen, setIOpen] = useState(false);
   const [status, setStatus] = useState();
   const location = useLocation()
   const dispatch = useDispatch();
@@ -71,6 +76,7 @@ function SignUp() {
       const {from} = location.state || { from: { pathname: "/home" } };
 
       dispatch(userActions.register(data, from));
+      setIOpen(true);
     } else setOpen(true);
   }
   const handleClose = (event, reason) => {
@@ -79,7 +85,9 @@ function SignUp() {
     }
     setOpen(false);
   };
-
+  const handleCloseBox = () => {
+    setIOpen(false);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -176,6 +184,24 @@ function SignUp() {
           </Alert>
         </Snackbar>
       </div>
+      <Dialog
+        open={iopen}
+        onClose={handleCloseBox}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">GREATE!!</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            We sent a mail for you. Please check your email to finish create account and join with us !!
+          </DialogContentText>
+          
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseBox} color="primary">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

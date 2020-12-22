@@ -11,6 +11,8 @@ export const userActions = {
   getUserOnline,
   delete: _delete,
   userOnline,
+  profile,
+  update,
   userOffline
 };
 
@@ -75,7 +77,7 @@ function logout(from) {
   return async (dispatch) => {
     await UserService.logout().then(async (reponsive) => {
       const user = reponsive.data;
-       socket.emit('offline', {
+      socket.emit('offline', {
         body: ({ username: user.user, name: user.name }),
         senderId: socket.id,
       });
@@ -109,6 +111,52 @@ function register(iuser) {
   }
   function failure(error) {
     return { type: userConstants.REGISTER_FAILURE, error };
+  }
+}
+
+function profile() {
+  return (dispatch) => {
+    dispatch(request());
+    UserService.getCurrentUser().then(
+      (user) => dispatch(success(user.data)),
+      (error) => dispatch(failure(error.toString()))
+    );
+  };
+
+  function request() {
+    return { type: userConstants.PROFILE_REQUEST };
+  }
+  function success(user) {
+    return { type: userConstants.PROFILE_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: userConstants.PROFILE_FAILURE, error };
+  }
+}
+
+function update(data) {
+  return (dispatch) => {
+
+    dispatch(request());
+    UserService.update(data).then(
+      (user) => {
+        dispatch(success(user.data));
+      },
+      (error) => {
+        dispatch(failure(error.toString()))
+      }
+    );
+
+  };
+
+  function request() {
+    return { type: userConstants.UPDATE_REQUEST };
+  }
+  function success(user) {
+    return { type: userConstants.UPDATE_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: userConstants.UPDATE_FAILURE, error };
   }
 }
 

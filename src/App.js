@@ -14,6 +14,7 @@ import {HistoryBoard} from "./page/historyboard";
 import {Rank} from "./page/rank"
 import { history } from './helpers';
 import Confirm from './components/Confirm';
+import {ResetPassword} from './components/ResetPassword'
 function App() {
   
   return (
@@ -23,6 +24,7 @@ function App() {
               <NormalRoute exact path="/" component={Home} />
               <NormalRoute path="/login" component={Home} />
               <NormalRoute path="/checkmail" component={Confirm} />
+              <NormalRoute path="/resetpassword/:user" component={ResetPassword} />
               <NormalRoute path="/signup" component={Home} />
               <PrivateRoute path="/admin" component={Admin} />
               <Route path="/rank" component={Rank} />

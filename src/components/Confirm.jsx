@@ -1,7 +1,8 @@
 import React from 'react'
 import queryString from 'query-string';
 import {UserService} from '../services';
-import {socket} from '../helpers'
+import {socket} from '../helpers';
+import { urlConstants } from '../constants'
 export default function Confirm({location}) {
     const value=queryString.parse(location.search);
     const data = {
