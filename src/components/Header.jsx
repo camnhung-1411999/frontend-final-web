@@ -11,7 +11,13 @@ import {
   Menu,
   Button,
 } from "@material-ui/core";
-import {Menu as MenuIcon,Search as SearchIcon, AccountCircle, MoreVert as MoreIcon, PlayForWork as PlayForWorkIcon  } from "@material-ui/icons";
+import {
+  Menu as MenuIcon,
+  Search as SearchIcon,
+  AccountCircle,
+  MoreVert as MoreIcon,
+  PlayForWork as PlayForWorkIcon,
+} from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { userActions } from "../actions";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -68,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
       width: "20ch",
     },
     button: {
-    margin: theme.spacing(1),
-  },
+      margin: theme.spacing(1),
+    },
   },
   sectionDesktop: {
     display: "none",
@@ -95,7 +101,6 @@ function Header() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-
   const handelProfile = (event) => {
     return history.push("/profile");
   };
@@ -113,7 +118,6 @@ function Header() {
     handleMobileMenuClose();
   };
 
-
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
@@ -124,9 +128,9 @@ function Header() {
   };
 
   const handleJoin = () => {
-    console.log(idroom)
+    console.log(idroom);
     dispatch(roomActions.joinRoom(idroom));
-  }
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -195,34 +199,9 @@ function Header() {
           <Typography className={classes.title} variant="h6" noWrap>
             Caroro
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              value={idroom}
-              onChange={(e) => setIdroom(e.target.value)}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-            
-          </div>
-          <Button
-            variant="contained"
-            color="default"
-            className={classes.button}
-            onClick={handleJoin}
-            startIcon={<PlayForWorkIcon />}
-          >
-            Join
-          </Button>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-      
             <Dropdown />
             <Button color="inherit" onClick={handleLogout}>
               Logout

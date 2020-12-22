@@ -120,7 +120,6 @@ function SignIn() {
             autoFocus
             onChange={(e) => setUsername(e.target.value)}
           />
-          ,
           <TextField
             variant="outlined"
             margin="normal"
