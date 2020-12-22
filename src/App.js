@@ -1,6 +1,7 @@
 import "./App.css";
 import Home from "./page/auth/Home";
 import {Admin} from "./page/admin";
+import {AdminBoard} from "./page/adminboard";
 import { Router, Switch, Route } from "react-router-dom";
 // import Profile from "./page/Profile";
 import {DashBoard} from "./page/dashboard";
@@ -26,6 +27,7 @@ function App() {
               <NormalRoute path="/checkmail" component={Confirm} />
               <NormalRoute path="/resetpassword/:user" component={ResetPassword} />
               <NormalRoute path="/signup" component={Home} />
+              <NormalRoute path="/adminboard" component={AdminBoard} />
               <PrivateRoute path="/admin" component={Admin} />
               <Route path="/rank" component={Rank} />
               <PrivateRoute path="/home" component={DashBoard} />
