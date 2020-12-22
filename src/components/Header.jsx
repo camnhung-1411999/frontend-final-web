@@ -6,23 +6,38 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  InputBase,
   MenuItem,
   Menu,
   Button,
+  Link,
 } from "@material-ui/core";
 import {
   Menu as MenuIcon,
-  Search as SearchIcon,
   AccountCircle,
   MoreVert as MoreIcon,
-  PlayForWork as PlayForWorkIcon,
 } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { userActions } from "../actions";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { roomActions } from "../actions";
 import { useDispatch } from "react-redux";
+
+import clsx from "clsx";
+import { useTheme } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
+
+const drawerWidth = 150;
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -37,46 +52,6 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-    button: {
-      margin: theme.spacing(1),
-    },
-  },
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
@@ -89,17 +64,42 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
+  },
 }));
 
 function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [idroom, setIdroom] = React.useState();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();
   const dispatch = useDispatch();
+  const theme = useTheme();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   const handelProfile = (event) => {
     return history.push("/profile");
@@ -127,10 +127,6 @@ function Header() {
     dispatch(userActions.logout(from));
   };
 
-  const handleJoin = () => {
-    console.log(idroom);
-    dispatch(roomActions.joinRoom(idroom));
-  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -192,12 +188,14 @@ function Header() {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
-            onClick={handelHome}
+            onClick={handleDrawerOpen}
           >
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            Caroro
+            <Link style={{ color: "white" }} href="/home">
+              Caroro
+            </Link>
           </Typography>
 
           <div className={classes.grow} />
@@ -220,6 +218,42 @@ function Header() {
           </div>
         </Toolbar>
       </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <Typography className={classes.title} variant="h6" noWrap>
+            <Link style={{ color: "black" }} href="/home">
+              Caroro
+            </Link>
+          </Typography>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          <ListItem button key={"Rank"} onClick={() => history.push("rank")}>
+            <ListItemIcon>
+              <EmojiEventsIcon style={{ color: "orange" }} />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Ranking"}
+              style={{ color: "black", fontSize: 40 }}
+            />
+          </ListItem>
+        </List>
+      </Drawer>
       {renderMobileMenu}
       {renderMenu}
     </div>

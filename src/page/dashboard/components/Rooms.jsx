@@ -79,8 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(1)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
@@ -134,7 +133,6 @@ const Rooms = ({ className, ...rest }) => {
             <>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>
-                  <SearchIcon />
                 </div>
                 <InputBase
                   placeholder="Id"
@@ -146,21 +144,12 @@ const Rooms = ({ className, ...rest }) => {
                   }}
                   inputProps={{ "aria-label": "search" }}
                 />
-                {/* <Button
-                  variant="contained"
-                  color="primary"
-                  // className={classes.button}
-                  // onClick={handleJoin}
-                  startIcon={<PlayForWorkIcon />}
-                >
-                  Join
-                </Button> */}
                 <IconButton
                   style={{ padding: "6px" }}
                   aria-label="new room"
                   // onClick={handleJoin}
                 >
-                  <PlayForWorkIcon style={{ fontSize: 30, color: "white" }} />
+                  <SearchIcon style={{ fontSize: 30, color: "white" }} />
                 </IconButton>
               </div>
 
