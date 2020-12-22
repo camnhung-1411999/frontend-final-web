@@ -95,9 +95,9 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="User name"
-                name="email"
-                // onChange={handleChange}
+                label="Email"
+                name="email"  
+                onChange={handleChange}
                 disabled ={true}
                 required
                 value={user?.user + ''}
@@ -116,7 +116,7 @@ const ProfileDetails = ({ className, ...rest }) => {
             color="primary"
             variant="contained"
           >
-            Save details
+            Update
           </Button>
         </Box>
       </Card>

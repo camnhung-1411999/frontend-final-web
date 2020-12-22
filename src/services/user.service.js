@@ -104,7 +104,6 @@ class UserService {
         headers: authHeader(),
       });
     }
-    console.log("token", token);
     return token;
   }
 

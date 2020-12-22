@@ -4,20 +4,18 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CardActions,
-  IconButton,
-  Typography,
   Divider,
+  Icon
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
-import { ExitToAppRounded } from "@material-ui/icons";
 import { roomActions } from "../../../actions";
 import { useDispatch } from "react-redux";
+import image from "../../../assets/image/pvp.svg"
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 400,
-    minWidth: 300,
+  board_room: {
+    maxWidth: 273,
+    minWidth: 200,
     margin: "10px",
     color: "black",
     border: "1px solid blue",
@@ -56,36 +54,22 @@ export default function Board({ id }) {
 
   function handelCard() {
     dispatch(roomActions.joinRoom(id));
-    // dispatch(roomActions.joinRoom(id, `/board/${id}`))
-    // history.push(`/board/${id}`);
   }
 
   return (
     <>
-      <Card className={classes.root}>
+      <Card className={classes.board_room}>
         <CardHeader
-          style={{ textAlign: "left" }}
-          title={`ID: #${id}`}
+          style={{ textAlign: "left", padding: "8px" }}
+          title={`Room: ${id}`}
           onClick={handelCard}
         />
         <CardContent onClick={handelCard}>
-          <Typography
-            style={{ textAlign: "left" }}
-            component={"div"}
-            className={classes.description}
-          ></Typography>
+          <Icon style ={{ textAlign: 'center',height: "100%", width: "50%", margin: "0 auto"}}>
+            <img style ={{width: "40%", marginLeft: "30%"}} className={classes.imageIcon} src={image}/>
+          </Icon>
         </CardContent>
         <Divider light />
-        <CardActions disableSpacing>
-          <IconButton
-            className={classes.expand}
-            aria-expanded={expanded}
-            aria-label="show more"
-            onClick={() => handelCard()}
-          >
-            <ExitToAppRounded style={{ color: "blue" }} />
-          </IconButton>
-        </CardActions>
       </Card>
     </>
   );
