@@ -21,12 +21,7 @@ const StyledBreadcrumb = withStyles((theme) => ({
   },
 }))(Chip); 
 
-function handleClick(event) {
-  event.preventDefault();
-  console.info('You clicked a breadcrumb.');
-}
-
-function CustomizedBreadcrumbs(props) {
+function Breadcrumb(props) {
   return (
     <Breadcrumbs aria-label="breadcrumb" style ={ props.style ? props.style : {margin: '20px 0px 0px 50px'}}>
       <StyledBreadcrumb
@@ -44,4 +39,4 @@ function CustomizedBreadcrumbs(props) {
   );
 }
 
-export {CustomizedBreadcrumbs};
+export {Breadcrumb};

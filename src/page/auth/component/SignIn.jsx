@@ -10,14 +10,13 @@ import {
   Checkbox,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
 import MuiAlert from "@material-ui/lab/Alert";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GoogleIcon } from "../../../assets/image/google.svg";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userActions } from "../../../actions";
 import ForgotPwd from "./ForgotPwd";
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +47,6 @@ function SignIn() {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
