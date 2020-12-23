@@ -26,7 +26,7 @@ function App() {
               <NormalRoute path="/resetpassword/:user" component={ResetPassword} />
               <NormalRoute path="/signup" component={Home} />
               <NormalRoute path="/adminboard" component={AdminBoard} />
-              <Route path="/rank" component={Rank} />
+              <PrivateRoute path="/rank" component={Rank} />
               <PrivateRoute path="/home" component={DashBoard} />
               <PrivateRoute path="/board/:id" component={ChessBoard} />
               <PrivateRoute path="/profile" component={Account} />

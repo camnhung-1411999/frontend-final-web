@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from "react";
+import clsx from "clsx";
+import PropTypes from "prop-types";
 import {
   Box,
   Button,
@@ -10,35 +10,49 @@ import {
   Divider,
   Grid,
   TextField,
-  makeStyles
-} from '@material-ui/core';
-import { useSelector } from 'react-redux';
+  makeStyles,
+} from "@material-ui/core";
+import { useSelector } from "react-redux";
 const states = [
   {
-    value: 'alabama',
-    label: 'Alabama'
+    value: "alabama",
+    label: "Alabama",
   },
   {
-    value: 'new-york',
-    label: 'New York'
+    value: "new-york",
+    label: "New York",
   },
   {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
+    value: "san-francisco",
+    label: "San Francisco",
+  },
 ];
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {},
 }));
 
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
-  const user = useSelector(state => state.users.profile); 
+  const user = useSelector((state) => state.users.profile);
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+  });
 
   const handleChange = (event) => {
-  
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
   };
+
+  useEffect(() => {
+    setValues({
+      firstName: user?.name.split(" ")[0] + "",
+      lastName: user?.name.split(" ")[1] + "",
+    });
+  }, [user]);
 
   return (
     <form
@@ -48,74 +62,48 @@ const ProfileDetails = ({ className, ...rest }) => {
       {...rest}
     >
       <Card>
-        <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
-        />
+        <CardHeader subheader="The information can be edited" title="Profile" />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="First name"
                 name="firstName"
                 onChange={handleChange}
                 required
-                value={user?.name.split(' ')[0] + ''}
+                value={values.firstName}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Last name"
                 name="lastName"
                 onChange={handleChange}
                 required
-                value={user?.name.split(' ')[1] + ''}
+                value={values.lastName}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Email"
-                name="email"  
-                onChange={handleChange}
-                disabled ={true}
+                name="email"
+                disabled={true}
                 required
-                value={user?.user + ''}
+                value={user?.user + ""}
                 variant="outlined"
               />
             </Grid>
-           </Grid>
+          </Grid>
         </CardContent>
         <Divider />
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          p={2}
-        >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+        <Box display="flex" justifyContent="flex-end" p={2}>
+          <Button color="primary" variant="contained">
             Update
           </Button>
         </Box>
@@ -125,7 +113,7 @@ const ProfileDetails = ({ className, ...rest }) => {
 };
 
 ProfileDetails.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
-export {ProfileDetails};
+export { ProfileDetails };

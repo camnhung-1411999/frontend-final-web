@@ -54,10 +54,6 @@ function Password() {
   });
 
   const handleChange = (event) => {
-
-    console.log(event.target.value);
-    console.log(event.target.name);
-
     setValues({
       ...values,
       [event.target.name]: event.target.value,

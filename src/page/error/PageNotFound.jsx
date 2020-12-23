@@ -1,6 +1,6 @@
 import React from "react";
 import "../assets/css/page.css";
-import {CustomizedBreadcrumbs} from "../../components";
+import {Breadcrumb} from "../../components";
 
 export default function PageNotFound() {
   
@@ -29,7 +29,7 @@ export default function PageNotFound() {
             </div>
           </div>
           <h2 className="h1">Sorry! Page not found</h2>
-          <CustomizedBreadcrumbs
+          <Breadcrumb
             name="Page Not Found"
             style={{ margin: "auto", width: "fit-content", padding: "10px" }}
           />

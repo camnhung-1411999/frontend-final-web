@@ -11,7 +11,6 @@ import {
   Divider,
   Typography,
   makeStyles,
-  Button,
   IconButton,
   colors,
   Badge,
@@ -25,17 +24,6 @@ import VictoryIcon from "../../../assets/image/victory.svg";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../../actions";
 import { useSelector } from "react-redux";
-
-import { UserService } from "../../../services";
-
-const user = {
-  avatar: "/static/media/image.8131c036.jpg",
-  city: "Los Angeles",
-  country: "USA",
-  jobTitle: "Senior Developer",
-  name: "Katarina Smith",
-  timezone: "GTM-7",
-};
 
 const useStyles = makeStyles(() => ({
   profile: {},
@@ -66,13 +54,7 @@ const Profile = ({ className, ...rest }) => {
     data.append("file", target.files[0]);
     dispatch(userActions.update(data));
   };
-  // const handelAvatar = async (file) => {
-  //   const formData = new FormData();
-  //   formData.append("myImage", file, file.name);
-  //   await UserService.updateAvatar(formData).then((reponse) => {
-  //     setAvatar(reponse.data.file);
-  //   });
-  // };
+
   const parameter = [
     {
       title: "Victory",

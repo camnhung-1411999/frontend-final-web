@@ -26,11 +26,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { roomActions } from "../../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Menu as MenuIcon,
   Search as SearchIcon,
-  AccountCircle,
-  MoreVert as MoreIcon,
-  PlayForWork as PlayForWorkIcon,
 } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
