@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { Switch, Route, Redirect } from "react-router-dom";	
 import { makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
 import ListUser from '../ListUser/ListUser';
+import {UserDetail} from '../UserDetail/UserDetail';
+import routes from "../routes";	
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -32,10 +35,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const switchRoutes = (	
+  <Switch>	
+    {routes.map((prop, key) => {	
+      if (prop.layout === "/adminboard") {	
+        return (	
+          <Route	
+            path={prop.layout + prop.path}	
+            component={prop.component}	
+            key={key}	
+          />	
+        );	
+      }	
+      return null;	
+    })}	
+    <Redirect from="/adminboard" to="/adminboard/list" />	
+  </Switch>	
+);	
+
 const DashboardLayout = () => {
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
-
+  const getRoute = () => {	
+    return window.location.pathname !== "/admin/maps";	
+  };	
+	
   return (
     <div className={classes.root}>
       <TopBar onMobileNavOpen={() => setMobileNavOpen(true)} />
@@ -46,9 +70,16 @@ const DashboardLayout = () => {
       <div className={classes.wrapper}>
         <div className={classes.contentContainer}>
           <div className={classes.content}>
-          <ListUser></ListUser>
+          {switchRoutes}
           </div>
         </div>
+        {getRoute() ? (	
+          <div className={classes.contentContainer}>	
+            <div className={classes.content}>{switchRoutes}</div>	
+          </div>	
+        ) : (	
+          <div>{switchRoutes}</div>	
+        )}	
       </div>
     </div>
   );
