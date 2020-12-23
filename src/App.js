@@ -1,9 +1,7 @@
 import "./App.css";
 import Home from "./page/auth/Home";
-import {Admin} from "./page/admin";
 import {AdminBoard} from "./page/adminboard";
 import { Router, Switch, Route } from "react-router-dom";
-// import Profile from "./page/Profile";
 import {DashBoard} from "./page/dashboard";
 import {PrivateRoute, NormalRoute} from './components';
 import React from "react";
@@ -28,7 +26,6 @@ function App() {
               <NormalRoute path="/resetpassword/:user" component={ResetPassword} />
               <NormalRoute path="/signup" component={Home} />
               <NormalRoute path="/adminboard" component={AdminBoard} />
-              <PrivateRoute path="/admin" component={Admin} />
               <Route path="/rank" component={Rank} />
               <PrivateRoute path="/home" component={DashBoard} />
               <PrivateRoute path="/board/:id" component={ChessBoard} />
