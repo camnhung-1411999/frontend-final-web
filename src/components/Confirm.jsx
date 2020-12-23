@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import queryString from 'query-string';
 import {UserService} from '../services';
 import {socket} from '../helpers';
-import { urlConstants } from '../constants'
+import { history } from '../helpers';
 export default function Confirm({location}) {
     const value=queryString.parse(location.search);
     const data = {
@@ -17,7 +18,11 @@ export default function Confirm({location}) {
             socket.emit('confirm');
         })
     }
-    createSuccess();
+
+    const handleClick = () => {
+      history.push('/');
+    }
+    createSuccess();  
     return (
         <div>
             <div>
@@ -30,7 +35,7 @@ export default function Confirm({location}) {
           <h1>Success</h1> 
           <p>You are confirm account successfully! <br /> Let's enjoy our website!</p>
 
-          <a href='http://localhost:3000/login'> Go to website</a>
+          <a href="#" onClick={handleClick}> Go to website</a>
         </div>
       </div>
         </div>
