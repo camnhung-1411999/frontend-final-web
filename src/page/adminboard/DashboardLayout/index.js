@@ -57,7 +57,7 @@ const DashboardLayout = () => {
   const classes = useStyles();
   const [isMobileNavOpen, setMobileNavOpen] = useState(false);
   const getRoute = () => {	
-    return window.location.pathname !== "/admin/maps";	
+    return window.location.pathname;	
   };	
 	
   return (
@@ -73,13 +73,6 @@ const DashboardLayout = () => {
           {switchRoutes}
           </div>
         </div>
-        {getRoute() ? (	
-          <div className={classes.contentContainer}>	
-            <div className={classes.content}>{switchRoutes}</div>	
-          </div>	
-        ) : (	
-          <div>{switchRoutes}</div>	
-        )}	
       </div>
     </div>
   );
