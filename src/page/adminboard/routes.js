@@ -1,5 +1,6 @@
 
 import ListUser from './ListUser/ListUser';
+import {ListMatch} from './ListMatch';
 import {UserDetail} from './UserDetail';	
 
 const dashboardRoutes = [	
@@ -11,6 +12,11 @@ const dashboardRoutes = [
   {	
     path: "/user",		
     component: UserDetail,	
+    layout: "/adminboard"	
+  },	
+  {	
+    path: "/match",		
+    component: ListMatch,	
     layout: "/adminboard"	
   },	
 ];	

@@ -42,9 +42,9 @@ const items = [
     title: 'Customers'
   },
   {
-    href: '/app/products',
+    href: '/adminboard/match',
     icon: ShoppingBagIcon,
-    title: 'History'
+    title: 'List Match'
   },
   {
     href: '/adminboard/user',
@@ -62,7 +62,7 @@ const items = [
     title: 'Login'
   },
   {
-    href: '/register',
+    href: '/login',
     icon: UserPlusIcon,
     title: 'Register'
   },
