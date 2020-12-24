@@ -174,7 +174,7 @@ function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} component = "div" variant="h6" noWrap>
             <Link style={{ color: "white" }} href="/home">
               Caroro
             </Link>
@@ -210,7 +210,7 @@ function Header() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography className={classes.title} component = "div" variant="h6" noWrap>
             <Link style={{ color: "black" }} href="/home">
               Caroro
             </Link>

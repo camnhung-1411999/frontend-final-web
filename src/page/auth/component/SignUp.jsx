@@ -50,7 +50,6 @@ function SignUp() {
 
   useEffect(() => {
     socket.on('success', () => {
-      console.log('okkkkkk');
       window.alert('CONFIRM EMAIL SUCCESS')
     })
   }, [])

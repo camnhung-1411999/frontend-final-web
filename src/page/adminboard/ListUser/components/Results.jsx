@@ -148,6 +148,7 @@ const Results = ({ className, customers, ...rest }) => {
                       <Typography
                         color="textPrimary"
                         variant="body1"
+                        component = "div"
                       >
                         {customer.name}
                       </Typography>

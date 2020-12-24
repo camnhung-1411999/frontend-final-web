@@ -122,12 +122,14 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           className={classes.name}
           color="textPrimary"
           variant="h5"
+          component = "div"
         >
           {user.name}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
+          component = "div"
         >
           {user.jobTitle}
         </Typography>
@@ -155,12 +157,15 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           align="center"
           gutterBottom
           variant="h4"
+          component = "div"
         >
           Need more?
         </Typography>
         <Typography
           align="center"
           variant="body2"
+          component = "div"
+          component = "div"
         >
           Upgrade to PRO version and access 20 more screens
         </Typography>

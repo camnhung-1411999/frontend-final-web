@@ -97,6 +97,7 @@ const Player = () => {
                       color="textPrimary"
                       variant="body1"
                       style={{ color }}
+                      component = "div"
                     >
                       {title}
                     </Typography>

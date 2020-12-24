@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Board from "./Board";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import {
+  Snackbar,
   Card,
   CardContent,
   CardHeader,
@@ -25,9 +26,12 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import { roomActions } from "../../../actions";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Search as SearchIcon,
-} from "@material-ui/icons";
+import { Search as SearchIcon } from "@material-ui/icons";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
   room: {
@@ -55,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     },
     "@media (max-width: 780px)": {
       width: "50%",
-      marginLeft: "10px"
+      marginLeft: "10px",
     },
   },
   searchIcon: {
@@ -89,13 +93,17 @@ const useStyles = makeStyles((theme) => ({
 
 const Rooms = ({ className, ...rest }) => {
   const classes = useStyles();
-  const rooms = useSelector((state) => state.rooms.items);
+  const rooms = useSelector((state) => state.rooms);
+  // const isPublic = useSelector((state) => state.rooms.isPublic);
   const theme = useTheme();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const [password, setPassword] = useState("");
   const [idroom, setIdRoom] = useState("");
+  const [openError, setOpenError] = useState(false);
+  const [openPublic, setOpenPublic] = useState(false);
+  const err = useSelector((state) => state.alert);
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -111,13 +119,29 @@ const Rooms = ({ className, ...rest }) => {
 
   const handleCreate = () => {
     setOpen(false);
+    dispatch(roomActions.create(checked, password));
   };
+
+  const handlePublic = () => {
+    if (idroom) dispatch(roomActions.getRoom(idroom, rooms.items));
+  };
+
+  const handleJoin = () => {
+    dispatch(roomActions.joinRoom(password));
+  };
+
   useEffect(() => {
     dispatch(roomActions.listRooms());
   }, []);
-  const handleAddRoom = () => {
-    dispatch(roomActions.create());
-  };
+
+  useEffect(() => {
+    setOpenPublic(rooms.isPublic);
+  }, [rooms.isPublic]);
+
+  useEffect(() => {
+    setOpenError(err.message ? true : false);
+  }, [err.message]);
+
   return (
     <>
       <Card className={clsx(classes.room, className)} {...rest}>
@@ -128,8 +152,7 @@ const Rooms = ({ className, ...rest }) => {
           action={
             <>
               <div className={classes.search}>
-                <div className={classes.searchIcon}>
-                </div>
+                <div className={classes.searchIcon}></div>
                 <InputBase
                   placeholder="Id"
                   value={idroom}
@@ -143,7 +166,7 @@ const Rooms = ({ className, ...rest }) => {
                 <IconButton
                   style={{ padding: "6px" }}
                   aria-label="new room"
-                  // onClick={handleJoin}
+                  onClick={handlePublic}
                 >
                   <SearchIcon style={{ fontSize: 30, color: "white" }} />
                 </IconButton>
@@ -161,7 +184,7 @@ const Rooms = ({ className, ...rest }) => {
         ></CardHeader>
         <Divider />
         <CardContent className={classes.cardContent}>
-          {rooms?.data.map((element) => (
+          {rooms.items?.map((element) => (
             <Board key={element.idroom} id={element.idroom} />
           ))}
         </CardContent>
@@ -187,7 +210,7 @@ const Rooms = ({ className, ...rest }) => {
                 fullWidth
                 label="Password"
                 margin="normal"
-                name="confirm"
+                name="password"
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 value={password}
@@ -205,6 +228,46 @@ const Rooms = ({ className, ...rest }) => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog
+        open={openPublic}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Enter password"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            <TextField
+              fullWidth
+              label="Password"
+              margin="normal"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              value={password}
+              variant="outlined"
+            />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenPublic(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleJoin} color="primary" autoFocus>
+            Join
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <Snackbar
+        open={openError}
+        autoHideDuration={2000}
+        onClose={() => setOpenError(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={() => setOpenError(false)} severity="error">
+          {err?.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

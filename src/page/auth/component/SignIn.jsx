@@ -103,7 +103,7 @@ function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" component = "div" variant="h5">
           Login
         </Typography>
         <form className={classes.form} noValidate>

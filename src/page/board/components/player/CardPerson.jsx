@@ -78,6 +78,7 @@ const CardPerson = ({ className, ...rest }) => {
             color="textPrimary"
             gutterBottom
             variant="h4"
+            component = "div"
             style={{ marginTop: "40px" }}
           >
             {user.name}

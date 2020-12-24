@@ -1,9 +1,8 @@
 import axios from "axios";
 import { authHeader } from '../helpers';
 import { urlConstants } from '../constants'
-// import jwt from "jwt-decode";
 
-const API_URL = urlConstants.API_URL_USER;
+const API_URL = urlConstants.API_URL + "users/";
 
 class UserService {
   login(data) {

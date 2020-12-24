@@ -8,7 +8,7 @@ export default function rooms(state = {}, action) {
             };
         case roomConstants.CREATE_SUCCESS:
             return {
-                squares: Array(20*20).fill(null),
+                squares: Array(20 * 20).fill(null),
             };
         case roomConstants.CREATE_FAILURE:
             // add 'deleting:true' property to user being deleted
@@ -21,12 +21,12 @@ export default function rooms(state = {}, action) {
             };
         case roomConstants.UPDATE_SUCCESS:
             return {
-                squares: state.squares.map((item,index) =>
+                squares: state.squares.map((item, index) =>
                     index === action.index
                         ? action.chessman
                         : index
                 )
-            }; 
+            };
         case roomConstants.UPDATE_FAILURE:
             return {
                 error: action.error
@@ -39,6 +39,7 @@ export default function rooms(state = {}, action) {
         case roomConstants.GET_SUCCESS:
             return {
                 items: action.rooms,
+                isPublic: false,
             };
         case roomConstants.GET_FAILURE:
             // add 'deleting:true' property to user being deleted
@@ -56,6 +57,20 @@ export default function rooms(state = {}, action) {
         case roomConstants.MESSAGE_FAILURE:
             return {
                 error: action.error
+            };
+        case roomConstants.ROOM_PUBLIC_REQUEST:
+            return {
+                loading: true,
+            };
+        case roomConstants.ROOM_PUBLIC_SUCCESS:
+            return {
+                isPublic: action.isPublic,
+                items: action.rooms,
+            };
+        case roomConstants.ROOM_PUBLIC_FAILURE:
+            return {
+                error: action.error,
+                items: action.rooms
             };
         default:
             return state

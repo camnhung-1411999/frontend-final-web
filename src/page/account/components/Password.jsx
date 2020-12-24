@@ -69,7 +69,7 @@ function Password() {
           id="panel1c-header"
         >
           <div className={classes.column}>
-            <Typography variant="h5">Change Password</Typography>
+            <Typography component = "div" variant="h5">Change Password</Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>

@@ -116,7 +116,7 @@ const Profile = ({ className, ...rest }) => {
               }
             />
           </Badge>
-          <Typography color="textPrimary" gutterBottom variant="h3">
+          <Typography color="textPrimary" component= "div" gutterBottom variant="h3">
             {user?.name}
           </Typography>
         </Box>
@@ -132,10 +132,10 @@ const Profile = ({ className, ...rest }) => {
               style={{ margin: "0px 10px 0px 10px" }}
             >
               <Icon style={{ color, fontSize: "40" }} color="action" />
-              <Typography color="textPrimary" variant="body1" style={{ color }}>
+              <Typography color="textPrimary" component= "div" variant="body1" style={{ color }}>
                 {title}
               </Typography>
-              <Typography style={{ color }} variant="h5">
+              <Typography style={{ color }} component= "div" variant="h5">
                 {value}
               </Typography>
             </Box>

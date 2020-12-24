@@ -9,13 +9,16 @@ export const roomActions = {
   listRooms,
   listMsg,
   joinRoom,
+  getRoom
 };
 
-function create(from) {
+function create(checked, password) {
   return (dispatch) => {
     dispatch(request());
 
-    RoomService.createRoom().then(
+    const data = { public: checked, password: password }
+
+    RoomService.createRoom(checked, password).then(
       async (room) => {
         dispatch(success(room));
         await socket.emit('joinRoom', room.data.idroom)
@@ -73,7 +76,7 @@ function listRooms() {
 
     RoomService.listRoom().then(
       (rooms) => {
-        dispatch(success(rooms));
+        dispatch(success(rooms.data));
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -94,26 +97,36 @@ function listRooms() {
 
 };
 
+function getRoom(id, rooms) {
+  return (dispatch) => {
+    RoomService.getRoom(id).then(
+      async (response) => {
+        const room = response.data;
+        if (room.public == "true") {
+          dispatch(success(true, rooms));
+        }
+        else {
+          await socket.emit('joinRoom', id)
+          history.push(`/board/${id}`);
+        }
+      }
+    ).catch(
+      () => {
+        dispatch(alertActions.error(`Room ${id} not found`));
+      })
+  };
 
-// function joinRoom(id, from) {
-//   return (dispatch) => {
-//     dispatch(request());
-//     dispatch(success(id));
-//     socket.emit('joinRoom', id)
-//     history.push(from);
+  function request(id) {
+    return { type: roomConstants.ROOM_PUBLIC_REQUEST, id };
+  }
+  function success(isPublic, rooms) {
+    return { type: roomConstants.ROOM_PUBLIC_SUCCESS, isPublic, rooms };
+  }
+  function failure(error, rooms) {
+    return { type: roomConstants.ROOM_PUBLIC_FAILURE, error, rooms };
+  }
+}
 
-//   };
-
-//   function request(room) {
-//     return { type: roomConstants.CREATE_REQUEST, room };
-//   }
-//   function success(room) {
-//     return { type: roomConstants.CREATE_SUCCESS, room };
-//   }
-//   function failure(error) {
-//     return { type: roomConstants.CREATE_FAILURE, error };
-//   }
-// }
 
 function listMsg(arr) {
   return (dispatch) => {
@@ -121,7 +134,7 @@ function listMsg(arr) {
   };
 
   function success(messages) {
-    return { type: roomConstants.GET_SUCCESS, messages};
+    return { type: roomConstants.GET_SUCCESS, messages };
   }
 
 }
