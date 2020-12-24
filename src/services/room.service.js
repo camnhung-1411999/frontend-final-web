@@ -11,8 +11,8 @@ class RoomService {
         });
     }
 
-    joinRoom(id) {
-        return axios.put(API_URL + `join/${id}`, null, {
+    joinRoom(id, password) {
+        return axios.post(API_URL + `join/${id}`, {password}, {
             headers: authHeader(),
         });
     }

@@ -127,7 +127,7 @@ const Rooms = ({ className, ...rest }) => {
   };
 
   const handleJoin = () => {
-    dispatch(roomActions.joinRoom(password));
+    dispatch(roomActions.joinRoom(idroom, password));
   };
 
   useEffect(() => {
@@ -136,11 +136,11 @@ const Rooms = ({ className, ...rest }) => {
 
   useEffect(() => {
     setOpenPublic(rooms.isPublic);
-  }, [rooms.isPublic]);
+  }, [rooms]);
 
   useEffect(() => {
     setOpenError(err.message ? true : false);
-  }, [err.message]);
+  }, [err]);
 
   return (
     <>

@@ -16,8 +16,6 @@ function create(checked, password) {
   return (dispatch) => {
     dispatch(request());
 
-    const data = { public: checked, password: password }
-
     RoomService.createRoom(checked, password).then(
       async (room) => {
         dispatch(success(room));
@@ -42,19 +40,15 @@ function create(checked, password) {
   }
 }
 
-function joinRoom(id) {
+function joinRoom(id, password) {
   return (dispatch) => {
-    dispatch(request());
-
-    RoomService.joinRoom(id).then(
-      async (room) => {
-        dispatch(success(room));
+    RoomService.joinRoom(id, password).then(
+      async () => {
         await socket.emit('joinRoom', id)
         history.push(`/board/${id}`);
       },
       (error) => {
-        dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(alertActions.error("Password wrong"));
       }
     );
   };
