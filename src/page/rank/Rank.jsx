@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Grid, makeStyles, Avatar } from "@material-ui/core";
 import { Breadcrumb, Page } from "../../components";
 import Paper from "@material-ui/core/Paper";
 import CardPerson from "./components/CardPerson";
 import ListPerson from "./components/ListPerson";
+import { useDispatch, useSelector } from "react-redux";
+import { rankActions } from "../../actions";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -46,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     height: 200,
     width: 200,
     margin: "0 auto",
-    marginTop: 30,
+    marginTop: 40,
     background: "linear-gradient(45deg, #008793 30%, #00bf72 90%)",
     border: 0,
     borderRadius: 3,
@@ -67,6 +70,12 @@ const useStyles = makeStyles((theme) => ({
 
 const Rank = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.ranks.items);
+
+  useEffect(() => {
+    dispatch(rankActions.listRank());
+  }, []);
 
   return (
     <Page className={classes.root} title="Rank">
@@ -93,23 +102,22 @@ const Rank = () => {
           >
             <Grid item lg={4} sm={4} xl={4} xs={4}>
               <Paper className={classes.paper1}>
-                <CardPerson styleCss={classes.paper1} />
+                <CardPerson styleCss={classes.paper1} user={data?.[1]} />
               </Paper>
             </Grid>
             <Grid item lg={4} sm={4} xl={4} xs={4}>
               <Paper className={classes.paper}>
-                <CardPerson styleCss={classes.paper} />
+                <CardPerson styleCss={classes.paper} user={data?.[0]} />
               </Paper>
             </Grid>
             <Grid item lg={4} sm={4} xl={4} xs={4}>
               <Paper className={classes.paper2}>
-                <CardPerson styleCss={classes.paper2} />
+                <CardPerson styleCss={classes.paper2} user={data?.[2]} />
               </Paper>
             </Grid>
           </Grid>
-
           <Grid item lg={12} sm={12} xl={12} xs={12}>
-            <ListPerson />
+            {data?.length > 3 ? <ListPerson users={data.slice(3)} /> : null}
           </Grid>
         </Grid>
       </Container>
