@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Link from '@material-ui/core/Link';
-import { UserService } from '../../../services';
+import { userService } from '../../../services';
 export default function ForgotPwd() {
   const [open, setOpen] = React.useState(false);
   const [iopen, setIOpen] = React.useState(false);
@@ -30,7 +30,7 @@ export default function ForgotPwd() {
           setError('Please enter your mail');
           return;
       }
-      await UserService.resetPassword(email).then(() => {
+      await userService.resetPassword(email).then(() => {
         setEmail();
         setOpen(false);
         setIOpen(true);

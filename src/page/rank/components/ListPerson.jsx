@@ -45,11 +45,11 @@ const ListPerson = ({ users, className, customers, ...rest }) => {
                         src={user?.image}
                       ></Avatar>
                       <Typography color="textPrimary" variant="body1">
-                        {user?.name} cups
+                        {user?.name} 
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell style={{ width: "20%" }}>{user?.cups}</TableCell>
+                  <TableCell style={{ width: "20%" }}>{user?.cups} cups</TableCell>
                 </TableRow>
               ))}
             </TableBody>

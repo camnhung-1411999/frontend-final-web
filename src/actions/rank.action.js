@@ -1,6 +1,6 @@
 import { rankConstants } from "../constants";
 import { alertActions } from "./";
-import { UserService } from "../services";
+import { userService } from "../services";
 
 export const rankActions = {
   listRank,
@@ -9,7 +9,7 @@ export const rankActions = {
 function listRank() {
   return async (dispatch) => {
     dispatch(request());
-    await UserService.getListRank().then(
+    await userService.getListRank().then(
       (response) => {
         dispatch(success(response.data));
       },

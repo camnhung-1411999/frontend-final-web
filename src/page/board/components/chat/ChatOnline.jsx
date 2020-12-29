@@ -18,7 +18,7 @@ import MoodIcon from "@material-ui/icons/Mood";
 import BoxMessage from "./BoxMessage";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
-import UserService from "../../../../services/user.service";
+import userService from "../../../../services/user.service";
 import RoomService from "../../../../services/room.service";
 import { socket } from "../../../../helpers";
 
@@ -47,7 +47,7 @@ const ChatOnline = ({ idroom, className, ...rest }) => {
 
   useEffect(() => {
     const iuser = async () => {
-      await UserService.getUser().then(async (res) => {
+      await userService.getUser().then(async (res) => {
         localStorage.setItem(
           "username",
           JSON.stringify(res.data.user)

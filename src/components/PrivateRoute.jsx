@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import {UserService} from "../services/index";
+import {userService} from "../services/index";
 import {Header} from "./Header";
 
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const auth = UserService.getCurrentUser();
+  const auth = userService.getCurrentUser();
   return (
     <Route
       {...rest}
@@ -26,7 +26,7 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 function NormalRoute({ component: Component, ...rest }) {
-  const auth = UserService.getCurrentUser();
+  const auth = userService.getCurrentUser();
   return (
     <Route
       {...rest}

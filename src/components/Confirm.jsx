@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import queryString from 'query-string';
-import {UserService} from '../services';
+import {userService} from '../services';
 import {socket} from '../helpers';
 import { history } from '../helpers';
 export default function Confirm({location}) {
@@ -14,7 +14,7 @@ export default function Confirm({location}) {
         status: false,
     }
     const createSuccess = async () => {
-        await UserService.subRegiser(data).then(() => {
+        await userService.subRegiser(data).then(() => {
             socket.emit('confirm');
         })
     }

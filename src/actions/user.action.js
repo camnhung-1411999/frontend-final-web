@@ -1,5 +1,5 @@
 import { userConstants } from "../constants";
-import { UserService } from "../services";
+import { userService } from "../services";
 import { alertActions } from ".";
 import { history, socket } from "../helpers";
 
@@ -20,7 +20,7 @@ function login(data, from) {
   return async (dispatch) => {
     dispatch(request({ username: data.user }));
 
-    await UserService.login(data).then(
+    await userService.login(data).then(
       (user) => {
         dispatch(success(user));
         socket.emit('online', {
@@ -50,7 +50,7 @@ function login(data, from) {
 function loginSocial(data, from) {
   return async (dispatch) => {
     dispatch(request({ username: data.user }));
-    await UserService.loginSocial(data).then(
+    await userService.loginSocial(data).then(
       async (user) => {
         dispatch(success(user));
         await socket.emit('online');
@@ -75,7 +75,7 @@ function loginSocial(data, from) {
 
 function logout(from) {
   return async (dispatch) => {
-    await UserService.logout().then(async (reponsive) => {
+    await userService.logout().then(async (reponsive) => {
       const user = reponsive.data;
       socket.emit('offline', {
         body: ({ username: user.user, name: user.name }),
@@ -90,7 +90,7 @@ function register(iuser) {
   return (dispatch) => {
     dispatch(request(iuser));
 
-    UserService.register(iuser).then(
+    userService.register(iuser).then(
       (user) => {
         dispatch(success());
         history.push("/login");
@@ -117,7 +117,7 @@ function register(iuser) {
 function profile() {
   return (dispatch) => {
     dispatch(request());
-    UserService.getCurrentUser().then(
+    userService.getCurrentUser().then(
       (user) => dispatch(success(user.data)),
       (error) => dispatch(failure(error.toString()))
     );
@@ -138,7 +138,7 @@ function update(data) {
   return (dispatch) => {
 
     dispatch(request());
-    UserService.update(data).then(
+    userService.update(data).then(
       (user) => {
         dispatch(success(user.data));
       },
@@ -164,7 +164,7 @@ function getUserOnline() {
   return (dispatch) => {
     dispatch(request());
 
-    UserService.getUserOnline().then(
+    userService.getUserOnline().then(
       (users) => dispatch(success(users.data)),
       (error) => dispatch(failure(error.toString()))
     );
@@ -213,7 +213,7 @@ function _delete(id) {
   return (dispatch) => {
     dispatch(request(id));
 
-    UserService.delete(id).then(
+    userService.delete(id).then(
       (user) => dispatch(success(id)),
       (error) => dispatch(failure(id, error.toString()))
     );
