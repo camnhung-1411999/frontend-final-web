@@ -24,7 +24,7 @@ function login(data, from) {
       (user) => {
         dispatch(success(user));
         socket.emit('online', {
-          body: ({ username: user.user, name: user.name }),
+          body: ({ username: user.user, name: user.name, image: user.image }),
           senderId: socket.id,
         });
         history.push(from);
