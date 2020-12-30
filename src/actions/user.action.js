@@ -27,11 +27,12 @@ function login(data, from) {
           body: ({ username: user.user, name: user.name, image: user.image }),
           senderId: socket.id,
         });
+        dispatch(alertActions.clear());
         history.push(from);
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(alertActions.error("Login failed !!!"));
       }
     );
   };

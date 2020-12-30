@@ -3,5 +3,7 @@ export * from './Header';
 export * from './PrivateRoute';
 export * from './Online';
 export * from './Page';
+export * from './SnackBar';
+
 
 

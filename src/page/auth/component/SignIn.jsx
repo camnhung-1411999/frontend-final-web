@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Snackbar,
   Container,
   Typography,
   Button,
@@ -39,15 +38,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
 function SignIn() {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -64,12 +58,6 @@ function SignIn() {
       dispatch(userActions.login(data, from));
     }
   }
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
 
   function loginSocial(data) {
     const { from } = location.state || { from: { pathname: "/home" } };
@@ -176,16 +164,6 @@ function SignIn() {
               />
             }
           ></FacebookLogin>
-        <Snackbar
-          open={open}
-          autoHideDuration={2000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert onClose={handleClose} severity="error">
-            Login failed!!!
-          </Alert>
-        </Snackbar>
       </div>
     </Container>
   );
