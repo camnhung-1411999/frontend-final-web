@@ -21,9 +21,8 @@ import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfie
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import VictoryIcon from "../../../assets/image/victory.svg";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../actions";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   profile: {},
@@ -108,13 +107,15 @@ const Profile = ({ className, ...rest }) => {
           >
             <Avatar
               className={classes.avatar}
-              src={
-                user?.image
-                  ? user.image: null
-              }
+              src={user?.image ? user.image : null}
             />
           </Badge>
-          <Typography color="textPrimary" component= "div" gutterBottom variant="h3">
+          <Typography
+            color="textPrimary"
+            component="div"
+            gutterBottom
+            variant="h3"
+          >
             {user?.name}
           </Typography>
         </Box>
@@ -130,10 +131,15 @@ const Profile = ({ className, ...rest }) => {
               style={{ margin: "0px 10px 0px 10px" }}
             >
               <Icon style={{ color, fontSize: "40" }} color="action" />
-              <Typography color="textPrimary" component= "div" variant="body1" style={{ color }}>
+              <Typography
+                color="textPrimary"
+                component="div"
+                variant="body1"
+                style={{ color }}
+              >
                 {title}
               </Typography>
-              <Typography style={{ color }} component= "div" variant="h5">
+              <Typography style={{ color }} component="div" variant="h5">
                 {value}
               </Typography>
             </Box>

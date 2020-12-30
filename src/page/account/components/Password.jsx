@@ -13,6 +13,10 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../../actions";
+import { alertActions } from "../../../actions";
+
 const useStyles = makeStyles((theme) => ({
   password: {
     width: "100%",
@@ -47,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Password() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [values, setValues] = useState({
     oldpassword: "",
     password: "",
@@ -59,7 +64,26 @@ function Password() {
       [event.target.name]: event.target.value,
     });
   };
-
+  const handelUpdate = () => {
+    if (!values.password || !values.confirm || !values.oldpassword) {
+      dispatch(alertActions.error("Feild not empty."));
+    } else {
+      if (values.password != values.confirm) {
+        dispatch(alertActions.error("Password are not matching."));
+      } else {
+        if (values.password == values.oldpassword) {
+          dispatch(
+            alertActions.error(
+              "Password and Old Password must not be the same."
+            )
+          );
+        } else
+          dispatch(
+            userActions.updatePassword(values.password, values.oldpassword)
+          );
+      }
+    }
+  };
   return (
     <div className={classes.password}>
       <Accordion>
@@ -69,7 +93,9 @@ function Password() {
           id="panel1c-header"
         >
           <div className={classes.column}>
-            <Typography component = "div" variant="h5">Change Password</Typography>
+            <Typography component="div" variant="h5">
+              Change Password
+            </Typography>
           </div>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
@@ -84,6 +110,7 @@ function Password() {
                 type="password"
                 value={values.oldpassword}
                 variant="outlined"
+                required
               />
             </Grid>
             <Grid item md={6} xs={12}>
@@ -96,6 +123,7 @@ function Password() {
                 type="password"
                 value={values.password}
                 variant="outlined"
+                required
               />
             </Grid>
             <Grid item md={6} xs={12}>
@@ -104,17 +132,18 @@ function Password() {
                 label="Confirm password"
                 margin="normal"
                 name="confirm"
-                onChange={handleChange} 
+                onChange={handleChange}
                 type="password"
                 value={values.confirm}
                 variant="outlined"
+                required
               />
             </Grid>
           </Grid>
         </AccordionDetails>
         <Divider />
         <AccordionActions>
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick={handelUpdate}>
             Update
           </Button>
         </AccordionActions>

@@ -165,7 +165,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           align="center"
           variant="body2"
           component = "div"
-          component = "div"
         >
           Upgrade to PRO version and access 20 more screens
         </Typography>

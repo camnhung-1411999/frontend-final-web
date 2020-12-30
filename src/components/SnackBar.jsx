@@ -21,7 +21,7 @@ function SnackBar() {
         onClose={() => setOpenError(false)}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Alert onClose={() => setOpenError(false)} severity="error">
+        <Alert onClose={() => setOpenError(false)} severity={err.type}>
           {err?.message}
         </Alert>
       </Snackbar>

@@ -13,7 +13,8 @@ export const userActions = {
   userOnline,
   profile,
   update,
-  userOffline
+  userOffline,
+  updatePassword
 };
 
 function login(data, from) {
@@ -196,6 +197,7 @@ function userOnline(user) {
   }
 
 }
+
 function userOffline(user) {
   return (dispatch) => {
     dispatch(request());
@@ -228,5 +230,35 @@ function _delete(id) {
   }
   function failure(_id, error) {
     return { type: userConstants.DELETE_FAILURE, _id, error };
+  }
+}
+
+function updatePassword(user, password, oldPassword) {
+  return (dispatch) => {
+
+    dispatch(request());
+    userService.updatePwd({ user, password, oldPassword }).then(
+      (user) => {
+        // dispatch(success(user.data));
+        dispatch(alertActions.success("Update password success."));
+
+      },
+      (error) => {
+        // dispatch(failure(error.toString()));
+        dispatch(alertActions.error("Update password failed."));
+
+      }
+    );
+
+  };
+
+  function request() {
+    return { type: userConstants.UPDATE_REQUEST };
+  }
+  function success(user) {
+    return { type: userConstants.UPDATE_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: userConstants.UPDATE_FAILURE, error };
   }
 }
