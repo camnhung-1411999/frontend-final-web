@@ -61,10 +61,10 @@ class UserService {
       });
   }
 
-  resetPassword(input){
-    return axios.post(API_URL + "reset", {user: input});
+  resetPassword(input) {
+    return axios.post(API_URL + "reset", { user: input });
   }
-  subRegiser(data){
+  subRegiser(data) {
     return axios
       .post(API_URL + "subsignup", data)
       .then((response) => {
@@ -101,9 +101,8 @@ class UserService {
 
   getCurrentUser() {
     const token = localStorage.getItem('accessToken');
-    if(token)
-    {
-      return axios.get(API_URL,{
+    if (token) {
+      return axios.get(API_URL, {
         headers: authHeader(),
       });
     }
@@ -118,6 +117,11 @@ class UserService {
         headers: authHeader(),
       }
     );
+  }
+  getListRank() {
+    return axios.get(API_URL + 'rank', {
+      headers: authHeader()
+    });
   }
 }
 export default new UserService();

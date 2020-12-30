@@ -1,5 +1,5 @@
 import { userConstants } from "../constants";
-import { UserService } from "../services/index";
+import { userService } from "../services";
 import { alertActions } from ".";
 import { history, socket } from "../helpers";
 
@@ -13,25 +13,27 @@ export const userActions = {
   userOnline,
   profile,
   update,
-  userOffline
+  userOffline,
+  updatePassword
 };
 
 function login(data, from) {
   return async (dispatch) => {
     dispatch(request({ username: data.user }));
 
-    await UserService.login(data).then(
+    await userService.login(data).then(
       (user) => {
         dispatch(success(user));
         socket.emit('online', {
-          body: ({ username: user.user, name: user.name }),
+          body: ({ username: user.user, name: user.name, image: user.image }),
           senderId: socket.id,
         });
+        dispatch(alertActions.clear());
         history.push(from);
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        dispatch(alertActions.error("Login failed !!!"));
       }
     );
   };
@@ -50,7 +52,7 @@ function login(data, from) {
 function loginSocial(data, from) {
   return async (dispatch) => {
     dispatch(request({ username: data.user }));
-    await UserService.loginSocial(data).then(
+    await userService.loginSocial(data).then(
       async (user) => {
         dispatch(success(user));
         await socket.emit('online');
@@ -75,7 +77,7 @@ function loginSocial(data, from) {
 
 function logout(from) {
   return async (dispatch) => {
-    await UserService.logout().then(async (reponsive) => {
+    await userService.logout().then(async (reponsive) => {
       const user = reponsive.data;
       socket.emit('offline', {
         body: ({ username: user.user, name: user.name }),
@@ -90,7 +92,7 @@ function register(iuser) {
   return (dispatch) => {
     dispatch(request(iuser));
 
-    UserService.register(iuser).then(
+    userService.register(iuser).then(
       (user) => {
         dispatch(success());
         history.push("/login");
@@ -117,7 +119,7 @@ function register(iuser) {
 function profile() {
   return (dispatch) => {
     dispatch(request());
-    UserService.getCurrentUser().then(
+    userService.getCurrentUser().then(
       (user) => dispatch(success(user.data)),
       (error) => dispatch(failure(error.toString()))
     );
@@ -138,7 +140,7 @@ function update(data) {
   return (dispatch) => {
 
     dispatch(request());
-    UserService.update(data).then(
+    userService.update(data).then(
       (user) => {
         dispatch(success(user.data));
       },
@@ -164,7 +166,7 @@ function getUserOnline() {
   return (dispatch) => {
     dispatch(request());
 
-    UserService.getUserOnline().then(
+    userService.getUserOnline().then(
       (users) => dispatch(success(users.data)),
       (error) => dispatch(failure(error.toString()))
     );
@@ -195,6 +197,7 @@ function userOnline(user) {
   }
 
 }
+
 function userOffline(user) {
   return (dispatch) => {
     dispatch(request());
@@ -213,7 +216,7 @@ function _delete(id) {
   return (dispatch) => {
     dispatch(request(id));
 
-    UserService.delete(id).then(
+    userService.delete(id).then(
       (user) => dispatch(success(id)),
       (error) => dispatch(failure(id, error.toString()))
     );
@@ -227,5 +230,35 @@ function _delete(id) {
   }
   function failure(_id, error) {
     return { type: userConstants.DELETE_FAILURE, _id, error };
+  }
+}
+
+function updatePassword(user, password, oldPassword) {
+  return (dispatch) => {
+
+    dispatch(request());
+    userService.updatePwd({ user, password, oldPassword }).then(
+      (user) => {
+        // dispatch(success(user.data));
+        dispatch(alertActions.success("Update password success."));
+
+      },
+      (error) => {
+        // dispatch(failure(error.toString()));
+        dispatch(alertActions.error("Update password failed."));
+
+      }
+    );
+
+  };
+
+  function request() {
+    return { type: userConstants.UPDATE_REQUEST };
+  }
+  function success(user) {
+    return { type: userConstants.UPDATE_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: userConstants.UPDATE_FAILURE, error };
   }
 }

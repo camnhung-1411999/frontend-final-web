@@ -4,12 +4,10 @@ import PropTypes from "prop-types";
 import Board from "./Board";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import {
-  Snackbar,
   Card,
   CardContent,
   CardHeader,
   Divider,
-  useTheme,
   IconButton,
   Button,
   Dialog,
@@ -94,16 +92,12 @@ const useStyles = makeStyles((theme) => ({
 const Rooms = ({ className, ...rest }) => {
   const classes = useStyles();
   const rooms = useSelector((state) => state.rooms);
-  // const isPublic = useSelector((state) => state.rooms.isPublic);
-  const theme = useTheme();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const [password, setPassword] = useState("");
   const [idroom, setIdRoom] = useState("");
-  const [openError, setOpenError] = useState(false);
   const [openPublic, setOpenPublic] = useState(false);
-  const err = useSelector((state) => state.alert);
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -122,8 +116,9 @@ const Rooms = ({ className, ...rest }) => {
     dispatch(roomActions.create(checked, password));
   };
 
-  const handlePublic = () => {
-    if (idroom) dispatch(roomActions.getRoom(idroom, rooms.items));
+  const handlePublic = (id) => {
+    setIdRoom(id);
+    if (id) dispatch(roomActions.getRoom(id, rooms.items));
   };
 
   const handleJoin = () => {
@@ -137,10 +132,6 @@ const Rooms = ({ className, ...rest }) => {
   useEffect(() => {
     setOpenPublic(rooms.isPublic);
   }, [rooms]);
-
-  useEffect(() => {
-    setOpenError(err.message ? true : false);
-  }, [err]);
 
   return (
     <>
@@ -166,7 +157,7 @@ const Rooms = ({ className, ...rest }) => {
                 <IconButton
                   style={{ padding: "6px" }}
                   aria-label="new room"
-                  onClick={handlePublic}
+                  onClick={() => handlePublic(idroom)}
                 >
                   <SearchIcon style={{ fontSize: 30, color: "white" }} />
                 </IconButton>
@@ -185,7 +176,12 @@ const Rooms = ({ className, ...rest }) => {
         <Divider />
         <CardContent className={classes.cardContent}>
           {rooms.items?.map((element) => (
-            <Board key={element.idroom} id={element.idroom} />
+            <Board
+              key={element.idroom}
+              id={element.idroom}
+              board={element}
+              handelClick={() => handlePublic(element.idroom)}
+            />
           ))}
         </CardContent>
       </Card>
@@ -258,16 +254,6 @@ const Rooms = ({ className, ...rest }) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <Snackbar
-        open={openError}
-        autoHideDuration={2000}
-        onClose={() => setOpenError(false)}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <Alert onClose={() => setOpenError(false)} severity="error">
-          {err?.message}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

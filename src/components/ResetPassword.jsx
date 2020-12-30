@@ -17,7 +17,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { history } from '../helpers';
-import { UserService } from '../services';
+import { userService } from '../services';
 const useStyles = makeStyles(({
   root: {}
 }));
@@ -52,7 +52,7 @@ const ResetPassword = ({ match, className, ...rest }) => {
           setError('* Confirm password wrong');
           return;
       }
-      await UserService.updatePwd({
+      await userService.updatePwd({
           password: values.password,
           user: match.params.user,
       }).then(()=> {

@@ -8,9 +8,9 @@ import {
   Icon
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
-import { roomActions } from "../../../actions";
-import { useDispatch } from "react-redux";
 import image from "../../../assets/image/pvp.svg"
+import image1 from "../../../assets/image/opponent.svg"
+
 
 const useStyles = makeStyles((theme) => ({
   board_room: {
@@ -47,26 +47,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Board({ id }) {
+export default function Board({ id, board, handelClick }) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
-  const dispatch = useDispatch();
-
-  function handelCard() {
-    dispatch(roomActions.joinRoom(id));
-  }
-
   return (
     <>
       <Card className={classes.board_room}>
         <CardHeader
           style={{ textAlign: "left", padding: "8px" }}
           title={`Room: ${id}`}
-          onClick={handelCard}
+          onClick={handelClick}
         />
-        <CardContent onClick={handelCard}>
+        <CardContent onClick={handelClick}>
           <Icon style ={{ textAlign: 'center',height: "100%", width: "50%", margin: "0 auto"}}>
-            <img style ={{width: "40%", marginLeft: "30%"}} className={classes.imageIcon} src={image}/>
+            <img style ={{width: "40%", marginLeft: "30%"}} className={classes.imageIcon} src={ !board.player2? image: image1 }/>
           </Icon>
         </CardContent>
         <Divider light />

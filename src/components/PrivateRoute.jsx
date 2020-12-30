@@ -1,18 +1,18 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import {UserService} from "../services/index";
-import {Header} from "./Header";
-
+import { userService } from "../services/index";
+import { Header, SnackBar } from "./";
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const auth = UserService.getCurrentUser();
+  const auth = userService.getCurrentUser();
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         auth ? (
           <>
-            <Header /> 
+            <Header />
+            <SnackBar />
             <Component {...props} />
           </>
         ) : (
@@ -26,13 +26,16 @@ function PrivateRoute({ component: Component, ...rest }) {
 }
 
 function NormalRoute({ component: Component, ...rest }) {
-  const auth = UserService.getCurrentUser();
+  const auth = userService.getCurrentUser();
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         !auth ? (
-          <Component {...props} />
+          <>
+            <SnackBar />
+            <Component {...props} />
+          </>
         ) : (
           <Redirect
             to={{ pathname: "/home", state: { referer: props.location } }}
@@ -43,4 +46,4 @@ function NormalRoute({ component: Component, ...rest }) {
   );
 }
 
-export { PrivateRoute, NormalRoute};
+export { PrivateRoute, NormalRoute };

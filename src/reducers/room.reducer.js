@@ -1,6 +1,6 @@
 import { roomConstants } from '../constants';
 
-export default function rooms(state = {}, action) {
+export function rooms(state = {}, action) {
     switch (action.type) {
         case roomConstants.CREATE_REQUEST:
             return {

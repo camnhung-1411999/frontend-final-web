@@ -1,8 +1,7 @@
-import React from 'react';
-import clsx from 'clsx';
-import PropTypes from 'prop-types';
-// import moment from 'moment';
-// import PerfectScrollbar from 'react-perfect-scrollbar';
+import React from "react";
+import clsx from "clsx";
+import PropTypes from "prop-types";
+import PerfectScrollbar from "react-perfect-scrollbar";
 import {
   Avatar,
   Box,
@@ -12,69 +11,58 @@ import {
   TableCell,
   TableRow,
   Typography,
-  makeStyles
-} from '@material-ui/core';
-// import getInitials from 'src/utils/getInitials';
+  makeStyles,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  listRank: {
     margin: "0 auto",
-    '@media (min-width: 1500px)': {
+    "@media (min-width: 1500px)": {
       width: "50%",
-    }
+    },
   },
   avatar: {
-    marginRight: theme.spacing(2)
-  }
+    marginRight: theme.spacing(2),
+  },
 }));
 
-const ListPerson = ({ className, customers, ...rest }) => {
+
+const ListPerson = ({ users, className, customers, ...rest }) => {
   const classes = useStyles();
 
   return (
-    <Card
-      className={clsx(classes.root, className)}
-      {...rest}
-    >
-      {/* <PerfectScrollbar> */}
-      <Box >
-        <Table>
-          <TableBody>
-            <TableRow
-              hover
-            >
-              <TableCell>
-                <Box
-                  alignItems="center"
-                  display="flex"
-                >
-                  <Avatar
-                    className={classes.avatar}
-                  >
-                  </Avatar>
-                  <Typography
-                    color="textPrimary"
-                    variant="body1"
-                  >
-                    Minh
-                  </Typography>
-                </Box>
-              </TableCell>
-              <TableCell>
-                1000 cups
-
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </Box>
+    <Card className={clsx(classes.listRank, className)} {...rest}>
+      <PerfectScrollbar>
+        <Box maxHeight = {400}>
+          <Table>
+            <TableBody>
+              {users?.map((user) => (
+                <TableRow hover>
+                  <TableCell style={{ width: "80%" }}>
+                    <Box alignItems="center" display="flex">
+                      <Avatar
+                        className={classes.avatar}
+                        src={user?.image}
+                      ></Avatar>
+                      <Typography color="textPrimary" variant="body1">
+                        {user?.name} 
+                      </Typography>
+                    </Box>
+                  </TableCell>
+                  <TableCell style={{ width: "20%" }}>{user?.cups} cups</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Box>
+      </PerfectScrollbar>
     </Card>
   );
 };
 
 ListPerson.propTypes = {
   className: PropTypes.string,
-  customers: PropTypes.array.isRequired
+  customers: PropTypes.array.isRequired,
 };
 
 export default ListPerson;

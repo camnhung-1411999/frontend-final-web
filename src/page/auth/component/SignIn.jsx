@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Snackbar,
   Container,
   Typography,
   Button,
@@ -10,7 +9,6 @@ import {
   Checkbox,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import MuiAlert from "@material-ui/lab/Alert";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import { ReactComponent as GoogleIcon } from "../../../assets/image/google.svg";
 import GoogleLogin from "react-google-login";
@@ -39,15 +37,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
-
 function SignIn() {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -64,12 +57,6 @@ function SignIn() {
       dispatch(userActions.login(data, from));
     }
   }
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
 
   function loginSocial(data) {
     const { from } = location.state || { from: { pathname: "/home" } };
@@ -103,7 +90,7 @@ function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Typography component="h1" component = "div" variant="h5">
+        <Typography component="h1" variant="h5">
           Login
         </Typography>
         <form className={classes.form} noValidate>
@@ -176,16 +163,6 @@ function SignIn() {
               />
             }
           ></FacebookLogin>
-        <Snackbar
-          open={open}
-          autoHideDuration={2000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert onClose={handleClose} severity="error">
-            Login failed!!!
-          </Alert>
-        </Snackbar>
       </div>
     </Container>
   );

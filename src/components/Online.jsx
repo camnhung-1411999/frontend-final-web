@@ -16,16 +16,14 @@ import {
   Avatar,
 } from "@material-ui/core";
 import { FixedSizeList } from "react-window";
-import PersonIcon from "@material-ui/icons/Person";
 import AutoSizer from "react-virtualized-auto-sizer";
-import TimelineDot from "@material-ui/lab/TimelineDot";
 import { socket } from "../helpers";
 import { userActions } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   online: {
-    height: "85vh"
+    height: "85vh",
   },
   box: {
     height: "100%",
@@ -76,7 +74,9 @@ const renderRow = (data) => (props) => {
           }}
           variant="dot"
         >
-          <Avatar src="/static/media/image.8131c036.jpg" />
+          <Avatar
+            src={data.items[index]?.image ? data.items[index]?.image : null}
+          />
         </StyledBadge>
       </ListItemAvatar>
       <ListItemText primary={`${data.items[index].name}`} />
