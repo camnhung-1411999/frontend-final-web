@@ -31,15 +31,11 @@ const user = {
 };
 
 const items = [
-  {
-    href: '/adminboard/list',
-    icon: BarChartIcon,
-    title: 'Dashboard'
-  },
+
   {
     href: '/adminboard/list',
     icon: UsersIcon,
-    title: 'Customers'
+    title: 'List Users'
   },
   {
     href: '/adminboard/match',
@@ -51,26 +47,6 @@ const items = [
     icon: UserIcon,
     title: 'Account'
   },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
-  },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/login',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
 ];
 
 const useStyles = makeStyles(() => ({

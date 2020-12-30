@@ -18,6 +18,12 @@ import {
   Button,
   makeStyles
 } from '@material-ui/core';
+const getStatus = (status) =>{
+ if(status)
+ return 'active';
+ else
+ return 'inactive';
+}
 const getInitials = (name = '') =>{
    name.replace(/\s+/, ' ')
   .split(' ')
@@ -46,7 +52,7 @@ const Results = ({ className, customers, ...rest }) => {
     let newSelectedCustomerIds;
 
     if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+      newSelectedCustomerIds = customers.map((customer) => customer._id);
     } else {
       newSelectedCustomerIds = [];
     }
@@ -104,16 +110,16 @@ const Results = ({ className, customers, ...rest }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Username
                 </TableCell>
                 <TableCell>
-                  Email
+                  FullName
                 </TableCell>
                 <TableCell>
                   Total Match
                 </TableCell>
                 <TableCell>
-                  Cups
+                  Status
                 </TableCell>
                 <TableCell>
                   
@@ -124,13 +130,13 @@ const Results = ({ className, customers, ...rest }) => {
               {customers.slice(0, limit).map((customer) => (
                 <TableRow
                   hover
-                  key={customer.id}
-                  selected={selectedCustomerIds.indexOf(customer.id) !== -1}
+                  key={customer._id}
+                  selected={selectedCustomerIds.indexOf(customer._id) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedCustomerIds.indexOf(customer.id) !== -1}
-                      onChange={(event) => handleSelectOne(event, customer.id)}
+                      checked={selectedCustomerIds.indexOf(customer._id) !== -1}
+                      onChange={(event) => handleSelectOne(event, customer._id)}
                       value="true"
                     />
                   </TableCell>
@@ -141,27 +147,27 @@ const Results = ({ className, customers, ...rest }) => {
                     >
                       <Avatar
                         className={classes.avatar}
-                        src={customer.avatarUrl}
+                        src={customer.image}
                       >
-                        {getInitials(customer.name)}
+                        {customer.user}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                         component = "div"
                       >
-                        {customer.name}
+                        {customer.user}
                       </Typography>
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {customer.email}
+                    {customer.name}
                   </TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
+                    {customer.totalMatch}
                   </TableCell>
                   <TableCell>
-                    {customer.phone}
+                    { getStatus(customer.status)}
                   </TableCell>
                   <TableCell>
                   <Button variant="contained" color="primary">
