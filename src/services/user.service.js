@@ -91,6 +91,10 @@ class UserService {
     });
   }
 
+  async getAllUser() {
+    return await axios.get(API_URL+'list');
+  }
+
   getUserOnline() {
     return axios.get(API_URL + "online");
   }
