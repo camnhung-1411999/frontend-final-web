@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -88,6 +89,11 @@ const Results = ({ className, customers, ...rest }) => {
     setPage(newPage);
   };
 
+  const history = useHistory();
+  const handleViewUser = () => {
+    history.push(`/adminboard/user/1`);
+  }
+
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -170,7 +176,7 @@ const Results = ({ className, customers, ...rest }) => {
                     { getStatus(customer.status)}
                   </TableCell>
                   <TableCell>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" onClick={handleViewUser}>
                   View
                 </Button>
                   </TableCell>

@@ -43,7 +43,7 @@ const items = [
     title: 'List Match'
   },
   {
-    href: '/adminboard/user',
+    href: '/adminboard/account',
     icon: UserIcon,
     title: 'Account'
   },

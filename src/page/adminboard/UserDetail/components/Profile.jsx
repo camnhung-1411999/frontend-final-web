@@ -5,14 +5,17 @@ import moment from "moment";
 import {
   Avatar,
   Box,
-  Button,
   Card,
   CardActions,
   CardContent,
   Divider,
   Typography,
   makeStyles,
+  colors,
 } from "@material-ui/core";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
+import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
+import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 
 const user = {
   avatar: "/static/images/avatars/avatar_6.png",
@@ -23,11 +26,42 @@ const user = {
   timezone: "GTM-7",
 };
 
+const parameter = [
+  {
+    title: "Victory",
+    icon: SentimentVerySatisfiedIcon,
+    color: colors.indigo[500],
+    value: 100,
+  },
+  {
+    title: "Defeat",
+    icon: SentimentDissatisfiedIcon,
+    color: colors.black,
+    value: 100,
+  },
+  {
+    title: "Cups",
+    icon: EmojiEventsIcon,
+    color: colors.orange[600],
+    value: 100,
+  },
+];
+
 const useStyles = makeStyles(() => ({
-  root: {},
+  profile: {},
   avatar: {
     height: 100,
     width: 100,
+  },
+  input: {
+    display: "none",
+  },
+  box: {
+    display: "flex",
+    margin: "0 auto",
+    "@media (max-width: 780px)": {
+      display: "inherit",
+    },
   },
 }));
 
@@ -56,9 +90,29 @@ const Profile = ({ className, ...rest }) => {
       </CardContent>
       <Divider />
       <CardActions>
-        <Button color="primary" fullWidth variant="text">
-          Upload picture
-        </Button>
+        <Box className={classes.box} justifyContent="center" mt={2}>
+          {parameter.map(({ color, icon: Icon, title, value }) => (
+            <Box
+              key={title}
+              p={1}
+              textAlign="center"
+              style={{ margin: "0px 10px 0px 10px" }}
+            >
+              <Icon style={{ color, fontSize: "40" }} color="action" />
+              <Typography
+                color="textPrimary"
+                component="div"
+                variant="body1"
+                style={{ color }}
+              >
+                {title}
+              </Typography>
+              <Typography style={{ color }} component="div" variant="h5">
+                {value}
+              </Typography>
+            </Box>
+          ))}
+        </Box>
       </CardActions>
     </Card>
   );
@@ -68,4 +122,4 @@ Profile.propTypes = {
   className: PropTypes.string,
 };
 
-export default Profile;
+export { Profile };
