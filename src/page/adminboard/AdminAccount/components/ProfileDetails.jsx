@@ -10,8 +10,6 @@ import {
   Divider,
   Grid,
   TextField,
-  Switch, 
-  FormControlLabel,
   makeStyles,
 } from "@material-ui/core";
 
@@ -45,14 +43,11 @@ const ProfileDetails = ({ className, ...rest }) => {
     country: "USA",
   });
 
-
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-  });
-
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
   };
 
   return (
@@ -63,7 +58,7 @@ const ProfileDetails = ({ className, ...rest }) => {
       {...rest}
     >
       <Card>
-        <CardHeader title="Profile" />
+        <CardHeader subheader="The information can be edited" title="Profile" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
@@ -73,6 +68,8 @@ const ProfileDetails = ({ className, ...rest }) => {
                 helperText="Please specify the first name"
                 label="First name"
                 name="firstName"
+                onChange={handleChange}
+                required
                 value={values.firstName}
                 variant="outlined"
               />
@@ -82,6 +79,8 @@ const ProfileDetails = ({ className, ...rest }) => {
                 fullWidth
                 label="Last name"
                 name="lastName"
+                onChange={handleChange}
+                required
                 value={values.lastName}
                 variant="outlined"
               />
@@ -91,26 +90,60 @@ const ProfileDetails = ({ className, ...rest }) => {
                 fullWidth
                 label="Email Address"
                 name="email"
+                onChange={handleChange}
+                required
                 value={values.email}
                 variant="outlined"
               />
             </Grid>
-      
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Phone Number"
+                name="phone"
+                onChange={handleChange}
+                type="number"
+                value={values.phone}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Country"
+                name="country"
+                onChange={handleChange}
+                required
+                value={values.country}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Select State"
+                name="state"
+                onChange={handleChange}
+                required
+                select
+                SelectProps={{ native: true }}
+                value={values.state}
+                variant="outlined"
+              >
+                {states.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
           </Grid>
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>
-        <FormControlLabel
-        control={
-          <Switch
-            checked={state.checkedB}
-            onChange={handleChange}
-            name="checkedB"
-            color="primary"
-          />
-        }
-        label="Deactive"
-      />
+          <Button color="primary" variant="contained">
+            Save details
+          </Button>
         </Box>
       </Card>
     </form>
@@ -121,4 +154,4 @@ ProfileDetails.propTypes = {
   className: PropTypes.string,
 };
 
-export { ProfileDetails };
+export default ProfileDetails;

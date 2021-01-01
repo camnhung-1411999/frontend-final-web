@@ -3,7 +3,7 @@ import { Box, Container, makeStyles } from "@material-ui/core";
 import { Page } from "../../../components";
 import Results from "./components/Results";
 import Toolbar from "./components/Toolbar";
-import { UserService } from "../../../services/index";
+import { userService } from "../../../services/index";
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -26,7 +26,7 @@ const ListUser = () => {
   }]
   const [customers, setCustomers] = useState(init);
   useEffect(() => {
-    UserService.getAllUser().then(function (response) {
+    userService.getAllUser().then(function (response) {
       setCustomers(response.data);
       console.log('list user',response.data);
     });
