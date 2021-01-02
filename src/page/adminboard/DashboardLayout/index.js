@@ -3,8 +3,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { makeStyles } from '@material-ui/core';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
-import ListUser from '../ListUser/ListUser';
-import {UserDetail} from '../UserDetail/UserDetail';
 import routes from "../routes";	
 const useStyles = makeStyles((theme) => ({
   root: {
