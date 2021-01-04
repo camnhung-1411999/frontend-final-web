@@ -1,13 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import {
   Card,
   Avatar,
-  CardHeader,
-  CardMedia,
   CardContent,
-  CardActions,
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
