@@ -3,6 +3,7 @@ import ListUser from './ListUser/ListUser';
 import {ListMatch} from './ListMatch';
 import {AdminAccount} from './AdminAccount';	
 import {UserDetail} from './UserDetail';	
+import {MatchDetail} from './MatchDetail';	
 
 const dashboardRoutes = [	
   {	
@@ -23,6 +24,11 @@ const dashboardRoutes = [
   {	
     path: "/user/:id",		
     component: UserDetail,	
+    layout: "/adminboard"	
+  },	
+  {	
+    path: "/:id/match",		
+    component: MatchDetail,	
     layout: "/adminboard"	
   },	
 ];	

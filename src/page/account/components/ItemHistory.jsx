@@ -8,18 +8,19 @@ import {
   AccordionDetails,
   AccordionSummary,
   AccordionActions,
-  Typography,
   Grid,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userActions } from "../../../actions";
 import { alertActions } from "../../../actions";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
   password: {
     width: "100%",
+    marginTop: '3%'
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
@@ -33,9 +34,7 @@ const useStyles = makeStyles((theme) => ({
   details: {
     alignItems: "center",
   },
-  column: {
-    flexBasis: "33.33%",
-  },
+
   helper: {
     borderLeft: `2px solid ${theme.palette.divider}`,
     padding: theme.spacing(1, 2),
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Password() {
+function ItemHistory() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [values, setValues] = useState({
@@ -77,8 +76,7 @@ function Password() {
               "Password and Old Password must not be the same."
             )
           );
-        } else
-          {
+        } else {
             dispatch(
               userActions.updatePassword(values.password, values.oldpassword)
             );
@@ -93,12 +91,10 @@ function Password() {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
+          style={{backgroundColor: 'rgb(157, 215, 238)'
+        }}
         >
-          <div className={classes.column}>
-            <Typography component="div" variant="h5">
-              Change Password
-            </Typography>
-          </div>
+           <p>WIN <span><AccountCircleIcon/></span>minh blues<span>22/11/2020</span>      times: 30mins</p>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
           <Grid container spacing={3}>
@@ -153,4 +149,4 @@ function Password() {
     </div>
   );
 }
-export { Password };
+export { ItemHistory };

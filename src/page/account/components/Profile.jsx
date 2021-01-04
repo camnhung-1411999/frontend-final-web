@@ -20,7 +20,8 @@ import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import VictoryIcon from "../../../assets/image/victory.svg";
-
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import BeenhereIcon from '@material-ui/icons/Beenhere';
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../actions";
 
@@ -55,14 +56,14 @@ const Profile = ({ className, ...rest }) => {
 
   const parameter = [
     {
-      title: "Victory",
-      icon: SentimentVerySatisfiedIcon,
+      title: "Rate",
+      icon: ThumbUpIcon,
       color: colors.indigo[500],
-      value: 100,
+      value: '60.8%',
     },
     {
-      title: "Defeat",
-      icon: SentimentDissatisfiedIcon,
+      title: "Total match",
+      icon: BeenhereIcon,
       color: colors.black,
       value: 100,
     },
