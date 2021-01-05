@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import {
@@ -23,8 +23,19 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Toolbar = ({ className, ...rest }) => {
+const Toolbar = (props,{ className, ...rest }) => {
   const classes = useStyles();
+  const [keyword, setKeyword] = useState(null);
+  const handleChange = (event) =>{
+   setKeyword(event.target.value);
+  }
+
+  const handleKeyUp = (event) => {
+    if (event.key === 'Enter')
+    {
+      props.onClick({keyword});
+    }
+  }
 
   return (
     <div
@@ -35,6 +46,7 @@ const Toolbar = ({ className, ...rest }) => {
         <Card>
           <CardContent>
             <Box maxWidth={500}>
+              
               <TextField
                 fullWidth
                 InputProps={{
@@ -51,8 +63,13 @@ const Toolbar = ({ className, ...rest }) => {
                 }}
                 placeholder="Search customer"
                 variant="outlined"
+                value = {keyword}
+                onChange={handleChange}
+                onKeyUp ={handleKeyUp}
               />
+            
             </Box>
+           
           </CardContent>
         </Card>
       </Box>
