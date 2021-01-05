@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
   root: {
     height: "100%",
     borderRadius: "10px",
-    padding: '5px'
+    padding: "5px",
   },
   box: {
     height: "100%",
@@ -57,7 +57,7 @@ const renderRow = (props) => {
               marginLeft: "2px",
               background: "#e4e6eb",
             }}
-            component={'div'}
+            component={"div"}
             variant="body2"
             gutterBottom
           >
@@ -74,7 +74,7 @@ const renderRow = (props) => {
               marginLeft: "2px",
               color: "white",
             }}
-            component={'div'}
+            component={"div"}
             variant="body2"
             gutterBottom
           >

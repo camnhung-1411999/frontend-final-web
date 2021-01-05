@@ -6,6 +6,8 @@ import { users } from './users.reducer';
 import { rooms } from './room.reducer';
 import { alert } from './alert.reducer';
 import { ranks } from './rank.reducer';
+import { games } from './game.reducer';
+
 
 const rootReducer = combineReducers({
     authentication,
@@ -13,7 +15,8 @@ const rootReducer = combineReducers({
     users,
     rooms,
     ranks,
-    alert
+    alert,
+    games
 });
 
 export default rootReducer;

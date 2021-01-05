@@ -14,25 +14,11 @@ function Game() {
     const [stepNumber, setStepNumber] = useState(0);
     const [historyIndex, setHistoryIndex] = useState([{ index: null }]);
     const [sort, setSort] = useState(false);
-    // const current = useSelector(state=>state.rooms);
     const {id} = useParams();
     const {isNext, boards, playTo } = useRoom(id);
-    // const [isNext, setisNext] = useState(true)
-    console.log("ssssssssssssss", isNext)
 
     function handleClick(i, isFlag) {
-        // const his = history.slice(0, stepNumber + 1);
-        // const hisIndex = historyIndex.slice(0, stepNumber + 1);
-        // const current = his[his.length - 1];
-        // const squares = current.squares.slice();
-        // if (calculateWinner(squares) || squares[i]) {
-        //     return;
-        // }
-        // squares[i] = xIsNext ? 'X' : 'O';
-        // setHistory(his.concat([{ squares: squares }]))
-        // setXIsNext(!xIsNext)
-        // setStepNumber(his.length)
-        // setHistoryIndex(hisIndex.concat([{ index: i }]))
+        
         const data = {
             roomId: id, 
             index: i,
@@ -40,7 +26,6 @@ function Game() {
         }
         if(isFlag)
             playTo(data)
-        // setisNext(false)
     }
     const playAgain = () => {
         setHistory([{ squares: Array(9).fill(null) }])
@@ -54,7 +39,6 @@ function Game() {
         setXIsNext((step % 2) === 0)
     }
 
-    // const current = history[stepNumber];
     const winner = calculateWinner(boards);
     let status;
     if (winner) {
