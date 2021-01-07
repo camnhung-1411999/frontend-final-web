@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { Page } from "../../../components/Page";
@@ -20,19 +20,30 @@ const useStyles = makeStyles((theme) => ({
 
 const ListMatch = () => {
   const classes = useStyles();
-  const [products] = useState(data);
+  const [matches, setMatches] = useState(data);
+  const [listMatches, setListMatches] = useState();
 
+  useEffect(() => {
+    setMatches(data);
+    setListMatches(data);
+  }, [])
+
+  const handleSearch = (keyword,listMatches) => {
+    const filter= listMatches.filter(item => item.winner.includes(keyword.keyword)||item.loser.includes(keyword.keyword));
+    setMatches(filter);
+
+  }
   return (
     <Page className={classes.root} title="Products">
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar onClick={(keyword) => handleSearch(keyword,listMatches)}/>
         <Box mt={3}>
           <Grid container spacing={3}>
-            {products.map((product) => (
-              <Grid item key={product.id} lg={4} md={6} xs={12}>
+            {matches.map((match) => (
+              <Grid item key={match._id} lg={4} md={6} xs={12}>
                 <MatchCard
-                  className={classes.productCard}
-                  product={product}
+                  className={match.productCard}
+                  product={match}
                 />
               </Grid>
             ))}

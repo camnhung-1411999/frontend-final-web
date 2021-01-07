@@ -2,6 +2,7 @@ import { userConstants } from "../constants";
 import { userService } from "../services";
 import { alertActions } from ".";
 import { history, socket } from "../helpers";
+import { ContactSupportOutlined } from "@material-ui/icons";
 
 export const userActions = {
   login,
@@ -23,6 +24,16 @@ function login(data, from) {
 
     await userService.login(data).then(
       (user) => {
+        console.log("login user:",user)
+        if(user.role ==="admin")
+        {
+          console.log("login adminn:")
+           dispatch(success(user));
+          dispatch(alertActions.clear());
+          history.push(`/adminboard`);
+        }
+        else
+        {
         dispatch(success(user));
         socket.emit('online', {
           body: ({ username: user.user, name: user.name, image: user.image }),
@@ -30,6 +41,7 @@ function login(data, from) {
         });
         dispatch(alertActions.clear());
         history.push(from);
+      }
       },
       (error) => {
         dispatch(failure(error.toString()));

@@ -3,7 +3,7 @@ import Home from "./page/auth/Home";
 import {AdminBoard} from "./page/adminboard";
 import { Router, Switch, Route } from "react-router-dom";
 import {DashBoard} from "./page/dashboard";
-import {PrivateRoute, NormalRoute} from './components';
+import {PrivateRoute, NormalRoute, AdminRoute} from './components';
 import React from "react";
 import PageNotFound from "./page/error/PageNotFound";
 import {ChessBoard} from "./page/board";
@@ -25,7 +25,7 @@ function App() {
               <NormalRoute path="/checkmail" component={Confirm} />
               <NormalRoute path="/resetpassword/:user" component={ResetPassword} />
               <NormalRoute path="/signup" component={Home} />
-              <NormalRoute path="/adminboard" component={AdminBoard} />
+              <AdminRoute path="/adminboard" component={AdminBoard} />
               <PrivateRoute path="/rank" component={Rank} />
               <PrivateRoute path="/home" component={DashBoard} />
               <PrivateRoute path="/board/:id" component={ChessBoard} />

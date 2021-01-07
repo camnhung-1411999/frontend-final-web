@@ -43,7 +43,7 @@ const ProductCard = ({ className, product, ...rest }) => {
           gutterBottom
           variant="h4"
         >
-          {product.title}
+          {product.roomId}
         </Typography>
         <Typography align="center" color="textPrimary" variant="body1">
           {product.description}
