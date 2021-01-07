@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Container, Grid, makeStyles } from "@material-ui/core";
-import { Breadcrumb, Page } from "../../components";
 import { Profile, ProfileDetails, Password, History } from "./components";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../actions";
@@ -53,9 +52,6 @@ const Account = () => {
     }
     return (
       <>
-      <Password/>
-      <Password/>
-      <Password/>
       <Password/></>
     )
   }
@@ -65,20 +61,21 @@ const Account = () => {
     <img className="image" src="https://image.winudf.com/v2/image1/bmV0Lm5leHRsZXZlbG1vYmlsZWFwcHMubWluaV93b3JsZF93YWxscGFwZXJzX3NjcmVlbl85XzE1NjgyNTQxNjZfMDY1/screen-10.jpg?fakeurl=1&type=.jpg" style={{width: "100%"}} alt="..." />
 
 
-      <Page className={classes.root} title="Profile">
+      <div className={classes.root} title="Profile">
       
       <Container maxWidth="lg">
         <Grid container spacing={3}>
-        <Grid item lg={4} md={6} xs={12}>
+        <Grid item xs={4}>
             <Profile/>
           </Grid>
-          <Grid item lg={8} md={6} xs={12}>
+          <Grid item xs={4}>
           </Grid>
-          <Grid item lg={4} md={6} xs={12} style={{textAlign: 'center'}}>
-          <div style={{marginTop: '10%'}}>
-            <img style={{width:'30%', height:'30%'}} src={rank}/>
+          <Grid item xs={4} style={{paddingTop: '10%',paddingLeft: 'auto !important', textAlign: 'center'}} >
+            <img style={{width:'30%', height:'80%'}} src={rank}/>
             <h2 style={{color: 'rgb(245, 139, 0)', fontStyle: 'bold'}}> MASTER</h2>
-            </div>
+          </Grid>
+          <Grid item xs={3} style={{textAlign: 'center'}}>
+          
           <List
               component="nav"
               className={classes.list}
@@ -101,13 +98,14 @@ const Account = () => {
             </List>
            
           </Grid>
-          <Grid item lg={8} md={6} xs={12}>
+          <Grid item xs={9}>
           {handleComponent()}
           </Grid>
+       
         
         </Grid>
       </Container>
-    </Page>
+    </div>
 
       </div>
     

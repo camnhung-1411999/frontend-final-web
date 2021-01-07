@@ -1,0 +1,46 @@
+.square-his {
+    background: #fff;
+    border: 1px solid rgb(167, 167, 167);
+    float: left;
+    font-size: 30px;
+    font-weight: none;
+    line-height: 34px;
+    padding: 0;
+    text-align: center;
+    width: 40px;
+    height: 40px;
+  
+  }
+  
+  .square-his:hover {
+    background: rgb(182, 180, 178);
+  }
+  
+  .square-his:focus {
+    outline: none;
+    background: papayawhip;
+  }
+  
+  @media screen and (max-width:700px){
+    .square-his {
+      background: #fff;
+      border: 1px solid rgb(167, 167, 167);
+      float: left;
+      font-size: 12px;
+      font-weight: none;
+      line-height: 10px;
+      padding: 0;
+      text-align: center;
+      width: 16px;
+      height: 16px;
+  
+    }
+}
+
+.board-row-his:after {
+    clear: both;
+    content: "";  
+    display: table;
+  }
+  
+  

@@ -24,21 +24,29 @@ const ListUser = () => {
     "image": "",
     "totalMatch": null,
   }]
-  const [customers, setCustomers] = useState(init);
+  const [users, setUsers] = useState(init);
+  const [listUser, setListUser] = useState(init);
+
   useEffect(() => {
     userService.getAllUser().then(function (response) {
-      setCustomers(response.data);
-      console.log('list user',response.data);
+      setListUser(response.data);
+      setUsers(response.data);
     });
-  })
+  }, [])
+
+  const handleSearch = (keyword,listUser) => {
+    const filter= listUser.filter(item => item.user.includes(keyword.keyword));
+    setUsers(filter);
+
+  }
 
  
   return (
     <Page className={classes.root} title="Customers">
       <Container maxWidth={false}>
-        <Toolbar />
+        <Toolbar  onClick={(keyword) => handleSearch(keyword,listUser)}/>
         <Box mt={3}>
-          <Results customers={customers} />
+          <Results customers={users} />
         </Box>
       </Container>
     </Page>

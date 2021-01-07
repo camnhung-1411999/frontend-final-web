@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -12,34 +11,44 @@ import {
   TextField,
   makeStyles,
 } from "@material-ui/core";
-import { useSelector } from "react-redux";
 import {ItemHistory} from './ItemHistory';
+import '../../../assets/css/history.css'
 const useStyles = makeStyles(() => ({
-  root: {},
+  root: {
+    width: '100%'
+  },
 }));
-
+const data = [{
+  winner: 'Nhung',
+  loser: 'Nhi',
+  createdAt: '3:25 20/12/2020',
+  match: [
+    [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+      null,null,null,null,null,null,null,null,null,null,null,null,
+      null,null,null,null,null,null,null,null,null,
+      'X','O',null,'O', null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,'X',null,null,'O', null,null,null,
+      null,null,null,null,null,'O','X','O', null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+      null,null,null,null,null,null,'X','O','X','O', null,null,null,null,null,'X',null,'O', null,null,null,null,null,
+      null,null,'X','O',null,'O', null,null, null, null, null, 'X','0',null,'O', null,null,'O', null,null, null, null, null, null,null, 'X','0',null,'O', null,null,null,null,
+       null, null, null, null,null,'0',null,'O', null,null,null,null,
+        null, null, null, 'O',null,'X',null,'O', null],
+    [],
+    [],
+    [],
+  ],
+  messages: [
+    {message: "Hello", ownl: true},
+    {message: "How are u", ownl: true},
+    {message: "1111", ownl: false},
+    {message: "1111", ownl: true},
+    {message: "Nothing", ownl: false},
+    {message: "1111", ownl: true},
+    {message: "Hihi", ownl: false},
+    {message: "1111", ownl: true},
+  ],
+}]
 const History = ({ className, ...rest }) => {
   const classes = useStyles();
-  const user = useSelector((state) => state.users.profile);
-  const [values, setValues] = useState({
-    firstName: "",
-    lastName: "",
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  useEffect(() => {
-    setValues({
-      firstName: user?.name.split(" ")[0] + "",
-      lastName: user?.name.split(" ")[1] + "",
-    });
-  }, [user]);
-
   return (
     <form
       autoComplete="off"
@@ -51,12 +60,16 @@ const History = ({ className, ...rest }) => {
         <CardHeader subheader="Display detail your history" title="HISTORY" />
         <Divider />
         <CardContent>
-          <ItemHistory/>
-          <ItemHistory/>
-          <ItemHistory/>
-          <ItemHistory/>
-          <ItemHistory/>
-          <ItemHistory/>
+          {data?.map(element => (
+            <>
+             <ItemHistory data={element}/>
+             <ItemHistory data={element}/>
+             <ItemHistory data={element}/>
+             <ItemHistory data={element}/>
+             <ItemHistory data={element}/>
+             </>
+          ))}
+         
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>

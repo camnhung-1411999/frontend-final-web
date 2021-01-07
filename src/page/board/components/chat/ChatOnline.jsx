@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
@@ -18,9 +17,7 @@ import MoodIcon from "@material-ui/icons/Mood";
 import BoxMessage from "./BoxMessage";
 import "emoji-mart/css/emoji-mart.css";
 import { Picker } from "emoji-mart";
-import userService from "../../../../services/user.service";
-import RoomService from "../../../../services/room.service";
-import { socket } from "../../../../helpers";
+import useChat from '../../../../sockets/useChat';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -32,94 +29,23 @@ const ChatOnline = ({ idroom, className, ...rest }) => {
   const classes = useStyles();
   const [flag, setFlag] = useState(true);
   const [message, setMessage] = useState("");
-  const [isSend, setIsSend] = useState(false);
-  const [list, setList] = useState([]);
-  const [player, setPlayer] = useState();
-  const [temp, setTemp] = useState(0);
-
+  const { messages, sendMessage } = useChat(idroom);
+  console.log(message);
 
   const addEmoji = (e) => {
-    // console.log(e.native);
-    let emoji = e.native;
-    //setmessage
+    setMessage(message + " " + e.native);
   };
+  console.log(messages)
 
-
-  useEffect(() => {
-    const iuser = async () => {
-      await userService.getUser().then(async (res) => {
-        localStorage.setItem(
-          "username",
-          JSON.stringify(res.data.user)
-        );
-        await RoomService.getRoom(idroom).then((room) => {
-          if (room.data.player1 !== res.data.user) {
-            setPlayer(room.data.player1);
-          } else {
-            setPlayer(room.data.player2);
-          }
-        });
-      });
-    };
-    iuser();
-    if (JSON.parse(localStorage.getItem("myMessage"))) {
-      setList(JSON.parse(localStorage.getItem("myMessage")));
-    }
-  }, [isSend, temp]);
-  
-  useEffect(() => {
-    let a = 0;
-    socket.on("recievedMsg", (data) => {
-      const username = JSON.parse(localStorage.getItem('username'));
-      if (username === data.user) {
-        const iMsg = JSON.parse(localStorage.getItem("myMessage"))
-        ? JSON.parse(localStorage.getItem("myMessage"))
-        : [];
-      localStorage.setItem(
-        "myMessage",
-        JSON.stringify([
-          ...iMsg,
-          {
-            ownl: false,
-            message: data.message,
-          },
-        ])
-      );
-      setTemp(a+1);
-      a+=1;
-      }
-    });
-      
-  }, []);
-
-  const handleSend = async () => {
-    if (message) {
-      const iMsg = JSON.parse(localStorage.getItem("myMessage"))
-        ? JSON.parse(localStorage.getItem("myMessage"))
-        : [];
-      localStorage.setItem(
-        "myMessage",
-        JSON.stringify([
-          ...iMsg,
-          {
-            ownl: true,
-            message,
-          },
-        ])
-      );
-      await socket.emit("sendMessage", {
-        roomId: idroom,
-        message,
-        user: player,
-      });
-      setIsSend(!isSend);
-      setMessage("");
-    }
+  const handleSend = () => {
+    /* call api lưu message*/
+    sendMessage(message);
+    setMessage("");
+    setFlag(true);
   };
-
+ 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
-      <CardHeader title={player} />
       <Divider />
       <CardContent>
         <Box
@@ -133,15 +59,15 @@ const ChatOnline = ({ idroom, className, ...rest }) => {
           {flag ? (
             <BoxMessage
               style={{ height: "450px", border: "1px solid blue" }}
-              messages={list}
+              messages={messages}
             />
           ) : (
-            <Picker style={{ width: "100%" }} onSelect={() => addEmoji()} />
+            <Picker style={{ width: "100%" }} onSelect={(e) => addEmoji(e)} />
           )}
         </Box>
         <Divider />
         <Box style={{ marginTop: "10px" }}>
-          <Grid container >
+          <Grid container>
             <Grid item xs={9}>
               <TextField
                 id="outlined-multiline-static"

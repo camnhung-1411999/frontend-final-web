@@ -3,7 +3,7 @@ import { Box, Container, Grid, makeStyles } from "@material-ui/core";
 import { Pagination } from "@material-ui/lab";
 import { Page } from "../../../components/Page";
 import Toolbar from "./components/Toolbar";
-import ProductCard from "./components/ProductCard";
+import MatchCard from "./components/MatchCard";
 import data from "./components/data";
 
 const useStyles = makeStyles((theme) => ({
@@ -30,7 +30,7 @@ const ListMatch = () => {
           <Grid container spacing={3}>
             {products.map((product) => (
               <Grid item key={product.id} lg={4} md={6} xs={12}>
-                <ProductCard
+                <MatchCard
                   className={classes.productCard}
                   product={product}
                 />
