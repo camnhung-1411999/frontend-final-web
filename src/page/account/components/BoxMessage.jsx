@@ -112,7 +112,7 @@ const BoxMessage = ({ messages, className, ...rest }) => {
                 height={height}
                 width={width}
                 itemSize={80}
-                itemCount={messages.length}
+                itemCount={messages?.length}
                 itemData={messages}
                 justify-content={"flex-end"}
               >

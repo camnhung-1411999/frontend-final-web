@@ -1,26 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
 import {
-  Button,
   Divider,
-  TextField,
   makeStyles,
   Accordion,
   AccordionDetails,
   AccordionSummary,
-  AccordionActions,
   Grid,
+  Avatar,
+  Box,
+  Typography,
+  Card,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import { useDispatch } from "react-redux";
-import { userActions } from "../../../actions";
-import { alertActions } from "../../../actions";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import logo from "../../../assets/image/match.png";
+import Board from './Board';
+import ChatHistory from './ChatHistory';
 const useStyles = makeStyles((theme) => ({
   password: {
     width: "100%",
-    marginTop: '3%'
+    marginTop: "3%",
   },
   secondaryHeading: {
     fontSize: theme.typography.pxToRem(15),
@@ -46,107 +49,110 @@ const useStyles = makeStyles((theme) => ({
       textDecoration: "underline",
     },
   },
+  root: {
+    width: "100%",
+  },
+  matchAvatar: {
+    paddingBottom: '5%',
+    width: 100,
+    height: 100,
+  },
+  statsItem: {
+    alignItems: "center",
+    display: "flex",
+  },
+  statsIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
-
-function ItemHistory() {
+const MatchCard = ({ idata,className, product, ...rest }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const [values, setValues] = useState({
-    oldpassword: "",
-    password: "",
-    confirm: "",
-  });
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-  const handelUpdate = () => {
-    if (!values.password || !values.confirm || !values.oldpassword) {
-      dispatch(alertActions.error("Feild not empty."));
-    } else {
-      if (values.password != values.confirm) {
-        dispatch(alertActions.error("Password are not matching."));
-      } else {
-        if (values.password == values.oldpassword) {
-          dispatch(
-            alertActions.error(
-              "Password and Old Password must not be the same."
-            )
-          );
-        } else {
-            dispatch(
-              userActions.updatePassword(values.password, values.oldpassword)
-            );
-          }
-      }
-    }
-  };
+  return (
+    <>
+      <Grid container>
+        <Grid item xs={6}>
+          <Box display="flex" justifyContent="center">
+            <Avatar
+              className={classes.matchAvatar}
+              alt="Product"
+              src={logo}
+              variant="square"
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={3}>
+          <Box>
+            <Typography variant="h3" color="textPrimary" gutterBottom>
+              WIN{" "}
+            </Typography>
+          </Box>
+        </Grid>
+
+        <Grid item xs={3}>
+          <Box style={{paddingTop:'2%'}}>
+            <Typography color="textPrimary">Rival:  <AccountCircleIcon/> {idata.loser}</Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={12}>
+          <Divider />
+          <Box p={2}>
+            <Grid container justify="space-between" spacing={2}>
+              <Grid className={classes.statsItem} item>
+                <AccessTimeIcon className={classes.statsIcon} color="action" />
+                <Typography
+                  color="textSecondary"
+                  display="inline"
+                  variant="body2"
+                >
+                  {idata.createdAt}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Box>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
+
+function ItemHistory({ data, className, product, ...rest }) {
+  const classes = useStyles();
+
   return (
     <div className={classes.password}>
-      <Accordion>
+      <Accordion className={clsx(classes.root, className)} {...rest}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1c-content"
           id="panel1c-header"
-          style={{backgroundColor: 'rgb(157, 215, 238)'
-        }}
         >
-           <p>WIN <span><AccountCircleIcon/></span>minh blues<span>22/11/2020</span>      times: 30mins</p>
+          <MatchCard idata ={data}/>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
-          <Grid container spacing={3}>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Old password"
-                margin="normal"
-                name="oldpassword"
-                onChange={handleChange}
-                type="password"
-                value={values.oldpassword}
-                variant="outlined"
-                required
-              />
+          <Grid container>
+            <Grid item xs={9}>
+              <Board result = {data.match}/>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="New password"
-                margin="normal"
-                name="password"
-                onChange={handleChange}
-                type="password"
-                value={values.password}
-                variant="outlined"
-                required
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Confirm password"
-                margin="normal"
-                name="confirm"
-                onChange={handleChange}
-                type="password"
-                value={values.confirm}
-                variant="outlined"
-                required
-              />
+            <Grid item xs={3}>
+              <ChatHistory messages = {data.messages}/>
+              <Card style={{marginTop: '10%'}}>
+                  <div style={{marginLeft:'3%'}}>
+                  <p> Winner: {data.winner} <span style={{color: 'green', fontSize:'bold', marginLeft:'3%'}}> X</span></p>
+                    <p> Loser: {data.loser} <span style={{color: 'gray', fontSize:'bold', marginLeft:'3%'}}> O</span></p>
+                  </div>
+
+              </Card>
             </Grid>
           </Grid>
         </AccordionDetails>
-        <Divider />
-        <AccordionActions>
-          <Button color="primary" variant="contained" onClick={handelUpdate}>
-            Update
-          </Button>
-        </AccordionActions>
+       
       </Accordion>
     </div>
   );
 }
+ItemHistory.propTypes = {
+  className: PropTypes.string,
+  product: PropTypes.object.isRequired,
+};
 export { ItemHistory };

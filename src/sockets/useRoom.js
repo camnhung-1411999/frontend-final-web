@@ -6,14 +6,9 @@ const JOIN = "joinRoom";
 const useRoom = (roomId) => {
   const [messages, setMessages] = useState([]);
   const [boards, setBoards] = useState(Array(20 * 20).fill(null))
+  // const [boards, setBoards] = useState([Array(20).fill(null), Array(20).fill(null)])
+
   const [isNext, setNext] = useState(true);
-
-  const socketRef = useRef();
-
-  // useEffect(() => {
-  //   socket.emit(JOIN, roomId);
-  // }, [])
-
 
   useEffect(() => {
     socket.emit(JOIN, roomId);

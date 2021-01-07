@@ -1,5 +1,5 @@
 import { roomConstants } from "../constants/room.constant";
-import RoomService from "../services/room.service";
+import {roomService} from "../services";
 import { alertActions } from "./";
 import { history, socket } from "../helpers";
 
@@ -7,7 +7,6 @@ import { history, socket } from "../helpers";
 export const roomActions = {
   create,
   listRooms,
-  listMsg,
   joinRoom,
   getRoom
 };
@@ -16,9 +15,9 @@ function create(checked, password) {
   return (dispatch) => {
     dispatch(request());
 
-    RoomService.createRoom(checked, password).then(
+    roomService.createRoom(checked, password).then(
       async (room) => {
-        dispatch(success(room));
+        // dispatch(success(room));
         await socket.emit('joinRoom', room.data.idroom)
         history.push(`/board/${room.data.idroom}`);
       },
@@ -42,7 +41,7 @@ function create(checked, password) {
 
 function joinRoom(id, password) {
   return (dispatch) => {
-    RoomService.joinRoom(id, password).then(
+    roomService.joinRoom(id, password).then(
       async () => {
         await socket.emit('joinRoom', id)
         history.push(`/board/${id}`);
@@ -68,7 +67,7 @@ function listRooms() {
   return (dispatch) => {
     dispatch(request());
 
-    RoomService.listRoom().then(
+    roomService.listRoom().then(
       (rooms) => {
         dispatch(success(rooms.data));
       },
@@ -93,7 +92,7 @@ function listRooms() {
 
 function getRoom(id, rooms) {
   return (dispatch) => {
-    RoomService.getRoom(id).then(
+    roomService.getRoom(id).then(
       async (response) => {
         const room = response.data;
         if (room.public == "true") {
@@ -121,14 +120,3 @@ function getRoom(id, rooms) {
   }
 }
 
-
-function listMsg(arr) {
-  return (dispatch) => {
-    dispatch(success(arr))
-  };
-
-  function success(messages) {
-    return { type: roomConstants.GET_SUCCESS, messages };
-  }
-
-}

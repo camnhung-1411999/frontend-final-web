@@ -17,9 +17,6 @@ import {
 } from "@material-ui/core";
 import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
-import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
-import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
-import VictoryIcon from "../../../assets/image/victory.svg";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import BeenhereIcon from '@material-ui/icons/Beenhere';
 import { useDispatch, useSelector } from "react-redux";

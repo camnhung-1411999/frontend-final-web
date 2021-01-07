@@ -1,8 +1,14 @@
-import React  from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import {AppBar, TextareaAutosize, Tabs, Tab , Typography, Box} from '@material-ui/core';
-import ChatOnline from './ChatOnline'
+import React from "react";
+import PropTypes from "prop-types";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  AppBar,
+  Tabs,
+  Tab,
+  Typography,
+  Box,
+} from "@material-ui/core";
+import ChatOnline from "./ChatOnline";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -17,7 +23,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box>
-          <Typography component={'div'}>{children}</Typography>
+          <Typography component={"div"}>{children}</Typography>
         </Box>
       )}
     </div>
@@ -33,7 +39,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -43,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
 }));
-function TabChat({id}) {
+function TabChat({ id }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -53,14 +59,18 @@ function TabChat({id}) {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          aria-label="simple tabs example"
+        >
           <Tab label="Chat" {...a11yProps(0)} />
           <Tab label="Followers" {...a11yProps(1)} />
           <Tab label="Online" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-       <ChatOnline idroom ={id}/>
+        <ChatOnline idroom={id} />
       </TabPanel>
       <TabPanel value={value} index={1}>
         Followers
@@ -72,4 +82,4 @@ function TabChat({id}) {
   );
 }
 
-export {TabChat} 
+export { TabChat };
