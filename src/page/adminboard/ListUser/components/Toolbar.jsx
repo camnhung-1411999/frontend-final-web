@@ -61,7 +61,7 @@ const Toolbar = (props,{ className, ...rest }) => {
                     </InputAdornment>
                   )
                 }}
-                placeholder="Search customer"
+                placeholder="Search user by name or email"
                 variant="outlined"
                 value = {keyword}
                 onChange={handleChange}
