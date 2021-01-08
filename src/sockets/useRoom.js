@@ -7,11 +7,12 @@ const useRoom = (roomId) => {
   const [messages, setMessages] = useState([]);
   const [boards, setBoards] = useState(Array(20 * 20).fill(null))
   // const [boards, setBoards] = useState([Array(20).fill(null), Array(20).fill(null)])
+  const username = JSON.parse(localStorage.getItem("username"));
 
   const [isNext, setNext] = useState(true);
 
   useEffect(() => {
-    socket.emit(JOIN, roomId);
+    socket.emit(JOIN, {roomId, username});
     socket.on(PLAY, (data) => {
       const incomingBoard = data.board.map((item) =>
         {

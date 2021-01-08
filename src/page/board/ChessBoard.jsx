@@ -30,16 +30,6 @@ const ChessBoard = ({ match }) => {
   const [open, setOpen] = useState(true);
   const { id } = useParams();
 
-  useEffect(() => {
-    async function getRoom() {
-      console.log(id);
-      await roomService.getRoom(id).then((response) => {
-        console.log("sssssss", response.data);
-      });
-    }
-    getRoom();
-  }, []);
-
   const handleReady = () =>{
     setOpen(false);
   }
