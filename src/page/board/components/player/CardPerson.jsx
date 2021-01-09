@@ -1,97 +1,102 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import {
-  Avatar,
-  Box,
-  Card,
-  CardActions,
-  CardContent,
-  Divider,
-  Typography,
-  makeStyles,
-  CircularProgress,
+    Avatar,
+    Box,
+    Card,
+    CardActions,
+    IconButton,
+    CardContent,
+    Divider,
+    Typography,
+    makeStyles,
+    CircularProgress,
 } from "@material-ui/core";
 
-import { green } from "@material-ui/core/colors";
+import {green} from "@material-ui/core/colors";
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 const user = {
-  avatar: "/static/media/image.8131c036.jpg",
-  city: "Los Angeles",
-  country: "USA",
-  jobTitle: "Senior Developer",
-  name: "Smith",
-  timezone: "GTM-7",
+    avatar: "/static/media/image.8131c036.jpg",
+    city: "Los Angeles",
+    country: "USA",
+    jobTitle: "Senior Developer",
+    name: "Smith",
+    timezone: "GTM-7",
 };
 
 const useStyles = makeStyles(() => ({
-  root: {
-    border: "1px solid blue",
-  },
-  avatar: {
-    height: 100,
-    width: 100,
-    marginTop: "10px",
-  },
-  input: {
-    display: "none",
-  },
-  fabProgress: {
-    color: green[500],
-    position: "absolute",
-  },
-  buttonProgress: {
-    color: green[500],
-    position: "absolute",
-  },
+    root: {
+        border: "1px solid blue",
+    },
+    avatar: {
+        height: 100,
+        width: 100,
+        marginTop: "10px",
+    },
+    input: {
+        display: "none",
+    },
+    fabProgress: {
+        color: green[500],
+        position: "absolute",
+    },
+    buttonProgress: {
+        color: green[500],
+        position: "absolute",
+    },
 }));
 
-const CardPerson = ({ className, ...rest }) => {
-  const classes = useStyles();
-  const [avatar, setAvatar] = useState();
+const CardPerson = ({className, player, handleReady, ...rest}) => {
+    const classes = useStyles();
+    const [avatar, setAvatar] = useState();
 
-  const [progress, setProgress] = useState(0);
+    const [progress, setProgress] = useState(0);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress >= 100 ? 0 : prevProgress + 3
-      );
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+    // React.useEffect(() => {
+    //   const timer = setInterval(() => {
+    //     setProgress((prevProgress) =>
+    //       prevProgress >= 100 ? 0 : prevProgress + 3
+    //     );
+    //   }, 1000);
+    //   return () => {
+    //     clearInterval(timer);
+    //   };
+    // }, []);
 
-  return (
-    <Card className={clsx(classes.root, className)} {...rest}>
-      <CardContent>
-        <Box alignItems="center" display="flex" flexDirection="column">
-          <Avatar className={classes.avatar} src={user.avatar} />
-          <CircularProgress
-            variant="determinate"
-            size={120}
-            className={classes.fabProgress}
-            value={progress}
-          />
-          <Typography
-            color="textPrimary"
-            gutterBottom
-            variant="h4"
-            component = "div"
-            style={{ marginTop: "40px" }}
-          >
-            {user.name}
-          </Typography>
-        </Box>
-      </CardContent>
-      <Divider />
-    </Card>
-  );
+    return (
+        <Card className={clsx(classes.root, className)} {...rest}>
+            <CardContent>
+                <Box alignItems="center" display="flex" flexDirection="column">
+                    {player ? <Avatar className={classes.avatar} src={player?.avatar}/> :
+                        <IconButton color="primary" aria-label="ready" component="span" onClick={handleReady}>
+                            <GetAppIcon style={{fontSize: 100}}/>
+                        </IconButton>}
+                    {/*<CircularProgress*/}
+                    {/*  variant="determinate"*/}
+                    {/*  size={120}*/}
+                    {/*  className={classes.fabProgress}*/}
+                    {/*  value={progress}*/}
+                    {/*/>*/}
+                    <Typography
+                        color="textPrimary"
+                        gutterBottom
+                        variant="h4"
+                        component="div"
+                        style={{marginTop: "40px"}}
+                    >
+                        {player? player?.display_name: "READY"}
+                    </Typography>
+                </Box>
+            </CardContent>
+            <Divider/>
+        </Card>
+    );
 };
 
 CardPerson.propTypes = {
-  className: PropTypes.string,
+    className: PropTypes.string,
 };
 
 export default CardPerson;

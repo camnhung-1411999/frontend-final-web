@@ -3,8 +3,8 @@ import Board from "./Board";
 import './game.css';
 import {roomActions} from '../../../../actions';
 // import {useDispatch, useSelector} from 'react-redux';
-import useRoom from '../../../../sockets/useRoom';
 import {useParams} from "react-router-dom"
+import usePlay from "../../../../sockets/usePlay";
 
 
 function Game() {
@@ -15,7 +15,7 @@ function Game() {
     const [historyIndex, setHistoryIndex] = useState([{ index: null }]);
     const [sort, setSort] = useState(false);
     const {id} = useParams();
-    const {isNext, boards, playTo } = useRoom(id);
+    const {isNext, boards, playTo } = usePlay(id);
 
     function handleClick(i, isFlag) {
         
