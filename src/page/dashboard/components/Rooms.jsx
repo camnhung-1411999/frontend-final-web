@@ -118,7 +118,7 @@ const Rooms = ({ className, ...rest }) => {
 
   const handlePublic = (id) => {
     setIdRoom(id);
-    if (id) dispatch(roomActions.getRoom(id, rooms.items));
+    if (id) dispatch(roomActions.getRoom(id));
   };
 
   const handleJoin = () => {

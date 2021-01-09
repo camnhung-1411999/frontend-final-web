@@ -30,12 +30,10 @@ const ChatOnline = ({ idroom, className, ...rest }) => {
   const [flag, setFlag] = useState(true);
   const [message, setMessage] = useState("");
   const { messages, sendMessage } = useChat(idroom);
-  console.log(message);
 
   const addEmoji = (e) => {
     setMessage(message + " " + e.native);
   };
-  console.log(messages)
 
   const handleSend = () => {
     /* call api lưu message*/

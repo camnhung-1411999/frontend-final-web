@@ -30,12 +30,12 @@ export function rooms(state = {}, action) {
         case roomConstants.ROOM_PUBLIC_SUCCESS:
             return {
                 isPublic: action.isPublic,
-                items: action.rooms,
+                items: state.items,
             };
         case roomConstants.ROOM_PUBLIC_FAILURE:
             return {
                 error: action.error,
-                items: action.rooms
+                items: state.items
             };
         default:
             return state

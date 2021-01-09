@@ -61,7 +61,7 @@ const actions = [
   },
 ];
 
-const Player = () => {
+const Player = ({player, handleReady}) => {
   const classes = useStyles();
 
   return (
@@ -76,7 +76,7 @@ const Player = () => {
         className={classes.grid}
       >
         <Grid item lg={12} sm={4} xl={12} xs={4}>
-          <CardPerson />
+          <CardPerson player = {player?.player1} handleReady={handleReady} />
         </Grid>
 
         <Grid item lg={12} md={4} xl={12} xs={4}>
@@ -108,7 +108,7 @@ const Player = () => {
           </Card>
         </Grid>
         <Grid item lg={12} md={4} xl={12} xs={4}>
-          <CardPerson />
+          <CardPerson player = {player?.player2} handleReady={handleReady}/>
         </Grid>
       </Grid>
     </Container>

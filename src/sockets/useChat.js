@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
-import { socket } from "../helpers";
+import {useEffect, useState} from "react";
+import {socket} from "../helpers";
+import {useSelector} from "react-redux";
+
 const SEND = "sendMessage";
 const RECEIVE = "recievedMessage";
 const JOINROOM = "joinRoom";
@@ -7,9 +9,11 @@ const JOINROOM = "joinRoom";
 
 const useChat = (roomId) => {
     const [messages, setMessages] = useState([]);
-    const username = JSON.parse(localStorage.getItem("username"));
+    const user = useSelector(state => state.users.profile);
+
+
     useEffect(() => {
-        socket.on(JOINROOM, (room)=>{
+        socket.on(JOINROOM, (room) => {
             setMessages(room.chat)
         })
         socket.on(RECEIVE, (message) => {
@@ -25,14 +29,20 @@ const useChat = (roomId) => {
     }, [roomId]);
 
     const sendMessage = (message) => {
-        setMessages((messages) => [...messages, { message: message, ownl: true }]);
+        setMessages((messages) => [...messages, {message: message, ownl: true, avatar: user.image}]);
         socket.emit(SEND, {
-            body: { message: message, ownl: false, username: username },
+            body: {
+                message: message,
+                ownl: false,
+                username: user.user,
+                avatar: user.image,
+                display_name: user.name,
+            },
             roomId: roomId,
         });
     };
 
-    return { messages, sendMessage };
+    return {messages, sendMessage};
 };
 
 export default useChat;

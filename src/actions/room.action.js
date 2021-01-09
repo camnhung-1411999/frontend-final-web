@@ -90,13 +90,13 @@ function listRooms() {
 
 };
 
-function getRoom(id, rooms) {
+function getRoom(id) {
   return (dispatch) => {
     roomService.getRoom(id).then(
       async (response) => {
         const room = response.data;
         if (room.public == "true") {
-          dispatch(success(true, rooms));
+          dispatch(success(true));
         }
         else {
           await socket.emit('joinRoom', id)
@@ -112,8 +112,8 @@ function getRoom(id, rooms) {
   function request(id) {
     return { type: roomConstants.ROOM_PUBLIC_REQUEST, id };
   }
-  function success(isPublic, rooms) {
-    return { type: roomConstants.ROOM_PUBLIC_SUCCESS, isPublic, rooms };
+  function success(isPublic) {
+    return { type: roomConstants.ROOM_PUBLIC_SUCCESS, isPublic };
   }
   function failure(error, rooms) {
     return { type: roomConstants.ROOM_PUBLIC_FAILURE, error, rooms };

@@ -15,7 +15,7 @@ export const userActions = {
   profile,
   update,
   userOffline,
-  updatePassword
+  updatePassword,
 };
 
 function login(data, from) {
@@ -24,24 +24,21 @@ function login(data, from) {
 
     await userService.login(data).then(
       (user) => {
-        console.log("login user:",user)
-        if(user.role ==="admin")
-        {
-          console.log("login adminn:")
-           dispatch(success(user));
+        console.log("login user:", user);
+        if (user.role === "admin") {
+          console.log("login adminn:");
+          dispatch(success(user));
           dispatch(alertActions.clear());
           history.push(`/adminboard`);
+        } else {
+          dispatch(success(user));
+          socket.emit("online", {
+            body: { username: user.user, name: user.name, image: user.image },
+            senderId: socket.id,
+          });
+          dispatch(alertActions.clear());
+          history.push(from);
         }
-        else
-        {
-        dispatch(success(user));
-        socket.emit('online', {
-          body: ({ username: user.user, name: user.name, image: user.image }),
-          senderId: socket.id,
-        });
-        dispatch(alertActions.clear());
-        history.push(from);
-      }
       },
       (error) => {
         dispatch(failure(error.toString()));
@@ -53,9 +50,11 @@ function login(data, from) {
   function request(user) {
     return { type: userConstants.LOGIN_REQUEST, user };
   }
+
   function success(user) {
     return { type: userConstants.LOGIN_SUCCESS, user };
   }
+
   function failure(error) {
     return { type: userConstants.LOGIN_FAILURE, error };
   }
@@ -67,7 +66,7 @@ function loginSocial(data, from) {
     await userService.loginSocial(data).then(
       async (user) => {
         dispatch(success(user));
-        await socket.emit('online');
+        await socket.emit("online");
         history.push(from);
       },
       (error) => {
@@ -76,12 +75,15 @@ function loginSocial(data, from) {
       }
     );
   };
+
   function request(user) {
     return { type: userConstants.LOGIN_REQUEST, user };
   }
+
   function success(user) {
     return { type: userConstants.LOGIN_SUCCESS, user };
   }
+
   function failure(error) {
     return { type: userConstants.LOGIN_FAILURE, error };
   }
@@ -91,13 +93,13 @@ function logout(from) {
   return async (dispatch) => {
     await userService.logout().then(async (reponsive) => {
       const user = reponsive.data;
-      socket.emit('offline', {
-        body: ({ username: user.user, name: user.name }),
+      socket.emit("offline", {
+        body: { username: user.user, name: user.name },
         senderId: socket.id,
       });
       history.push(from);
     });
-  }
+  };
 }
 
 function register(iuser) {
@@ -120,18 +122,20 @@ function register(iuser) {
   function request(user) {
     return { type: userConstants.REGISTER_REQUEST, user };
   }
+
   function success(user) {
     return { type: userConstants.REGISTER_SUCCESS, user };
   }
+
   function failure(error) {
     return { type: userConstants.REGISTER_FAILURE, error };
   }
 }
 
 function profile() {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(request());
-    userService.getCurrentUser().then(
+    await userService.getCurrentUser().then(
       (user) => dispatch(success(user.data)),
       (error) => dispatch(failure(error.toString()))
     );
@@ -140,9 +144,11 @@ function profile() {
   function request() {
     return { type: userConstants.PROFILE_REQUEST };
   }
+
   function success(user) {
     return { type: userConstants.PROFILE_SUCCESS, user };
   }
+
   function failure(error) {
     return { type: userConstants.PROFILE_FAILURE, error };
   }
@@ -150,25 +156,25 @@ function profile() {
 
 function update(data) {
   return (dispatch) => {
-
     dispatch(request());
     userService.update(data).then(
       (user) => {
         dispatch(success(user.data));
       },
       (error) => {
-        dispatch(failure(error.toString()))
+        dispatch(failure(error.toString()));
       }
     );
-
   };
 
   function request() {
     return { type: userConstants.UPDATE_REQUEST };
   }
+
   function success(user) {
     return { type: userConstants.UPDATE_SUCCESS, user };
   }
+
   function failure(error) {
     return { type: userConstants.UPDATE_FAILURE, error };
   }
@@ -187,9 +193,11 @@ function getUserOnline() {
   function request() {
     return { type: userConstants.GETALL_REQUEST };
   }
+
   function success(users) {
     return { type: userConstants.GETALL_SUCCESS, users };
   }
+
   function failure(error) {
     return { type: userConstants.GETALL_FAILURE, error };
   }
@@ -204,25 +212,27 @@ function userOnline(user) {
   function request() {
     return { type: userConstants.USER_ONLINE_REQUEST };
   }
+
   function success(user) {
     return { type: userConstants.USER_ONLINE, user };
   }
-
 }
 
 function userOffline(user) {
   return (dispatch) => {
     dispatch(request());
-    dispatch(success(user))
+    dispatch(success(user));
   };
 
   function request() {
     return { type: userConstants.USER_OFF_REQUEST };
   }
+
   function success(user) {
     return { type: userConstants.USER_OFFLINE, user };
   }
 }
+
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
   return (dispatch) => {
@@ -237,9 +247,11 @@ function _delete(id) {
   function request(_id) {
     return { type: userConstants.DELETE_REQUEST, _id };
   }
+
   function success(_id) {
     return { type: userConstants.DELETE_SUCCESS, _id };
   }
+
   function failure(_id, error) {
     return { type: userConstants.DELETE_FAILURE, _id, error };
   }
@@ -247,29 +259,27 @@ function _delete(id) {
 
 function updatePassword(user, password, oldPassword) {
   return (dispatch) => {
-
     dispatch(request());
     userService.updatePwd({ user, password, oldPassword }).then(
       (user) => {
         // dispatch(success(user.data));
         dispatch(alertActions.success("Update password success."));
-
       },
       (error) => {
         // dispatch(failure(error.toString()));
         dispatch(alertActions.error("Update password failed."));
-
       }
     );
-
   };
 
   function request() {
     return { type: userConstants.UPDATE_REQUEST };
   }
+
   function success(user) {
     return { type: userConstants.UPDATE_SUCCESS, user };
   }
+
   function failure(error) {
     return { type: userConstants.UPDATE_FAILURE, error };
   }
