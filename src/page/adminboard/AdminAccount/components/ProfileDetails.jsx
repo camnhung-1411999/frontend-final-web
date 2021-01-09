@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -12,21 +12,7 @@ import {
   TextField,
   makeStyles,
 } from "@material-ui/core";
-
-const states = [
-  {
-    value: "alabama",
-    label: "Alabama",
-  },
-  {
-    value: "new-york",
-    label: "New York",
-  },
-  {
-    value: "san-francisco",
-    label: "San Francisco",
-  },
-];
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -34,13 +20,10 @@ const useStyles = makeStyles(() => ({
 
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
+  const user = useSelector((state) => state.users.profile);
   const [values, setValues] = useState({
-    firstName: "Katarina",
-    lastName: "Smith",
-    email: "demo@devias.io",
-    phone: "",
-    state: "Alabama",
-    country: "USA",
+    firstName: "",
+    lastName: "",
   });
 
   const handleChange = (event) => {
@@ -49,6 +32,13 @@ const ProfileDetails = ({ className, ...rest }) => {
       [event.target.name]: event.target.value,
     });
   };
+
+  useEffect(() => {
+    setValues({
+      firstName: user?.name.split(" ")[0] + "",
+      lastName: user?.name.split(" ")[1] + "",
+    });
+  }, [user]);
 
   return (
     <form
@@ -65,7 +55,6 @@ const ProfileDetails = ({ className, ...rest }) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
                 label="First name"
                 name="firstName"
                 onChange={handleChange}
@@ -88,61 +77,20 @@ const ProfileDetails = ({ className, ...rest }) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Email Address"
+                label="Email"
                 name="email"
-                onChange={handleChange}
+                disabled={true}
                 required
-                value={values.email}
+                value={user?.user + ""}
                 variant="outlined"
               />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
             </Grid>
           </Grid>
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>
           <Button color="primary" variant="contained">
-            Save details
+            Update
           </Button>
         </Box>
       </Card>
@@ -154,4 +102,4 @@ ProfileDetails.propTypes = {
   className: PropTypes.string,
 };
 
-export default ProfileDetails;
+export { ProfileDetails };

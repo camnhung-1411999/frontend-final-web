@@ -8,6 +8,7 @@ class UserService {
   login(data) {
     return axios.post(API_URL + "login", { data }).then((response) => {
       if (response.data) {
+        console.log(response.data)
         localStorage.setItem(
           "accessToken",
           JSON.stringify(response.data.accessToken)
@@ -15,6 +16,10 @@ class UserService {
         localStorage.setItem(
           "refreshToken",
           JSON.stringify(response.data.refreshToken)
+        );
+        localStorage.setItem(
+            "username",
+            JSON.stringify(response.data.user)
         );
       }
       return response.data;
@@ -48,6 +53,8 @@ class UserService {
     const auth = authHeader();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("username");
+
     return axios.put(API_URL + "logout", null, {
       headers: auth,
     });

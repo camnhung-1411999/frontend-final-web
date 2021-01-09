@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Container, Grid, makeStyles } from "@material-ui/core";
-import { Breadcrumb, Page } from "../../../components";
+import {  Page } from "../../../components";
 import { Profile, ProfileDetails, MatchHistory } from "./components";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,15 +15,6 @@ const UserDetail = () => {
   const classes = useStyles();
   return (
     <Page className={classes.root} title="Profile">
-      <Breadcrumb
-        name="Profile"
-        style={{
-          marginLeft: "10px",
-          marginBottom: "10px",
-          width: "fit-content",
-          padding: "10px",
-        }}
-      />
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item lg={4} md={6} xs={12}>
