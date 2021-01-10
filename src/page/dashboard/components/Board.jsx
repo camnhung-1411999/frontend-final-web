@@ -59,7 +59,7 @@ export default function Board({ id, board, handelClick }) {
         />
         <CardContent onClick={handelClick}>
           <Icon style ={{ textAlign: 'center',height: "100%", width: "50%", margin: "0 auto"}}>
-            <img style ={{width: "40%", marginLeft: "30%"}} className={classes.imageIcon} src={ !board.player2? image: image1 }/>
+            <img style ={{width: "40%", marginLeft: "30%"}} className={classes.imageIcon} src={ board.player2? image: image1 }/>
           </Icon>
         </CardContent>
         <Divider light />

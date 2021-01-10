@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom"
 import usePlay from "../../../../sockets/usePlay";
 
 
-function Game() {
+function Game({isPlay}) {
 
     const [xIsNext, setXIsNext] = useState(true);
     const [history, setHistory] = useState([{ squares: Array(9*9).fill(null) }]);
@@ -18,14 +18,15 @@ function Game() {
     const {isNext, boards, playTo } = usePlay(id);
 
     function handleClick(i, isFlag) {
-        
-        const data = {
-            roomId: id, 
-            index: i,
-            chessman: true
+        if(isPlay) {
+            const data = {
+                roomId: id,
+                index: i,
+                chessman: true
+            }
+            if (isFlag)
+                playTo(data)
         }
-        if(isFlag)
-            playTo(data)
     }
     const playAgain = () => {
         setHistory([{ squares: Array(9).fill(null) }])

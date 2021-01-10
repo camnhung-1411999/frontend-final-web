@@ -14,15 +14,7 @@ import {
 
 import {green} from "@material-ui/core/colors";
 import GetAppIcon from '@material-ui/icons/GetApp';
-
-// const user = {
-//     avatar: "/static/media/image.8131c036.jpg",
-//     city: "Los Angeles",
-//     country: "USA",
-//     jobTitle: "Senior Developer",
-//     name: "Smith",
-//     timezone: "GTM-7",
-// };
+import "./player.css";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -68,7 +60,7 @@ const CardPerson = ({className, player, handleReady, ...rest}) => {
             <CardContent>
                 <Box alignItems="center" display="flex" flexDirection="column">
                     {player ? <Avatar className={classes.avatar} src={player?.avatar}/> :
-                        <IconButton color="primary" aria-label="ready" component="span" onClick={handleReady}>
+                        <IconButton className = "buttonReady" style = {{color: "white"}} aria-label="ready" component="span" onClick={handleReady}>
                             <GetAppIcon style={{fontSize: 100}}/>
                         </IconButton>}
                     {/*<CircularProgress*/}
