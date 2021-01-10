@@ -10,7 +10,7 @@ import {
     Button,
     DialogTitle,
 } from "@material-ui/core";
-import {Page, Online} from "../../components";
+import {Page} from "../../components";
 import {Game, TabChat} from "./components";
 import Player from "./components/player/Player";
 import {userActions} from "../../actions";
@@ -30,16 +30,16 @@ const useStyles = makeStyles((theme) => ({
 
 const ChessBoard = ({match}) => {
     const classes = useStyles();
-    // const [open, setOpen] = useState(true);
     const dispatch = useDispatch();
 
     const {id} = useParams();
-    const {player, open, setOpen, setReadyPlayer} = useRoom(id);
+    const {player,isPlay, open, setReadyPlayer, playGame} = useRoom(id);
 
     const handleReady = () => {
         setReadyPlayer();
-        console.log("sssss")
-        setOpen(false);
+    }
+    const  handlePlay = () =>{
+        playGame()
     }
     useEffect(() => {
         dispatch(userActions.profile());
@@ -53,7 +53,7 @@ const ChessBoard = ({match}) => {
                         <Player player={player} handleReady={() => handleReady()}/>
                     </Grid>
                     <Grid item lg={6} md={12} xl={6} xs={12}>
-                        <Game/>
+                        <Game isPlay = {isPlay}/>
                     </Grid>
                     <Grid item lg={3} md={6} xl={3} xs={12}>
                         <TabChat id={match.params.id}/>
@@ -61,17 +61,17 @@ const ChessBoard = ({match}) => {
                 </Grid>
             </Container>
             <Dialog
-                open={false}
+                open={open}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Join the match"}</DialogTitle>
+                {/*<DialogTitle id="alert-dialog-title">{"Join the match"}</DialogTitle>*/}
                 <DialogActions>
-                    <Button onClick={() => setOpen(false)} color="secondary">
-                        Stand
-                    </Button>
-                    <Button onClick={handleReady} color="primary" autoFocus>
-                        Ready
+                    {/*<Button onClick={() => setOpen(false)} color="secondary">*/}
+                    {/*    Stand*/}
+                    {/*</Button>*/}
+                    <Button onClick={handlePlay} color="primary" autoFocus>
+                        Play Game
                     </Button>
                 </DialogActions>
             </Dialog>

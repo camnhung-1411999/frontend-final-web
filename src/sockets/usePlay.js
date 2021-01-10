@@ -3,7 +3,6 @@ import { socket } from "../helpers";
 import {useSelector} from "react-redux";
 
 const PLAY = "play";
-const JOIN = "joinRoom";
 
 const usePlay = (roomId) => {
     const [boards, setBoards] = useState(Array(20 * 20).fill(null))
