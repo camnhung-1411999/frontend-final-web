@@ -21,7 +21,8 @@ export function users(state = {}, action) {
             };
         case userConstants.PROFILE_SUCCESS:
             return {
-                profile: action.user
+                profile: action.user,
+                items: state.items,
             };
         case userConstants.PROFILE_FAILURE:
             return {

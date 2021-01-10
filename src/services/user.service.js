@@ -1,6 +1,7 @@
 import axios from "axios";
 import { authHeader } from '../helpers';
 import { urlConstants } from '../constants'
+import axiosApiInstance from '../helpers/axiosApiInstance';
 
 const API_URL = urlConstants.API_URL + "users/";
 
@@ -109,9 +110,7 @@ class UserService {
   getCurrentUser() {
     const token = localStorage.getItem('accessToken');
     if (token) {
-      return axios.get(API_URL, {
-        headers: authHeader(),
-      });
+      return axiosApiInstance.get(API_URL);
     }
     return token;
   }

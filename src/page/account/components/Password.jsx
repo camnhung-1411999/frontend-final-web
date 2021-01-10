@@ -68,10 +68,10 @@ function Password() {
     if (!values.password || !values.confirm || !values.oldpassword) {
       dispatch(alertActions.error("Feild not empty."));
     } else {
-      if (values.password != values.confirm) {
+      if (values.password !== values.confirm) {
         dispatch(alertActions.error("Password are not matching."));
       } else {
-        if (values.password == values.oldpassword) {
+        if (values.password === values.oldpassword) {
           dispatch(
             alertActions.error(
               "Password and Old Password must not be the same."
