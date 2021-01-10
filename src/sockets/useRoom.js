@@ -16,11 +16,11 @@ const useRoom = (roomId) => {
         if (user) {
             socket.emit(JOINROOM, {roomId, user});
             socket.on(JOINROOM, (room) => {
-                setOpen(!((room.player1?.username == user.user || room.player2?.username == user.user) || (room.player1 && room.player2)))
+                setOpen(!((room.player1?.username === user.user || room.player2?.username === user.user) || (room.player1 && room.player2)))
                 setPlayer({player1: room.player1, player2: room.player2});
             })
             socket.on(READY, (room) => {
-                setOpen(!((room.player1?.username == user.user || room.player2?.username == user.user) || (room.player1 && room.player2)))
+                setOpen(!((room.player1?.username === user.user || room.player2?.username === user.user) || (room.player1 && room.player2)))
                 setPlayer({player1: room.player1, player2: room.player2});
             })
         }

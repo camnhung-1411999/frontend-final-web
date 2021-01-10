@@ -7,7 +7,6 @@ import {
 } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import image from "../../../assets/image/image.jpg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
