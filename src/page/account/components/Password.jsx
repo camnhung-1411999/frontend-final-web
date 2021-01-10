@@ -53,7 +53,7 @@ function Password() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [values, setValues] = useState({
-    oldpassword: "",
+    oldPassword: "",
     password: "",
     confirm: "",
   });
@@ -65,22 +65,22 @@ function Password() {
     });
   };
   const handelUpdate = () => {
-    if (!values.password || !values.confirm || !values.oldpassword) {
-      dispatch(alertActions.error("Feild not empty."));
+    if (!values.password || !values.confirm || !values.oldPassword) {
+      dispatch(alertActions.error("Field not empty."));
     } else {
       if (values.password !== values.confirm) {
-        dispatch(alertActions.error("Password are not matching."));
+        dispatch(alertActions.error("Confirm password is not matching."));
       } else {
-        if (values.password === values.oldpassword) {
+        if (values.password === values.oldPassword) {
           dispatch(
             alertActions.error(
-              "Password and Old Password must not be the same."
+              "Password and old password must not be the same."
             )
           );
         } else
           {
             dispatch(
-              userActions.updatePassword(values.password, values.oldpassword)
+              userActions.update({password: values.password, oldPassword: values.oldPassword})
             );
           }
       }
@@ -107,10 +107,10 @@ function Password() {
                 fullWidth
                 label="Old password"
                 margin="normal"
-                name="oldpassword"
+                name="oldPassword"
                 onChange={handleChange}
                 type="password"
-                value={values.oldpassword}
+                value={values.oldPassword}
                 variant="outlined"
                 required
               />

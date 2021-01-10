@@ -15,7 +15,6 @@ export const userActions = {
   profile,
   update,
   userOffline,
-  updatePassword,
 };
 
 function login(data, from) {
@@ -26,7 +25,6 @@ function login(data, from) {
       (user) => {
         console.log("login user:", user);
         if (user.role === "admin") {
-          console.log("login adminn:");
           dispatch(success(user));
           dispatch(alertActions.clear());
           history.push(`/adminboard`);
@@ -42,7 +40,11 @@ function login(data, from) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error("Login failed !!!"));
+        if (error.response.status === 404) {
+          dispatch(alertActions.error("User not found!!!"));
+        } else {
+          dispatch(alertActions.error("Password not match!!!"));
+        }
       }
     );
   };
@@ -97,6 +99,7 @@ function logout(from) {
         body: { username: user.user, name: user.name },
         senderId: socket.id,
       });
+      dispatch();
       history.push(from);
     });
   };
@@ -114,7 +117,11 @@ function register(iuser) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        dispatch(alertActions.error(error.toString()));
+        if (error.response.status === 409) {
+        dispatch(alertActions.error("Email existed !!!"));
+        } else {
+          dispatch(alertActions.error(error.toString()));
+        }
       }
     );
   };
@@ -154,31 +161,6 @@ function profile() {
   }
 }
 
-function update(data) {
-  return (dispatch) => {
-    dispatch(request());
-    userService.update(data).then(
-      (user) => {
-        dispatch(success(user.data));
-      },
-      (error) => {
-        dispatch(failure(error.toString()));
-      }
-    );
-  };
-
-  function request() {
-    return { type: userConstants.UPDATE_REQUEST };
-  }
-
-  function success(user) {
-    return { type: userConstants.UPDATE_SUCCESS, user };
-  }
-
-  function failure(error) {
-    return { type: userConstants.UPDATE_FAILURE, error };
-  }
-}
 
 function getUserOnline() {
   return (dispatch) => {
@@ -257,17 +239,17 @@ function _delete(id) {
   }
 }
 
-function updatePassword(user, password, oldPassword) {
+function update(data) {
   return (dispatch) => {
     dispatch(request());
-    userService.updatePwd({ user, password, oldPassword }).then(
+    userService.update(data).then(
       (user) => {
         // dispatch(success(user.data));
-        dispatch(alertActions.success("Update password success."));
+        dispatch(alertActions.success("Update success."));
       },
       (error) => {
         // dispatch(failure(error.toString()));
-        dispatch(alertActions.error("Update password failed."));
+        dispatch(alertActions.error("Update failed."));
       }
     );
   };

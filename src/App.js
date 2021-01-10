@@ -9,7 +9,6 @@ import PageNotFound from "./page/error/PageNotFound";
 import {ChessBoard} from "./page/board";
 import {Redirect} from "react-router-dom";
 import {Account} from "./page/account"
-import {HistoryBoard} from "./page/historyboard";
 import {Rank} from "./page/rank"
 import { history } from './helpers';
 import Confirm from './components/Confirm';
@@ -30,7 +29,6 @@ function App() {
               <PrivateRoute path="/home" component={DashBoard} />
               <PrivateRoute path="/board/:id" component={ChessBoard} />
               <PrivateRoute path="/profile" component={Account} />
-              <PrivateRoute path="/historyboard" component={HistoryBoard} />
               <Route path="/404" component={PageNotFound} />
               <Redirect from='*' to='/404' />
             </Switch>

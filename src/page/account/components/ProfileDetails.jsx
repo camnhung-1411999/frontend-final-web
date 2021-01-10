@@ -13,6 +13,9 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../../actions";
+import { alertActions } from "../../../actions";
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -20,6 +23,7 @@ const useStyles = makeStyles(() => ({
 
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.users.profile);
   const [values, setValues] = useState({
     firstName: "",
@@ -40,6 +44,21 @@ const ProfileDetails = ({ className, ...rest }) => {
     });
   }, [user]);
 
+  const handelUpdate = () => {
+    if(!values.firstName || !values.lastName) {
+      alertActions.error('Field must not be empty');
+      return;
+    }
+    if(values.firstName === (user?.name.split(" ")[0] + "") && values.lastName === (user?.name.split(" ")[0] + "")) {
+      alertActions.error('Nothing changed to update');
+      return;
+    }
+
+    dispatch(
+      userActions.update({name: values.firstName + ' ' + values.lastName})
+    );
+
+  }
   return (
     <form
       autoComplete="off"
@@ -89,7 +108,7 @@ const ProfileDetails = ({ className, ...rest }) => {
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>
-          <Button color="primary" variant="contained">
+          <Button color="primary" variant="contained" onClick = {handelUpdate}>
             Update
           </Button>
         </Box>

@@ -48,10 +48,6 @@ export default function Dropdown() {
     return history.push("/profile");
   }
 
-  const handleClickHistory =()=>{
-    return history.push(`/historyboard`);
-  }
-
 
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
@@ -84,7 +80,6 @@ export default function Dropdown() {
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClickProfile}>Profile</MenuItem>
-                    <MenuItem onClick={handleClickHistory}>History</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

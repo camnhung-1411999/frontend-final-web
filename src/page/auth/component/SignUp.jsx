@@ -128,7 +128,7 @@ function SignUp() {
                 required
                 fullWidth
                 id="username"
-                label="Username"
+                label="Email"
                 name="username"
                 autoComplete="username"
                 onChange={(e) => setUsername(e.target.value)}

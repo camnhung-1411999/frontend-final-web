@@ -5,26 +5,24 @@ import {
     Avatar,
     Box,
     Card,
-    CardActions,
     IconButton,
     CardContent,
     Divider,
     Typography,
     makeStyles,
-    CircularProgress,
 } from "@material-ui/core";
 
 import {green} from "@material-ui/core/colors";
 import GetAppIcon from '@material-ui/icons/GetApp';
 
-const user = {
-    avatar: "/static/media/image.8131c036.jpg",
-    city: "Los Angeles",
-    country: "USA",
-    jobTitle: "Senior Developer",
-    name: "Smith",
-    timezone: "GTM-7",
-};
+// const user = {
+//     avatar: "/static/media/image.8131c036.jpg",
+//     city: "Los Angeles",
+//     country: "USA",
+//     jobTitle: "Senior Developer",
+//     name: "Smith",
+//     timezone: "GTM-7",
+// };
 
 const useStyles = makeStyles(() => ({
     root: {

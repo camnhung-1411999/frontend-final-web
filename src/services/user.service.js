@@ -1,5 +1,4 @@
 import axios from "axios";
-import { authHeader } from '../helpers';
 import { urlConstants } from '../constants'
 import axiosApiInstance from '../helpers/axiosApiInstance';
 
@@ -51,14 +50,11 @@ class UserService {
   }
 
   logout() {
-    const auth = authHeader();
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("username");
 
-    return axios.put(API_URL + "logout", null, {
-      headers: auth,
-    });
+    return axiosApiInstance.put(API_URL + "logout");
   }
 
   register(input) {
@@ -81,12 +77,9 @@ class UserService {
   }
 
   async update(data) {
-    return await axios.put(
+    return await axiosApiInstance.put(
       API_URL,
-      data,
-      {
-        headers: authHeader(),
-      }
+      data
     );
   }
 
@@ -94,17 +87,15 @@ class UserService {
     return axios.put(API_URL + 'resetpassword', data)
   }
   getUser() {
-    return axios.get(API_URL, {
-      headers: authHeader(),
-    });
+    return axiosApiInstance.get(API_URL);
   }
 
   async getAllUser() {
-    return await axios.get(API_URL+'list');
+    return await axios.axiosApiInstance(API_URL+'list');
   }
 
   getUserOnline() {
-    return axios.get(API_URL + "online");
+    return axiosApiInstance.get(API_URL + "online");
   }
 
   getCurrentUser() {
@@ -116,18 +107,13 @@ class UserService {
   }
 
   updateAvatar(file) {
-    return axios.post(
+    return axiosApiInstance.post(
       API_URL + "avatar",
-      { file },
-      {
-        headers: authHeader(),
-      }
+      { file }
     );
   }
   getListRank() {
-    return axios.get(API_URL + 'rank', {
-      headers: authHeader()
-    });
+    return axiosApiInstance.get(API_URL + 'rank');
   }
 }
 export default new UserService();

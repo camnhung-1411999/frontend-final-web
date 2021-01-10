@@ -1,38 +1,28 @@
 import axios from "axios";
-import { authHeader } from '../helpers';
-import { urlConstants} from '../constants'
+import { urlConstants} from '../constants';
+import axiosApiInstance from '../helpers/axiosApiInstance';
 
 const API_URL = urlConstants.API_URL+ 'rooms/';
 class RoomService {
 
     createRoom(checked, password) {
-        return axios.post(API_URL+'create', {public: checked, password: password}, {
-            headers: authHeader(),
-        });
+        return axiosApiInstance.post(API_URL+'create', {public: checked, password: password});
     }
 
     joinRoom(id, password) {
-        return axios.post(API_URL + `join/${id}`, {password}, {
-            headers: authHeader(),
-        });
+        return axiosApiInstance.post(API_URL + `join/${id}`, {password});
     }
 
     getRoom(id) {
-        return axios.get(API_URL + `${id}`, {
-            headers: authHeader(),
-        });
+        return axiosApiInstance.get(API_URL + `${id}`);
     }
 
     outRoom(input) {
-        return axios.put(API_URL + `out/${input.idroom}`, null, {
-            headers: authHeader(),
-        });
+        return axiosApiInstance.put(API_URL + `out/${input.idroom}`, null);
     }
 
     listRoom() {
-        return axios.get(API_URL,{
-            headers: authHeader(),
-        });
+        return axiosApiInstance.get(API_URL);
     }
 
 }
