@@ -53,22 +53,22 @@ const Profile = ({ className, ...rest }) => {
 
   const parameter = [
     {
-      title: "Rate",
+      title: "Rate win",
       icon: ThumbUpIcon,
       color: colors.indigo[500],
-      value: '60.8%',
+      value: user?.win  ? (user?.win / user.totalMatch)*0.1*100 + '%' : 0 + '%',
     },
     {
       title: "Total match",
       icon: BeenhereIcon,
       color: colors.black,
-      value: 100,
+      value: user?.totalMatch ? user.totalMatch : 0,
     },
     {
       title: "Cups",
       icon: EmojiEventsIcon,
       color: colors.orange[600],
-      value: 100,
+      value: user?.cups ? user.cups : 0,
     },
   ];
 

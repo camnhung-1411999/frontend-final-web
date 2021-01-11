@@ -32,7 +32,7 @@ class UserService {
         password: input.password,
         name: input.name,
         role: input.role,
-        status: false,
+        status: true,
       }).then(async (response) => {
         if (response.data) {
           localStorage.setItem(
@@ -82,6 +82,13 @@ class UserService {
     );
   }
 
+  async updateByAdmin(data) {
+    return await axios.put(
+      API_URL + 'block',
+      data
+    );
+  }
+
   updatePwd(data) {
     return axios.put(API_URL + 'resetpassword', data)
   }
@@ -89,8 +96,13 @@ class UserService {
     return axiosApiInstance.get(API_URL);
   }
 
+  async getUserById(id) {
+    console.log('id',id)
+    return await axiosApiInstance.get(API_URL+`${id}`);
+  }
+
   async getAllUser() {
-    return await axios.axiosApiInstance(API_URL+'list');
+    return await axiosApiInstance.get(API_URL+'list');
   }
 
   getUserOnline() {
