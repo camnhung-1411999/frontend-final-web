@@ -97,8 +97,7 @@ class UserService {
   }
 
   async getUserById(id) {
-    console.log('id',id)
-    return await axiosApiInstance.get(API_URL+`${id}`);
+    return await axiosApiInstance.get(API_URL+`/getUserById/${id}`);
   }
 
   async getAllUser() {
