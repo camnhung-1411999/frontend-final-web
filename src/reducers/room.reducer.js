@@ -37,6 +37,17 @@ export function rooms(state = {}, action) {
                 error: action.error,
                 items: state.items
             };
+        case roomConstants.ROOM_NEW_REQUEST:
+            return {
+                loading: true,
+            };
+        case roomConstants.ROOM_NEW_SUCCESS:
+            return {
+                ...state,
+                items: [
+                    ...state.items, action.room
+                ]
+            };
         default:
             return state
     }

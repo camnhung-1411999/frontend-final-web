@@ -26,6 +26,7 @@ import { roomActions } from "../../../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Search as SearchIcon } from "@material-ui/icons";
 import MuiAlert from "@material-ui/lab/Alert";
+import {socket} from "../../../helpers";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -132,6 +133,12 @@ const Rooms = ({ className, ...rest }) => {
   useEffect(() => {
     setOpenPublic(rooms.isPublic);
   }, [rooms]);
+
+  useEffect(()=>{
+    socket.on("createRoom", (room)=>{
+      dispatch(roomActions.addRoom(room));
+    });
+  },[])
 
   return (
     <>

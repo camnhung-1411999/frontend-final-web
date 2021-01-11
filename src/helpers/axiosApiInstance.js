@@ -27,7 +27,6 @@ axiosApiInstance.interceptors.response.use((response) => {
   if (error.response.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true;
     const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
-    console.log('-------------------')
     const token = await axios.get(`${API_URL}refresh`, {
       headers: {
         Authorization: 'Bearer ' + refreshToken,

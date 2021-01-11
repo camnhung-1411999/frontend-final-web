@@ -2,13 +2,16 @@ import { roomConstants } from "../constants/room.constant";
 import {roomService} from "../services";
 import { alertActions } from "./";
 import { history, socket } from "../helpers";
+import {userConstants} from "../constants";
 
 
 export const roomActions = {
   create,
   listRooms,
   joinRoom,
-  getRoom
+  getRoom,
+  addRoom,
+
 };
 
 function create(checked, password) {
@@ -16,9 +19,8 @@ function create(checked, password) {
     dispatch(request());
 
     roomService.createRoom(checked, password).then(
-      async (room) => {
-        // dispatch(success(room));
-        await socket.emit('joinRoom', room.data.idroom)
+       (room) => {
+        socket.emit('createRoom', room.data);
         history.push(`/board/${room.data.idroom}`);
       },
       (error) => {
@@ -36,6 +38,19 @@ function create(checked, password) {
   }
   function failure(error) {
     return { type: roomConstants.CREATE_FAILURE, error };
+  }
+}
+
+function addRoom(room) {
+  return (dispatch) => {
+    dispatch(success(room));
+  };
+
+  function request() {
+    return { type: roomConstants.ROOM_NEW_REQUEST };
+  }
+  function success(room) {
+    return { type: roomConstants.ROOM_NEW_SUCCESS, room };
   }
 }
 

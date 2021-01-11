@@ -12,7 +12,6 @@ function AdminRoute({ component: Component, ...rest }) {
     return undefined;
   };
   const admin = user();
-  console.log('..................', admin);
   return (
     <Route
       {...rest}
