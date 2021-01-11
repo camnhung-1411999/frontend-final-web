@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import moment from "moment";
+import { userService } from "../../../../services/index";
 import {
   Avatar,
   Box,
@@ -65,9 +66,25 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Profile = ({ className, ...rest }) => {
+const Profile = ({ className,id, ...rest }) => {
   const classes = useStyles();
+  const initProfile = {
+    "user": "",
+    "name": "",
+    "status": null,
+    "cups": null,
+    "image": null,
+    "totalMatch": null,
+    "wins": null,
+    "block": false
+  }
 
+  const [user, setUser] = useState(initProfile);
+  useEffect(() => {
+    userService.getUserById(id).then(function (response) {
+      setUser(response.data);
+    });
+  }, [])
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent>
@@ -76,15 +93,13 @@ const Profile = ({ className, ...rest }) => {
           <Typography color="textPrimary" gutterBottom variant="h3">
             {user.name}
           </Typography>
-          <Typography color="textSecondary" variant="body1">
-            {`${user.city} ${user.country}`}
-          </Typography>
+         
           <Typography
             className={classes.dateText}
             color="textSecondary"
             variant="body1"
           >
-            {`${moment().format("hh:mm A")} ${user.timezone}`}
+            {`${moment().format("hh:mm A")} ${user.createdAt}`}
           </Typography>
         </Box>
       </CardContent>

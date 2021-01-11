@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -14,30 +14,52 @@ import {
   makeStyles,
 } from "@material-ui/core";
 
+import { userService } from "../../../../services/index";
 const useStyles = makeStyles(() => ({
   root: {},
 }));
 
-const ProfileDetails = ({ className, ...rest }) => {
+const ProfileDetails = ({ className,id,  ...rest }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: "Katarina",
-    lastName: "Smith",
-    email: "demo@devias.io",
-    phone: "",
-    state: "Alabama",
-    country: "USA",
+  const initProfile = {
+    "user": "",
+    "name": "",
+    "status": null,
+    "cups": null,
+    "image": null,
+    "totalMatch": null,
+    "wins": null,
+    "block": false
+  }
+
+  const [user, setUser] = useState(initProfile);
+  useEffect(() => {
+    userService.getUserById(id).then(function (response) {
+      setUser(response.data);
+      setState({checkedBlock: response.data.block})
+    });
+  }, [])
+
+  const [state, setState] = useState({
+    checkedBlock: user.block,
   });
+  
 
-
-  const [state, setState] = React.useState({
-    checkedA: true,
-    checkedB: true,
-  });
-
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+  const handleChange =  (event) => {
+    const checked = event.target.checked;
+    let data ={
+      "user": user.user, 
+      "block": checked,
+    };
+    console.log('data',data);
+    userService.updateByAdmin(data).then(function (response) {
+      setUser(response.data);
+      console.log('user',response.data);
+    });
+    setState({ ...state, [event.target.name]: checked });
   };
+
+  
 
   return (
     <form
@@ -54,10 +76,9 @@ const ProfileDetails = ({ className, ...rest }) => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
                 label="First name"
                 name="firstName"
-                value={values.firstName}
+                value={user.name}
                 variant="outlined"
               />
             </Grid>
@@ -66,16 +87,16 @@ const ProfileDetails = ({ className, ...rest }) => {
                 fullWidth
                 label="Last name"
                 name="lastName"
-                value={values.lastName}
+                value={user.name}
                 variant="outlined"
               />
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Email Address"
-                name="email"
-                value={values.email}
+                label="Status"
+                name="status"
+                value={user.status?'active':'inactive'}
                 variant="outlined"
               />
             </Grid>
@@ -87,13 +108,14 @@ const ProfileDetails = ({ className, ...rest }) => {
         <FormControlLabel
         control={
           <Switch
-            checked={state.checkedB}
+            checked={state.checkedBlock}
             onChange={handleChange}
-            name="checkedB"
+            name="checkedBlock"
             color="primary"
           />
+          
         }
-        label="Deactive"
+        label={state.checkedBlock===false ? "Active Account" : "Blocked Account"}
       />
         </Box>
       </Card>
