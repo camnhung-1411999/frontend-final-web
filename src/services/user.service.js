@@ -33,7 +33,7 @@ class UserService {
         password: input.password,
         name: input.name,
         role: input.role,
-        status: false,
+        status: true,
       }).then(async (response) => {
         if (response.data) {
           localStorage.setItem(

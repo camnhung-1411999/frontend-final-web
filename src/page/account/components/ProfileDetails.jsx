@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../../actions";
 import { alertActions } from "../../../actions";
+import moment from 'moment';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -101,6 +102,18 @@ const ProfileDetails = ({ className, ...rest }) => {
                 disabled={true}
                 required
                 value={user?.user + ""}
+                variant="outlined"
+              />
+            </Grid>
+
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Created At"
+                name="createdAt"
+                disabled={true}
+                required
+                value={moment(user?.createdAt + "").format('HH:mm DD/MM/YYYY')}
                 variant="outlined"
               />
             </Grid>
