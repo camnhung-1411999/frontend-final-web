@@ -8,7 +8,6 @@ class UserService {
   login(data) {
     return axios.post(API_URL + "login", { data }).then((response) => {
       if (response.data) {
-        console.log(response.data)
         localStorage.setItem(
           "accessToken",
           JSON.stringify(response.data.accessToken)

@@ -23,7 +23,6 @@ function login(data, from) {
 
     await userService.login(data).then(
       (user) => {
-        console.log("login user:", user);
         if (user.role === "admin") {
           dispatch(success(user));
           dispatch(alertActions.clear());

@@ -136,7 +136,6 @@ const Rooms = ({ className, ...rest }) => {
 
   useEffect(()=>{
     socket.on("createRoom", (room)=>{
-      console.log(room)
       dispatch(roomActions.addRoom(room));
     });
   },[])

@@ -1,27 +1,54 @@
-import { useEffect, useRef, useState } from "react";
-import { socket } from "../helpers";
+import {useEffect, useRef, useState} from "react";
+import {socket} from "../helpers";
 import {useSelector} from "react-redux";
+import {userActions} from "../actions";
 
 const PLAY = "play";
+const CREATEBOARD = "createBoard";
 
 const usePlay = (roomId) => {
     const [boards, setBoards] = useState(Array(20 * 20).fill(null))
     const user = useSelector(state => state.users.profile);
     const [isNext, setNext] = useState(true);
+    const [game, setGame] = useState(null);
+    const [index, setIndex] = useState(0);
+    const [value, setValue] = useState("");
 
     useEffect(() => {
-        socket.on(PLAY, (data) => {
-            const incomingBoard = data.board.map((item) =>
-                {
-                    console.log("item", item)
-                    console.log("item", item === "X")
+        if (user) {
+            socket.on(CREATEBOARD, (data) => {
+                setGame(data);
+                if (data.playing) {
+                    if (data.board.length > 0) {
+                        const incomingBoard = Array(20 * 20).fill(null);
+                        data.board.map((item) => {
+                                incomingBoard[item.index] = item.value;
+                            }
+                        )
+                        setBoards(incomingBoard);
+                        setValue(data.board[data.board.length - 1].value);
+                        setNext(!((data.board[data.board.length - 1].value === "X" && user?.user === data.player1) || (data.board[data.board.length - 1].value === "O" && user?.user === data.player2)));
+                    } else {
+                        setNext(user?.user === data.player1);
+                    }
+                    setIndex(data.index);
+                    setValue(data.value);
 
-                    if(item === "X") return "O" ;
-                    if(item === "O") return "X" ;
+                } else {
+                    setNext(false);
                 }
-            )
+            });
+        }
+    }, [user]);
+
+    useEffect(() => {
+
+        socket.on(PLAY, (data) => {
+            console.log("data", data);
             setNext(true);
-            setBoards(incomingBoard);
+            setIndex(data.index);
+            setValue(data.value);
+            setBoards(data.board);
         });
 
         return () => {
@@ -30,22 +57,27 @@ const usePlay = (roomId) => {
     }, [roomId]);
 
     const playTo = (data) => {
-
         const incomingBoard = boards.map((item, index) =>
             index === data.index
-                ? "X"
+                ? game.player1 === user.user ? "X" : "O"
                 : item
         )
         setBoards(incomingBoard);
         socket.emit(PLAY, {
             board: incomingBoard,
             roomId: data.roomId,
-            isNext: true
+            index: data.index,
+            value: game.player1 === user.user ? "X" : "O",
+            isNext: true,
         });
         setNext(false)
+        setIndex(data.index);
+        setValue(game.player1 === user.user ? "X" : "O");
+
+
     };
 
-    return { isNext, boards, playTo };
+    return {isNext, index, boards, value, playTo};
 };
 
 export default usePlay;

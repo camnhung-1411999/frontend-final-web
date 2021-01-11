@@ -84,7 +84,6 @@ function listRooms() {
 
     roomService.listRoom().then(
       (rooms) => {
-        console.log(rooms.data)
         dispatch(success(rooms.data));
       },
       (error) => {
