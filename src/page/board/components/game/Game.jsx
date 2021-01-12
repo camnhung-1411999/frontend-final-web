@@ -10,14 +10,13 @@ function Game({isPlay}) {
     const {isNext, index, value, boards, playTo} = usePlay(id);
 
     function handleClick(i, isFlag) {
-        if (isPlay  && pieces_win.length < 0) {
+        if (isFlag && isPlay && pieces_win.length < 1) {
             const data = {
                 roomId: id,
                 index: i,
                 chessman: true
             }
-            if (isFlag)
-                playTo(data)
+            playTo(data)
         }
     }
 

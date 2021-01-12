@@ -49,10 +49,6 @@ class UserService {
   }
 
   logout() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("username");
-
     return axiosApiInstance.put(API_URL + "logout");
   }
 

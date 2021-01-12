@@ -30,8 +30,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   card: {
-    margin: "15px 0px 15px 0px",
+    // margin: "15px 0px 15px 0px",
     border: "1px solid blue",
+    margin: "5px",
     "@media (max-width: 780px)": {
       margin: "15px",
     },

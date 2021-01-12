@@ -94,12 +94,16 @@ function logout(from) {
   return async (dispatch) => {
     await userService.logout().then(async (reponsive) => {
       const user = reponsive.data;
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("username");
+      history.push(from);
       socket.emit("offline", {
         body: { username: user.user, name: user.name },
         senderId: socket.id,
       });
-      dispatch();
-      history.push(from);
+
+
     });
   };
 }

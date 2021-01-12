@@ -66,7 +66,6 @@ function TabChat({ id }) {
         >
           <Tab label="Chat" {...a11yProps(0)} />
           <Tab label="Followers" {...a11yProps(1)} />
-          <Tab label="Online" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
@@ -74,9 +73,6 @@ function TabChat({ id }) {
       </TabPanel>
       <TabPanel value={value} index={1}>
         Followers
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Online
       </TabPanel>
     </div>
   );

@@ -17,8 +17,9 @@ import GetAppIcon from '@material-ui/icons/GetApp';
 import "./player.css";
 
 const useStyles = makeStyles(() => ({
-    root: {
+    cardPerson: {
         border: "1px solid blue",
+        margin: "5px"
     },
     avatar: {
         height: 100,
@@ -56,7 +57,7 @@ const CardPerson = ({className, player, handleReady, ...rest}) => {
     // }, []);
 
     return (
-        <Card className={clsx(classes.root, className)} {...rest}>
+        <Card className={clsx(classes.cardPerson, className)} {...rest}>
             <CardContent>
                 <Box alignItems="center" display="flex" flexDirection="column">
                     {player ? <Avatar className={classes.avatar} src={player?.avatar}/> :

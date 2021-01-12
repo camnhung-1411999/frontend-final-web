@@ -47,13 +47,13 @@ const ChessBoard = ({match}) => {
         >
             <Container maxWidth={false}>
                 <Grid container spacing={3}>
-                    <Grid item lg={3} sm={6} xl={3} xs={12}>
+                    <Grid item lg={3} sm={12} md={12} xl={3} xs={12}>
                         <Player player={player} handleReady={() => handleReady()}/>
                     </Grid>
-                    <Grid item lg={6} md={12} xl={6} xs={12}>
+                    <Grid item lg={6} sm={12} md={12} xl={6} xs={12}>
                         <Game isPlay = {isPlay}/>
                     </Grid>
-                    <Grid item lg={3} md={6} xl={3} xs={12}>
+                    <Grid item lg={3} sm={12} md={12} xl={3} xs={12}>
                         <TabChat id={match.params.id}/>
                     </Grid>
                 </Grid>

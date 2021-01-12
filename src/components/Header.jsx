@@ -200,42 +200,6 @@ function Header() {
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <Typography className={classes.title} component = "div" variant="h6" noWrap>
-            <Link style={{ color: "black" }} href="/home">
-              Caroro
-            </Link>
-          </Typography>
-          <IconButton onClick={() => setOpen(!open)}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          <ListItem button key={"Rank"} onClick={() => history.push("rank")}>
-            <ListItemIcon>
-              <EmojiEventsIcon style={{ color: "orange" }} />
-            </ListItemIcon>
-            <ListItemText
-              primary={"Ranking"}
-              style={{ color: "black", fontSize: 40 }}
-            />
-          </ListItem>
-        </List>
-      </Drawer>
       {renderMobileMenu}
       {renderMenu}
     </div>
