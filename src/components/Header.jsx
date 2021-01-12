@@ -163,7 +163,7 @@ function Header() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor: "rgba(0, 0, 0, 0.719)"}}>
         <Toolbar>
           <IconButton
             edge="start"

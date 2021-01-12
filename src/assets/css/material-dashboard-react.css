@@ -26,6 +26,9 @@
   stroke: rgba(255, 255, 255, 0.8);
 }
 
+.nav-bar {
+  background-color: rgba(0, 0, 0, 0.719);
+}
 .ct-label.ct-horizontal.ct-end {
   -webkit-box-align: flex-start;
   -webkit-align-items: flex-start;

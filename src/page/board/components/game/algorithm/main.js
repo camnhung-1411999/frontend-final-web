@@ -12,13 +12,13 @@ export const isWin = (boards, idx, turn) => {
     // check col win
     let index = col - 1;
 
-    while (index >= 0 && board[row][index] == turn) {
+    while (index >= 0 && board[row][index] === turn) {
         piece_win.push([row, index]);
         index--;
     }
 
     index = col + 1;
-    while (index <= board.length - 1 && board[row][index] == turn) {
+    while (index <= board.length - 1 && board[row][index] === turn) {
         piece_win.push([row, index]);
         index++;
     }
@@ -31,13 +31,13 @@ export const isWin = (boards, idx, turn) => {
     // check row
     index = row - 1;
     piece_win = [];
-    while (index >= 0 && board[index][col] == turn) {
+    while (index >= 0 && board[index][col] === turn) {
         piece_win.push([index, col]);
         index--;
     }
 
     index = row + 1;
-    while (index >= 0 && index < board.length - 1 && board[index][col] == turn) {
+    while (index >= 0 && index < board.length - 1 && board[index][col] === turn) {
         piece_win.push([index, col]);
         index++;
     }
@@ -57,7 +57,7 @@ export const isWin = (boards, idx, turn) => {
     while (
         row_index >= 0 &&
         col_index >= 0 &&
-        board[row_index][col_index] == turn
+        board[row_index][col_index] === turn
         ) {
         piece_win.push([row_index, col_index]);
         row_index--;
@@ -71,7 +71,7 @@ export const isWin = (boards, idx, turn) => {
         col_index >= 0 &&
         row_index <= board.length - 1 &&
         col_index <= board.length - 1 &&
-        board[row_index][col_index] == turn
+        board[row_index][col_index] === turn
         ) {
         piece_win.push([row_index, col_index]);
         row_index++;
@@ -90,7 +90,7 @@ export const isWin = (boards, idx, turn) => {
         col_index >= 0 &&
         row_index >= 0 &&
         col_index <= board.length - 1 &&
-        board[row_index][col_index] == turn
+        board[row_index][col_index] === turn
         ) {
         piece_win.push([row_index, col_index]);
         row_index--;
@@ -102,7 +102,7 @@ export const isWin = (boards, idx, turn) => {
         row_index >= 0 &&
         row_index <= board.length - 1 &&
         col_index >= 0 &&
-        board[row_index][col_index] == turn
+        board[row_index][col_index] === turn
         ) {
         piece_win.push([row_index, col_index]);
         row_index++;

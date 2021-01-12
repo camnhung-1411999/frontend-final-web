@@ -1,0 +1,26 @@
+.room {
+  background-color: rgba(184, 180, 180, 0.521) !important;
+  height: 100%;
+}
+
+.start-btn {
+  text-align: center;
+  margin: 20% auto;
+  width: 50%;
+  font-weight: bold;
+  padding: 15px 0 15px 10px;
+  background-color: rgb(216, 176, 102);
+  text-shadow: -1px -1px black, 1px 1px white;
+  color: rgb(255, 255, 255);
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -o-border-radius: 7px;
+  border-radius: 7px;
+  box-shadow: 0 0.2em gray;
+  cursor: pointer;
+}
+.start-btn:active {
+	box-shadow: none;
+	position: relative;
+	top: .2em;
+}

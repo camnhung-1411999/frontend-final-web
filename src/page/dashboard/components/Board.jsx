@@ -17,13 +17,18 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 273,
     minWidth: 200,
     margin: "10px",
-    color: "black",
-    border: "1px solid blue",
+    color: "gray",
+    border: "1px solid white",
     float: "left",
     borderRadius: 3,
+    boxShadow: '0 0.2em gray',
     "&:hover": {
       boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
+      cursor: 'pointer',
     },
+    "&:active": {
+      boxShadow: 'none',
+    }
   },
   media: {
     height: 0,
@@ -54,7 +59,7 @@ export default function Board({ id, board, handelClick }) {
       <Card className={classes.board_room}>
         <CardHeader
           style={{ textAlign: "left", padding: "8px" }}
-          title={`Room: ${id}`}
+          title={`roomID: #${id}`}
           onClick={handelClick}
         />
         <CardContent onClick={handelClick}>

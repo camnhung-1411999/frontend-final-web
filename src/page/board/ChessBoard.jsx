@@ -1,27 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect } from "react";
 import {
     Container,
     Grid,
     makeStyles,
     Dialog,
     DialogActions,
-    DialogContent,
-    DialogContentText,
     Button,
-    DialogTitle,
 } from "@material-ui/core";
 import {Page} from "../../components";
 import {Game, TabChat} from "./components";
 import Player from "./components/player/Player";
 import {userActions} from "../../actions";
 
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch } from "react-redux";
 import {useParams} from "react-router-dom";
 import useRoom from "../../sockets/useRoom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: theme.palette.background.dark,
         minHeight: "100%",
         paddingBottom: theme.spacing(3),
         paddingTop: theme.spacing(3),
@@ -46,7 +42,9 @@ const ChessBoard = ({match}) => {
     }, []);
 
     return (
-        <Page className={classes.root} title="Room">
+        <Page className={classes.root}
+        title="Room"
+        >
             <Container maxWidth={false}>
                 <Grid container spacing={3}>
                     <Grid item lg={3} sm={6} xl={3} xs={12}>

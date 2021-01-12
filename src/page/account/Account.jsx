@@ -58,7 +58,7 @@ const Account = () => {
   return (
  
       <div>
-    <img className="image" src="https://image.winudf.com/v2/image1/bmV0Lm5leHRsZXZlbG1vYmlsZWFwcHMubWluaV93b3JsZF93YWxscGFwZXJzX3NjcmVlbl85XzE1NjgyNTQxNjZfMDY1/screen-10.jpg?fakeurl=1&type=.jpg" style={{width: "100%"}} alt="..." />
+    <img className="image" src="https://cdna.artstation.com/p/assets/images/images/008/033/540/large/nastya-friday-platformer-background-4.jpg?1510051665" style={{width: "100%"}} alt="..." />
 
 
       <div className={classes.root} title="Profile">

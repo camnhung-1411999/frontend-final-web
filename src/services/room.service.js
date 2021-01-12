@@ -1,4 +1,3 @@
-import axios from "axios";
 import { urlConstants} from '../constants';
 import axiosApiInstance from '../helpers/axiosApiInstance';
 

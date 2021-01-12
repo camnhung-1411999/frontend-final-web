@@ -20,6 +20,7 @@ import {
   Fade,
   TextField,
   InputBase,
+  Grid
 } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import { roomActions } from "../../../actions";
@@ -27,6 +28,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Search as SearchIcon } from "@material-ui/icons";
 import MuiAlert from "@material-ui/lab/Alert";
 import {socket} from "../../../helpers";
+import '../../../assets/css/room.css';
+import { useHistory } from "react-router-dom";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -35,8 +38,7 @@ function Alert(props) {
 const useStyles = makeStyles((theme) => ({
   room: {
     height: "100%",
-    backgroundImage:
-      "linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)",
+    
   },
   cardContent: {
     height: "100%",
@@ -99,6 +101,7 @@ const Rooms = ({ className, ...rest }) => {
   const [password, setPassword] = useState("");
   const [idroom, setIdRoom] = useState("");
   const [openPublic, setOpenPublic] = useState(false);
+  const history = useHistory();
 
   const handleChange = () => {
     setChecked((prev) => !prev);
@@ -142,7 +145,7 @@ const Rooms = ({ className, ...rest }) => {
 
   return (
     <>
-      <Card className={clsx(classes.room, className)} {...rest}>
+      <Card className="room" {...rest}>
         <CardHeader
           title="Rooms"
           component="div"
@@ -168,21 +171,28 @@ const Rooms = ({ className, ...rest }) => {
                 >
                   <SearchIcon style={{ fontSize: 30, color: "white" }} />
                 </IconButton>
+                
               </div>
-
+ 
               <IconButton
                 style={{ padding: "6px" }}
                 aria-label="new room"
                 onClick={handleClickOpen}
               >
-                <AddIcon style={{ fontSize: 30, color: "white" }} />
+                
               </IconButton>
             </>
           }
         ></CardHeader>
         <Divider />
         <CardContent className={classes.cardContent}>
-          {rooms.items?.map((element) => (
+         <Grid  container
+          spacing={3}>
+           <Grid item lg={10}
+            md={12}
+            xl={9}
+            xs={12} style={{borderRight: '1px solid rgb(168, 164, 164)'}}>
+           {rooms.items?.map((element) => (
             <Board
               key={element.idroom}
               id={element.idroom}
@@ -190,6 +200,19 @@ const Rooms = ({ className, ...rest }) => {
               handelClick={() => handlePublic(element.idroom)}
             />
           ))}
+           </Grid>
+           <Grid item lg={2}
+            md={6}
+            xl={3}
+            xs={12}>
+           <div class='start-btn'>PLAY NOW</div>
+           {/* <AddIcon style={{ fontSize: 30, color: "white" }} */}
+           <div class='start-btn' onClick={handleClickOpen} > CREATE ROOM</div>
+           <div class='start-btn' onClick={() => {
+             history.push("/rank");
+             }}>RANKING</div>
+           </Grid>
+         </Grid>
         </CardContent>
       </Card>
       <Dialog

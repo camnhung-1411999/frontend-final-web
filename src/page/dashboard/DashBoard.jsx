@@ -10,10 +10,10 @@ import Rooms from './components/Rooms';
 
 const useStyles = makeStyles((theme) => ({
   dashboard: {
-    backgroundColor: theme.palette.background.dark,
     // minHeight: '100%',
     paddingBottom: theme.spacing(3),
-    paddingTop: theme.spacing(3)
+    paddingTop: theme.spacing(3),
+    backgroundImage: 'url("https://cdn.gamedevmarket.net/wp-content/uploads/20191203165317/8657cfcd9a0aa1149a40988c4686478c.png")'
   }
 }));
 
@@ -28,6 +28,7 @@ const DashBoard = (props) => {
         <Grid
           container
           spacing={3}
+          
         >
           <Grid
             item
