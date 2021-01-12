@@ -45,23 +45,14 @@ const CardPerson = ({className, player, handleReady, ...rest}) => {
 
     const [progress, setProgress] = useState(0);
 
-    // React.useEffect(() => {
-    //   const timer = setInterval(() => {
-    //     setProgress((prevProgress) =>
-    //       prevProgress >= 100 ? 0 : prevProgress + 3
-    //     );
-    //   }, 1000);
-    //   return () => {
-    //     clearInterval(timer);
-    //   };
-    // }, []);
 
     return (
         <Card className={clsx(classes.cardPerson, className)} {...rest}>
             <CardContent>
                 <Box alignItems="center" display="flex" flexDirection="column">
                     {player ? <Avatar className={classes.avatar} src={player?.avatar}/> :
-                        <IconButton className = "buttonReady" style = {{color: "white"}} aria-label="ready" component="span" onClick={handleReady}>
+                        <IconButton className="buttonReady" style={{color: "white"}} aria-label="ready" component="span"
+                                    onClick={handleReady}>
                             <GetAppIcon style={{fontSize: 100}}/>
                         </IconButton>}
                     {/*<CircularProgress*/}
@@ -77,7 +68,7 @@ const CardPerson = ({className, player, handleReady, ...rest}) => {
                         component="div"
                         style={{marginTop: "40px"}}
                     >
-                        {player? player?.display_name: "READY"}
+                        {player ? player?.display_name : "READY"}
                     </Typography>
                 </Box>
             </CardContent>

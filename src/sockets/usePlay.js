@@ -5,6 +5,8 @@ import {userActions} from "../actions";
 
 const PLAY = "play";
 const CREATEBOARD = "createBoard";
+const WIN = "win";
+const PLAYGAME = "playGame";
 
 const usePlay = (roomId) => {
     const [boards, setBoards] = useState(Array(20 * 20).fill(null))
@@ -16,6 +18,13 @@ const usePlay = (roomId) => {
 
     useEffect(() => {
         if (user) {
+            socket.on(PLAYGAME, (data) => {
+               setGame(data)
+                if(data.player1 === user.user)
+                {
+                    setNext(true);
+                }
+            });
             socket.on(CREATEBOARD, (data) => {
                 setGame(data);
                 if (data.playing) {
@@ -27,6 +36,7 @@ const usePlay = (roomId) => {
                         )
                         setBoards(incomingBoard);
                         setValue(data.board[data.board.length - 1].value);
+                        setIndex(data.board[data.board.length - 1].index);
                         setNext(!((data.board[data.board.length - 1].value === "X" && user?.user === data.player1) || (data.board[data.board.length - 1].value === "O" && user?.user === data.player2)));
                     } else {
                         setNext(user?.user === data.player1);
@@ -44,10 +54,9 @@ const usePlay = (roomId) => {
     useEffect(() => {
 
         socket.on(PLAY, (data) => {
-            console.log("data", data);
             setNext(true);
-            setIndex(data.index);
-            setValue(data.value);
+            // setIndex(data.index);
+            // setValue(data.value);
             setBoards(data.board);
         });
 
@@ -73,11 +82,12 @@ const usePlay = (roomId) => {
         setNext(false)
         setIndex(data.index);
         setValue(game.player1 === user.user ? "X" : "O");
-
-
     };
-
-    return {isNext, index, boards, value, playTo};
+    const winTo = () =>{
+        // setNext(false);
+        socket.emit(WIN, {roomId, user});
+    }
+    return {isNext, index, boards, value, playTo, winTo};
 };
 
 export default usePlay;

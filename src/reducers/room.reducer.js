@@ -41,13 +41,18 @@ export function rooms(state = {}, action) {
             return {
                 loading: true,
             };
-        case roomConstants.ROOM_NEW_SUCCESS:
-            return {
-                ...state,
-                items: [
-                    ...state.items, action.room
-                ]
-            };
+        case roomConstants.ROOM_NEW_SUCCESS: {
+            if(state.items) {
+                return {
+                    ...state,
+                    items: [
+                        ...state.items, action.room
+                    ]
+                };
+            }else{
+                return state
+            }
+        }
         default:
             return state
     }

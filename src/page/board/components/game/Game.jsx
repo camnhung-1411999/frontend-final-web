@@ -7,7 +7,7 @@ import {isWin} from "./algorithm/main";
 
 function Game({isPlay}) {
     const {id} = useParams();
-    const {isNext, index, value, boards, playTo} = usePlay(id);
+    const {isNext, index, value, boards, playTo, winTo} = usePlay(id);
 
     function handleClick(i, isFlag) {
         if (isFlag && isPlay && pieces_win.length < 1) {
@@ -22,6 +22,12 @@ function Game({isPlay}) {
 
     const pieces_win = isWin(boards, index, value);
 
+    if(pieces_win.length > 0 ){
+        console.log(isPlay)
+        console.log(isNext)
+
+        // winTo();
+    }
     return (
         <div>
             <div className="game">
