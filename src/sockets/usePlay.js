@@ -83,9 +83,9 @@ const usePlay = (roomId) => {
         setIndex(data.index);
         setValue(game.player1 === user.user ? "X" : "O");
     };
-    const winTo = () =>{
+    const winTo = async () =>{
         // setNext(false);
-        socket.emit(WIN, {roomId, user});
+        await socket.emit(WIN, {roomId, user});
     }
     return {isNext, index, boards, value, playTo, winTo};
 };

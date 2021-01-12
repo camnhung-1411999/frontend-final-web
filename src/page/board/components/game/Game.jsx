@@ -10,7 +10,9 @@ function Game({isPlay}) {
     const {isNext, index, value, boards, playTo, winTo} = usePlay(id);
 
     function handleClick(i, isFlag) {
-        if (isFlag && isPlay && pieces_win.length < 1) {
+        if (isFlag && isPlay && pieces_win.length < 1 && !boards[i]) {
+            console.log("aaaaaaaaaaaaaa")
+
             const data = {
                 roomId: id,
                 index: i,
@@ -18,15 +20,15 @@ function Game({isPlay}) {
             }
             playTo(data)
         }
+        else
+            console.log("cccccccccccccccc")
+
     }
 
     const pieces_win = isWin(boards, index, value);
 
     if(pieces_win.length > 0 ){
-        console.log(isPlay)
-        console.log(isNext)
-
-        // winTo();
+        winTo();
     }
     return (
         <div>

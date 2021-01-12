@@ -13,6 +13,8 @@ const useRoom = (roomId) => {
     const [player, setPlayer] = useState(null);
     const [open, setOpen] = useState(false);
     const [isInvite, setInvite] = useState(true);
+    const [openNewGame, setOpenNewGame] = useState(false);
+    const [winner, setWinner] = useState("")
 
     useEffect(() => {
         if (user) {
@@ -32,7 +34,12 @@ const useRoom = (roomId) => {
             })
 
             socket.on(ENDGAME, (data) => {
-                console.log("End Game", data)
+                setOpenNewGame(true);
+                setWinner(data.winnerName);
+                if(data.admin !== user.user)
+                {
+                    setWinner("");
+                }
             })
         }
     }, [user]);
@@ -53,7 +60,12 @@ const useRoom = (roomId) => {
         socket.emit(PLAYGAME, {roomId});
     }
 
-    return {player, isPlay, open, setOpen, setReadyPlayer, playGame, isInvite};
+    const newGame = () => {
+        setOpenNewGame(false);
+        setPlay(true);
+        socket.emit("newGame", {roomId});
+    }
+    return {player, isPlay, open, setOpen, openNewGame, winner, newGame, setReadyPlayer, playGame, isInvite};
 };
 
 export default useRoom;

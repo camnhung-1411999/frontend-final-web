@@ -1,9 +1,10 @@
-import React, {useEffect } from "react";
+import React, {useEffect} from "react";
 import {
     Container,
     Grid,
     makeStyles,
     Dialog,
+    DialogTitle,
     DialogActions,
     Button,
 } from "@material-ui/core";
@@ -12,7 +13,7 @@ import {Game, TabChat} from "./components";
 import Player from "./components/player/Player";
 import {userActions} from "../../actions";
 
-import {useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import useRoom from "../../sockets/useRoom";
 
@@ -29,13 +30,16 @@ const ChessBoard = ({match}) => {
     const dispatch = useDispatch();
 
     const {id} = useParams();
-    const {isInvite, player,isPlay, open, setReadyPlayer, playGame} = useRoom(id);
+    const {isInvite, player, isPlay, open, openNewGame, winner, newGame, setReadyPlayer, playGame} = useRoom(id);
 
     const handleReady = () => {
         setReadyPlayer();
     }
-    const  handlePlay = () =>{
+    const handlePlay = () => {
         playGame()
+    }
+    const handleNewGame = () => {
+        newGame();
     }
     useEffect(() => {
         dispatch(userActions.profile());
@@ -43,15 +47,15 @@ const ChessBoard = ({match}) => {
 
     return (
         <Page className={classes.root}
-        title="Room"
+              title="Room"
         >
             <Container maxWidth={false}>
                 <Grid container spacing={3}>
                     <Grid item lg={3} sm={12} md={12} xl={3} xs={12}>
-                        <Player player={player} handleReady={() => handleReady()} isInvite = {isInvite}/>
+                        <Player player={player} handleReady={() => handleReady()} isInvite={isInvite}/>
                     </Grid>
                     <Grid item lg={6} sm={12} md={12} xl={6} xs={12}>
-                        <Game isPlay = {isPlay}/>
+                        <Game isPlay={isPlay}/>
                     </Grid>
                     <Grid item lg={3} sm={12} md={12} xl={3} xs={12}>
                         <TabChat id={match.params.id}/>
@@ -71,6 +75,21 @@ const ChessBoard = ({match}) => {
                     <Button onClick={handlePlay} color="primary" autoFocus>
                         Play Game
                     </Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openNewGame}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{`${winner} win`}</DialogTitle>
+                <DialogActions>
+                    {/*<Button onClick={() => setOpen(false)} color="secondary">*/}
+                    {/*    Stand*/}
+                    {/*</Button>*/}
+                    {winner ? <Button onClick={handleNewGame} color="primary" autoFocus>
+                        New Game
+                    </Button> : null}
                 </DialogActions>
             </Dialog>
         </Page>
