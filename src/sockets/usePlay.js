@@ -7,6 +7,7 @@ const PLAY = "play";
 const CREATEBOARD = "createBoard";
 const WIN = "win";
 const PLAYGAME = "playGame";
+const NEWGAME = "newGame";
 
 const usePlay = (roomId) => {
     const [boards, setBoards] = useState(Array(20 * 20).fill(null))
@@ -19,14 +20,18 @@ const usePlay = (roomId) => {
     useEffect(() => {
         if (user) {
             socket.on(PLAYGAME, (data) => {
-               setGame(data)
-                if(data.player1 === user.user)
-                {
+                console.log("vao day 1")
+                setGame(data)
+                setBoards(Array(20 * 20).fill(null))
+                setIndex(null);
+                setValue("")
+                if (data.player1 === user.user) {
                     setNext(true);
                 }
             });
             socket.on(CREATEBOARD, (data) => {
                 setGame(data);
+                console.log(data)
                 if (data.playing) {
                     if (data.board.length > 0) {
                         const incomingBoard = Array(20 * 20).fill(null);
@@ -39,6 +44,8 @@ const usePlay = (roomId) => {
                         setIndex(data.board[data.board.length - 1].index);
                         setNext(!((data.board[data.board.length - 1].value === "X" && user?.user === data.player1) || (data.board[data.board.length - 1].value === "O" && user?.user === data.player2)));
                     } else {
+                        setBoards(Array(20 * 20).fill(null));
+
                         setNext(user?.user === data.player1);
                     }
                     setIndex(data.index);
@@ -83,9 +90,22 @@ const usePlay = (roomId) => {
         setIndex(data.index);
         setValue(game.player1 === user.user ? "X" : "O");
     };
-    const winTo = async () =>{
+    const winTo = (data) => {
         // setNext(false);
-        await socket.emit(WIN, {roomId, user});
+        const incomingBoard = boards.map((item, index) =>
+            index === data.index
+                ? game.player1 === user.user ? "X" : "O"
+                : item
+        )
+        setBoards(incomingBoard);
+        const play = {
+            board: incomingBoard,
+            roomId: data.roomId,
+            index: data.index,
+            value: game.player1 === user.user ? "X" : "O",
+            isNext: true,
+        }
+        socket.emit(WIN, {roomId, user, game, play});
     }
     return {isNext, index, boards, value, playTo, winTo};
 };

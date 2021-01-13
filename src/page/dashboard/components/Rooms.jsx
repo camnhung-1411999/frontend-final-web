@@ -205,10 +205,10 @@ const Rooms = ({ className, ...rest }) => {
             md={6}
             xl={3}
             xs={12}>
-           <div class='start-btn'>PLAY NOW</div>
+           <div className='start-btn'>PLAY NOW</div>
            {/* <AddIcon style={{ fontSize: 30, color: "white" }} */}
-           <div class='start-btn' onClick={handleClickOpen} > CREATE ROOM</div>
-           <div class='start-btn' onClick={() => {
+           <div className='start-btn' onClick={handleClickOpen} > CREATE ROOM</div>
+           <div className='start-btn' onClick={() => {
              history.push("/rank");
              }}>RANKING</div>
            </Grid>
