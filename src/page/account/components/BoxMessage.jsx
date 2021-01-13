@@ -39,14 +39,15 @@ const renderRow = (props) => {
   };
   return (
     <ListItem id={`id${index}`} button style={css} key={index}>
-      {!data[index].ownl ? (
+      {!data[index]?.ownl ? (
         <>
           <Avatar
             style={{
               marginRight: "2px",
               color: "#fff",
-              backgroundColor: "#4caf50",
+              // backgroundColor: "#4caf50",
             }}
+            src={data[index].avatar}
           >
             <FaceIcon />
           </Avatar>
@@ -84,8 +85,9 @@ const renderRow = (props) => {
             style={{
               marginLeft: "2px",
               color: "#fff",
-              backgroundColor: "#ff5722",
+              // backgroundColor: "#ff5722",
             }}
+            src={data[index].avatar}
           >
             <FaceIcon />
           </Avatar>

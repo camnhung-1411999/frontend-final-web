@@ -10,6 +10,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import {ItemHistory} from './ItemHistory';
+import { historyService } from '../../../services';
 import '../../../assets/css/history.css'
 const useStyles = makeStyles(() => ({
   root: {
@@ -45,8 +46,18 @@ const data = [{
     {message: "1111", ownl: true},
   ],
 }]
-const History = ({ className, ...rest }) => {
+const History = ({ username, className, ...rest }) => {
   const classes = useStyles();
+  const [histories, setHistories] = React.useState();
+
+  React.useEffect(() => {
+    const getListHistory = async () => {
+      await historyService.myHistory().then((response) => {
+        setHistories(response?.data);
+      })
+    };
+    getListHistory();
+  }, [])
   return (
     <form
       autoComplete="off"
@@ -58,16 +69,11 @@ const History = ({ className, ...rest }) => {
         <CardHeader subheader="Display detail your history" title="HISTORY" />
         <Divider />
         <CardContent>
-          {data?.map(element => (
+          {histories?.map(element => (
             <>
-             <ItemHistory data={element}/>
-             <ItemHistory data={element}/>
-             <ItemHistory data={element}/>
-             <ItemHistory data={element}/>
-             <ItemHistory data={element}/>
+             <ItemHistory username = {username} data={element}/>
              </>
           ))}
-         
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>

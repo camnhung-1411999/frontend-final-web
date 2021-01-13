@@ -10,6 +10,7 @@ import {
   Box,
   Typography,
   Card,
+  Button
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -20,6 +21,10 @@ import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import logo from "../../../assets/image/match.png";
 import Board from './Board';
 import ChatHistory from './ChatHistory';
+import { roomService } from '../../../services';
+import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
+
 const useStyles = makeStyles((theme) => ({
   password: {
     width: "100%",
@@ -65,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
 }));
-const MatchCard = ({ idata,className, product, ...rest }) => {
+const MatchCard = ({iuser, idata,className, product, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -84,14 +89,14 @@ const MatchCard = ({ idata,className, product, ...rest }) => {
         <Grid item xs={3}>
           <Box>
             <Typography variant="h3" color="textPrimary" gutterBottom>
-              WIN{" "}
+              {(idata?.winner === iuser) ? 'WIN': 'DEFEAT'}
             </Typography>
           </Box>
         </Grid>
 
         <Grid item xs={3}>
           <Box style={{paddingTop:'2%'}}>
-            <Typography color="textPrimary">Rival:  <AccountCircleIcon/> {idata.loser}</Typography>
+            <Typography color="textPrimary">Rival:  <AccountCircleIcon/> { (idata?.winner === iuser) ? idata.loser : idata.winner}</Typography>
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -105,7 +110,7 @@ const MatchCard = ({ idata,className, product, ...rest }) => {
                   display="inline"
                   variant="body2"
                 >
-                  {idata.createdAt}
+                  {idata?.createdAt}
                 </Typography>
               </Grid>
             </Grid>
@@ -116,9 +121,40 @@ const MatchCard = ({ idata,className, product, ...rest }) => {
   );
 };
 
-function ItemHistory({ data, className, product, ...rest }) {
+function ItemHistory({ username, data, className, product, ...rest }) {
   const classes = useStyles();
+  const [messages, setMessages] = React.useState();
+  const [value, setValue] = React.useState();
+  const [index, setIndex] = React.useState();
 
+  React.useEffect(() => {
+    setIndex(data?.result?.length);
+    const getMessage = async() => {
+      await roomService.getRoom(data?.roomId).then((response) => {
+        setMessages(response?.data?.chat);
+      })
+    }
+    getMessage();
+  }, [])
+  React.useEffect(() => {
+    let temp = [];
+    for( let i = 0 ; i<index && i <data?.result?.length; i++) {
+      temp.push(data?.result[i]);
+    }
+    setValue(temp);
+  }, [index]);
+
+  const handleNext = () => {
+    const i = index + 1;
+    setIndex(i);
+  }
+
+  const handlePre = () => {
+    if(index > 0){
+      const i = index - 1;
+       setIndex(i);
+    }
+  }
   return (
     <div className={classes.password}>
       <Accordion className={clsx(classes.root, className)} {...rest}>
@@ -127,26 +163,29 @@ function ItemHistory({ data, className, product, ...rest }) {
           aria-controls="panel1c-content"
           id="panel1c-header"
         >
-          <MatchCard idata ={data}/>
+          <MatchCard iuser={username} idata ={data}/>
         </AccordionSummary>
         <AccordionDetails className={classes.details}>
           <Grid container>
-            <Grid item xs={9}>
-              <Board result = {data.match}/>
+            <Grid item xs={9} >
+              <Board result = {value}/>
+              <div style={{marginLeft: '40%'}}>
+              <Button onClick= {handlePre}><NavigateBeforeIcon /></Button> 
+              <Button  onClick ={handleNext}><NavigateNextIcon style={{marginLeft: '3%'}}/></Button> 
+              </div>
             </Grid>
             <Grid item xs={3}>
-              <ChatHistory messages = {data.messages}/>
+              <ChatHistory messages = {messages}/>
               <Card style={{marginTop: '10%'}}>
                   <div style={{marginLeft:'3%'}}>
-                  <p> Winner: {data.winner} <span style={{color: 'green', fontSize:'bold', marginLeft:'3%'}}> X</span></p>
-                    <p> Loser: {data.loser} <span style={{color: 'gray', fontSize:'bold', marginLeft:'3%'}}> O</span></p>
+                  <p> Winner: {data?.winner} <span style={{color: 'green', fontSize:'bold', marginLeft:'3%'}}> X</span></p>
+                    <p> Loser: {data?.loser} <span style={{color: 'gray', fontSize:'bold', marginLeft:'3%'}}> O</span></p>
                   </div>
 
               </Card>
             </Grid>
           </Grid>
         </AccordionDetails>
-       
       </Accordion>
     </div>
   );
