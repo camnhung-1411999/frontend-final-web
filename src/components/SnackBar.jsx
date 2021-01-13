@@ -14,7 +14,6 @@ function SnackBar() {
     setOpenError(err?.message ? true : false);
   }, [err]);
   return (
-    <div className="sss">
       <Snackbar
         open={openError}
         autoHideDuration={2000}
@@ -25,7 +24,6 @@ function SnackBar() {
           {err?.message}
         </Alert>
       </Snackbar>
-    </div>
   );
 }
 

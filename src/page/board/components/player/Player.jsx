@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Card,
     CardActions,
@@ -15,15 +15,14 @@ import {
     DialogContent,
     RadioGroup,
     FormControlLabel,
-    Radio
+    Radio, Avatar
 } from "@material-ui/core";
 import CardPerson from "./CardPerson";
-// import ReplyIcon from '@material-ui/icons/Reply';
 import FlagIcon from "@material-ui/icons/Flag";
 import PanToolIcon from "@material-ui/icons/PanTool";
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import {Page} from "../../../../components";
+import {userService} from "../../../../services";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -54,15 +53,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ConfirmationDialogRaw(props) {
-    const { onClose, value: valueProp, open, options, ...other } = props;
-    const [value, setValue] = React.useState(valueProp);
+    const {onClose, open, options, ...other} = props;
+    const [value, setValue] = React.useState(options[0]);
     const radioGroupRef = React.useRef(null);
-
-    React.useEffect(() => {
-        if (!open) {
-            setValue(valueProp);
-        }
-    }, [valueProp, open]);
 
     const handleEntering = () => {
         if (radioGroupRef.current != null) {
@@ -70,17 +63,17 @@ function ConfirmationDialogRaw(props) {
         }
     };
 
+    const handleChange = (event) => {
+        setValue(event.target.value);
+    };
+
     const handleCancel = () => {
         onClose();
     };
 
-    const handleOk = () => {
-        onClose(value);
-    };
-
-    const handleChange = (event) => {
-        setValue(event.target.value);
-    };
+    function handleInvite(user) {
+        onClose(user);
+    }
 
     return (
         <Dialog
@@ -102,7 +95,13 @@ function ConfirmationDialogRaw(props) {
                     onChange={handleChange}
                 >
                     {options?.map((option) => (
-                        <FormControlLabel value={option} key={option} control={<Radio />} label={option} />
+                        <Button
+                            variant="contained"
+                            style={{margin: "5px"}} key={option.username} onClick={() => handleInvite(option.username)}
+                            startIcon={<Avatar src={option.image}/>}
+                        >
+                            {option.name}
+                        </Button>
                     ))}
                 </RadioGroup>
             </DialogContent>
@@ -110,17 +109,25 @@ function ConfirmationDialogRaw(props) {
                 <Button autoFocus onClick={handleCancel} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleOk} color="primary">
-                    Ok
-                </Button>
             </DialogActions>
         </Dialog>
     );
 }
 
-const Player = ({player, handleReady, isInvite}) => {
+const Player = ({player, handleReady, isInvite, inviteTo}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const [userOnline, setUserOnline] = useState([]);
+
+    useEffect(() => {
+        const getListUserOnline = async () => {
+            await userService.getUserOnline().then((reponsive) => {
+                setUserOnline(reponsive.data);
+            });
+        }
+
+        getListUserOnline();
+    }, [])
 
     const handleOutRoom = () => {
 
@@ -156,15 +163,14 @@ const Player = ({player, handleReady, isInvite}) => {
             handleClick: handleLose,
         },
     ];
-    const handleInvite = () =>{
+    const handleInvite = () => {
         setOpen(true);
     }
 
-    const handleClose = (newValue) => {
+    const handleClose = (username) => {
         setOpen(false);
-
-        if (newValue) {
-            // setValue(newValue);
+        if (username) {
+            inviteTo(username)
         }
     };
     return (
@@ -186,9 +192,9 @@ const Player = ({player, handleReady, isInvite}) => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Box className={classes.box} justifyContent="center" mt={2}>
-                                {isInvite ? <IconButton onClick={ handleInvite}>
-                                    < PersonAddIcon style={{fontSize: 50}} color="primary"/>
-                                </IconButton> :
+                                {isInvite ? <IconButton onClick={handleInvite}>
+                                        < PersonAddIcon style={{fontSize: 50}} color="primary"/>
+                                    </IconButton> :
                                     actions.map(({color, icon: Icon, title, handleClick}) => (
                                         <Box
                                             key={title}
@@ -208,7 +214,7 @@ const Player = ({player, handleReady, isInvite}) => {
                                                 {title}
                                             </Typography>
                                         </Box>
-                                    )) }
+                                    ))}
                             </Box>
                         </CardContent>
                     </Card>
@@ -225,7 +231,7 @@ const Player = ({player, handleReady, isInvite}) => {
                 keepMounted
                 open={open}
                 onClose={handleClose}
-                value={null}
+                options={userOnline}
             />
         </Container>
     );

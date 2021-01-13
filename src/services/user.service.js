@@ -16,10 +16,6 @@ class UserService {
           "refreshToken",
           JSON.stringify(response.data.refreshToken)
         );
-        localStorage.setItem(
-            "username",
-            JSON.stringify(response.data.user)
-        );
       }
       return response.data;
     });

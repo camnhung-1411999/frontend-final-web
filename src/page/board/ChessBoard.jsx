@@ -30,7 +30,7 @@ const ChessBoard = ({match}) => {
     const dispatch = useDispatch();
 
     const {id} = useParams();
-    const {isInvite, player, isPlay, open, openNewGame, winner, newGame, setReadyPlayer, playGame} = useRoom(id);
+    const {isInvite, player, isPlay, open, openNewGame, winner, newGame, setReadyPlayer, playGame, inviteTo} = useRoom(id);
 
     const handleReady = () => {
         setReadyPlayer();
@@ -52,7 +52,7 @@ const ChessBoard = ({match}) => {
             <Container maxWidth={false}>
                 <Grid container spacing={3}>
                     <Grid item lg={3} sm={12} md={12} xl={3} xs={12}>
-                        <Player player={player} handleReady={() => handleReady()} isInvite={isInvite}/>
+                        <Player player={player} handleReady={() => handleReady()} isInvite={isInvite} inviteTo={inviteTo}/>
                     </Grid>
                     <Grid item lg={6} sm={12} md={12} xl={6} xs={12}>
                         <Game isPlay={isPlay}/>

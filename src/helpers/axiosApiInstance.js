@@ -42,10 +42,6 @@ axiosApiInstance.interceptors.response.use((response) => {
       "refreshToken",
       JSON.stringify(token.data.refreshToken)
     );
-    localStorage.setItem(
-      "username",
-      JSON.stringify(token.data.user)
-    );
     return axiosApiInstance(originalRequest);
   }
   return Promise.reject(error);
