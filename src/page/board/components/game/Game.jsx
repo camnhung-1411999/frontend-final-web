@@ -7,7 +7,7 @@ import {isWin} from "./algorithm/main";
 
 function Game({isPlay}) {
     const {id} = useParams();
-    const {isNext, index, value, boards, playTo, winTo} = usePlay(id);
+    const {isNext, index, value, boards, playTo, winTo, drawTo} = usePlay(id);
 
     function handleClick(i, isFlag) {
         const pieces_win = isWin(boards, i, value);
@@ -19,8 +19,7 @@ function Game({isPlay}) {
             }
             playTo(data)
         }
-        if(isFlag && isPlay && pieces_win.length > 0 && !boards[i] ){
-            console.log("Vao day 4")
+        if (isFlag && isPlay && pieces_win.length > 0 && !boards[i]) {
             const data = {
                 roomId: id,
                 index: i,
@@ -28,6 +27,12 @@ function Game({isPlay}) {
             }
             winTo(data);
         }
+        if(!boards.includes(null))
+        {
+            drawTo();
+        }
+
+
     }
 
     // const pieces_win = isWin(boards, index, value);
@@ -39,6 +44,7 @@ function Game({isPlay}) {
                 <div className="game-board">
                     <div>
                         {/*<Board squares={boards} indexs={winner ? winner.indexs : null} onClick={(i) => handleClick(i, isNext)} />*/}
+
                         <Board squares={boards} onClick={(i) => handleClick(i, isNext)}/>
                     </div>
                 </div>

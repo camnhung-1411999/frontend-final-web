@@ -17,6 +17,9 @@ import {useDispatch} from "react-redux";
 import {useParams} from "react-router-dom";
 import useRoom from "../../sockets/useRoom";
 
+import {socket} from "../../helpers";
+import usePlay from "../../sockets/usePlay";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: "100%",
@@ -25,12 +28,30 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 const ChessBoard = ({match}) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-
     const {id} = useParams();
-    const {isInvite, player, isPlay, open, openNewGame, winner, newGame, setReadyPlayer, playGame, inviteTo} = useRoom(id);
+    const {
+        openDraw,
+        isNext,
+        timer,
+        setTimer,
+        isInvite,
+        player,
+        isPlay,
+        open,
+        openNewGame,
+        winner,
+        newGame,
+        setReadyPlayer,
+        playGame,
+        inviteTo,
+        endTimeTo,
+        handleDraw,
+        confirmDraw
+    } = useRoom(id);
 
     const handleReady = () => {
         setReadyPlayer();
@@ -45,6 +66,18 @@ const ChessBoard = ({match}) => {
         dispatch(userActions.profile());
     }, []);
 
+    const endTime = () =>{
+        if(isNext && isPlay)
+        {
+            endTimeTo();
+        }
+    }
+    const drawTo = () =>{
+        if(isNext && isPlay)
+        {
+            handleDraw();
+        }
+    }
     return (
         <Page className={classes.root}
               title="Room"
@@ -52,7 +85,8 @@ const ChessBoard = ({match}) => {
             <Container maxWidth={false}>
                 <Grid container spacing={3}>
                     <Grid item lg={3} sm={12} md={12} xl={3} xs={12}>
-                        <Player player={player} handleReady={() => handleReady()} isInvite={isInvite} inviteTo={inviteTo}/>
+                        <Player isFlag = {isNext && isPlay} timer={timer} setTimer={setTimer} player={player} handleReady={() => handleReady()} endTime = {endTime}
+                                isInvite={isInvite} inviteTo={inviteTo} drawTo={drawTo}/>
                     </Grid>
                     <Grid item lg={6} sm={12} md={12} xl={6} xs={12}>
                         <Game isPlay={isPlay}/>
@@ -67,11 +101,7 @@ const ChessBoard = ({match}) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                {/*<DialogTitle id="alert-dialog-title">{"Join the match"}</DialogTitle>*/}
                 <DialogActions>
-                    {/*<Button onClick={() => setOpen(false)} color="secondary">*/}
-                    {/*    Stand*/}
-                    {/*</Button>*/}
                     <Button onClick={handlePlay} color="primary" autoFocus>
                         Play Game
                     </Button>
@@ -82,14 +112,26 @@ const ChessBoard = ({match}) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{`${winner} win`}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{winner?`${winner} win`:"Draw"}</DialogTitle>
                 <DialogActions>
-                    {/*<Button onClick={() => setOpen(false)} color="secondary">*/}
-                    {/*    Stand*/}
-                    {/*</Button>*/}
-                    {winner ? <Button onClick={handleNewGame} color="primary" autoFocus>
+                    {isPlay ? <Button onClick={handleNewGame} color="primary" autoFocus>
                         New Game
                     </Button> : null}
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={openDraw}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{`${winner} draw`}</DialogTitle>
+                <DialogActions>
+                    <Button onClick={()=>confirmDraw(false)} color="primary" autoFocus>
+                       Cancel
+                    </Button>
+                    <Button onClick={()=>confirmDraw(true)} color="primary" autoFocus>
+                        Confirm
+                    </Button>
                 </DialogActions>
             </Dialog>
         </Page>

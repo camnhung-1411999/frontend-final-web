@@ -15,7 +15,7 @@ import {
     DialogContent,
     RadioGroup,
     FormControlLabel,
-    Radio, Avatar
+    Radio, Avatar, CardHeader
 } from "@material-ui/core";
 import CardPerson from "./CardPerson";
 import FlagIcon from "@material-ui/icons/Flag";
@@ -114,7 +114,7 @@ function ConfirmationDialogRaw(props) {
     );
 }
 
-const Player = ({player, handleReady, isInvite, inviteTo}) => {
+const Player = ({isFlag, timer, setTimer, player, handleReady, isInvite, inviteTo, endTime, drawTo}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [userOnline, setUserOnline] = useState([]);
@@ -125,20 +125,34 @@ const Player = ({player, handleReady, isInvite, inviteTo}) => {
                 setUserOnline(reponsive.data);
             });
         }
-
         getListUserOnline();
     }, [])
+
+    useEffect(() => {
+        if (timer >= 0 && player?.player1 && player?.player2) {
+            const timers = setInterval(() => {
+                setTimer((prevProgress) => (prevProgress - 1));
+            }, 1000);
+
+            return () => {
+                clearInterval(timers);
+            };
+        }
+        if (timer < 0) {
+            endTime();
+        }
+    }, [timer]);
 
     const handleOutRoom = () => {
 
     }
 
     const handleDraw = () => {
-
+        drawTo();
     }
 
     const handleLose = () => {
-
+        endTime();
     }
 
     const actions = [
@@ -190,6 +204,8 @@ const Player = ({player, handleReady, isInvite, inviteTo}) => {
 
                 <Grid item lg={12} md={4} xl={12} xs={4}>
                     <Card className={classes.card}>
+                        { <CardHeader style={{color: isFlag && timer < 10 ? "red" : "black", textAlign: "center", diplay:isInvite?"none":"inline"}}
+                                     title={`00:${timer >= 0 ? timer : 0}`}/>}
                         <CardContent>
                             <Box className={classes.box} justifyContent="center" mt={2}>
                                 {isInvite ? <IconButton onClick={handleInvite}>

@@ -20,7 +20,6 @@ const usePlay = (roomId) => {
     useEffect(() => {
         if (user) {
             socket.on(PLAYGAME, (data) => {
-                console.log("vao day 1")
                 setGame(data)
                 setBoards(Array(20 * 20).fill(null))
                 setIndex(null);
@@ -31,7 +30,6 @@ const usePlay = (roomId) => {
             });
             socket.on(CREATEBOARD, (data) => {
                 setGame(data);
-                console.log(data)
                 if (data.playing) {
                     if (data.board.length > 0) {
                         const incomingBoard = Array(20 * 20).fill(null);
@@ -45,7 +43,6 @@ const usePlay = (roomId) => {
                         setNext(!((data.board[data.board.length - 1].value === "X" && user?.user === data.player1) || (data.board[data.board.length - 1].value === "O" && user?.user === data.player2)));
                     } else {
                         setBoards(Array(20 * 20).fill(null));
-
                         setNext(user?.user === data.player1);
                     }
                     setIndex(data.index);
@@ -62,8 +59,6 @@ const usePlay = (roomId) => {
 
         socket.on(PLAY, (data) => {
             setNext(true);
-            // setIndex(data.index);
-            // setValue(data.value);
             setBoards(data.board);
         });
 
@@ -73,6 +68,7 @@ const usePlay = (roomId) => {
     }, [roomId]);
 
     const playTo = (data) => {
+        setNext(false)
         const incomingBoard = boards.map((item, index) =>
             index === data.index
                 ? game.player1 === user.user ? "X" : "O"
@@ -80,18 +76,17 @@ const usePlay = (roomId) => {
         )
         setBoards(incomingBoard);
         socket.emit(PLAY, {
+            user: user.user,
             board: incomingBoard,
             roomId: data.roomId,
             index: data.index,
             value: game.player1 === user.user ? "X" : "O",
             isNext: true,
         });
-        setNext(false)
         setIndex(data.index);
         setValue(game.player1 === user.user ? "X" : "O");
     };
     const winTo = (data) => {
-        // setNext(false);
         const incomingBoard = boards.map((item, index) =>
             index === data.index
                 ? game.player1 === user.user ? "X" : "O"
@@ -107,7 +102,11 @@ const usePlay = (roomId) => {
         }
         socket.emit(WIN, {roomId, user, game, play});
     }
-    return {isNext, index, boards, value, playTo, winTo};
+
+    const drawTo = () =>{
+        socket.emit("draw", {roomId, user, game});
+    }
+    return {isNext, index, boards, value, playTo, winTo, drawTo};
 };
 
 export default usePlay;

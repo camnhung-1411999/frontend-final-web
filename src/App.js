@@ -12,7 +12,7 @@ import {Account} from "./page/account"
 import {Rank} from "./page/rank"
 import { history } from './helpers';
 import Confirm from './components/Confirm';
-import {ResetPassword} from './components/ResetPassword'
+import {ResetPassword} from './components/ResetPassword';
 function App() {
   
   return (
