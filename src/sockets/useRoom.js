@@ -22,7 +22,6 @@ const useRoom = (roomId) => {
         if (user) {
             socket.emit(JOINROOM, {roomId, user});
             socket.on(PLAYGAME, (data) => {
-                console.log("vao day 2");
                 setPlay(true);
                 setOpenNewGame(false)
             });
@@ -32,7 +31,6 @@ const useRoom = (roomId) => {
                 }
             })
             socket.on(NEWGAME, (data) => {
-                console.log("vao day 3");
                 setPlay(true);
                 setOpenNewGame(false)
             });
@@ -79,7 +77,11 @@ const useRoom = (roomId) => {
         setPlay(true);
         socket.emit(NEWGAME, {roomId});
     }
-    return {player, isPlay, open, setOpen, openNewGame, winner, newGame, setReadyPlayer, playGame, isInvite};
+
+    const inviteTo = (username) =>{
+        socket.emit("invite", {user, username, roomId});
+    }
+    return {player, isPlay, open, setOpen, openNewGame, winner, newGame, setReadyPlayer, playGame, isInvite, inviteTo};
 };
 
 export default useRoom;

@@ -5,6 +5,7 @@ export * from './AdminRoute';
 export * from './Online';
 export * from './Page';
 export * from './SnackBar';
+export * from './DialogInvite';
 
 
 

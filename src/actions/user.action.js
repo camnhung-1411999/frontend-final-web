@@ -95,7 +95,6 @@ function logout(from) {
       const user = reponsive.data;
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
-      localStorage.removeItem("username");
       history.push(from);
       socket.emit("offline", {
         body: { username: user.user, name: user.name },
@@ -122,7 +121,7 @@ function register(iuser) {
         if (error.response.status === 409) {
         dispatch(alertActions.error("Email existed !!!"));
         } else {
-          dispatch(alertActions.error(error.toString()));
+          dispatch(alertActions.error("Registration failed !!!"));
         }
       }
     );
