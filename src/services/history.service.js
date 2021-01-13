@@ -1,20 +1,23 @@
-import axios from "axios";
 import { urlConstants } from '../constants'
 import axiosApiInstance from '../helpers/axiosApiInstance';
 
 const API_URL = urlConstants.API_URL + "history/";
 
 class HistoryService {
-    create (data){
-        return axiosApiInstance.post(API_URL, data);
+    adminGetByUser (user){
+        return axiosApiInstance.get(API_URL+ 'history/' + user);
     }
 
-    getHistoryByUser() {
-        return axiosApiInstance.get(API_URL);
+    adminGetById(id) {
+        return axiosApiInstance.get(API_URL +'find/' + id);
     }
 
-    getAllHistory() {
+    adminGetAll() {
         return axiosApiInstance.get(API_URL + 'list');
+    }
+
+    myHistory() {
+        return axiosApiInstance.get(API_URL);
     }
 }
 
