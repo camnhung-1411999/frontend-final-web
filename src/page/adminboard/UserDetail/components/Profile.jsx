@@ -12,11 +12,8 @@ import {
   Divider,
   Typography,
   makeStyles,
-  IconButton,
   colors,
-  Badge,
 } from "@material-ui/core";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import BeenhereIcon from '@material-ui/icons/Beenhere';
@@ -98,7 +95,7 @@ const Profile = ({ className,username, ...rest }) => {
             color="textSecondary"
             variant="body1"
           >
-            {`${moment().format("hh:mm A")} ${user.createdAt}`}
+            {`${moment(user.createdAt).format("dd-mm-yyyy")}`}
           </Typography>
         </Box>
       </CardContent>

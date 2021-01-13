@@ -56,7 +56,7 @@ const Profile = ({ className, ...rest }) => {
       title: "Rate win",
       icon: ThumbUpIcon,
       color: colors.indigo[500],
-      value: user?.wins  ? (user?.wins / user.totalMatch)*1.1*100 + '%' : 0 + '%',
+      value: user?.wins ? (user?.wins / user.totalMatch) * 1.1 * 100 + '%' : 0 + '%',
     },
     {
       title: "Total match",
@@ -119,31 +119,34 @@ const Profile = ({ className, ...rest }) => {
         </Box>
       </CardContent>
       <Divider />
-      <CardActions>
-        <Box className={classes.box} justifyContent="center" mt={2}>
-          {parameter.map(({ color, icon: Icon, title, value }) => (
-            <Box
-              key={title}
-              p={1}
-              textAlign="center"
-              style={{ margin: "0px 10px 0px 10px" }}
-            >
-              <Icon style={{ color, fontSize: "40" }} color="action" />
-              <Typography
-                color="textPrimary"
-                component="div"
-                variant="body1"
-                style={{ color }}
+      {user?.role !== 'admin' && (
+        <CardActions>
+          <Box className={classes.box} justifyContent="center" mt={2}>
+            {parameter.map(({ color, icon: Icon, title, value }) => (
+              <Box
+                key={title}
+                p={1}
+                textAlign="center"
+                style={{ margin: "0px 10px 0px 10px" }}
               >
-                {title}
-              </Typography>
-              <Typography style={{ color }} component="div" variant="h5">
-                {value}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
-      </CardActions>
+                <Icon style={{ color, fontSize: "40" }} color="action" />
+                <Typography
+                  color="textPrimary"
+                  component="div"
+                  variant="body1"
+                  style={{ color }}
+                >
+                  {title}
+                </Typography>
+                <Typography style={{ color }} component="div" variant="h5">
+                  {value}
+                </Typography>
+              </Box>
+            ))}
+          </Box>
+        </CardActions>
+
+      )}
     </Card>
   );
 };

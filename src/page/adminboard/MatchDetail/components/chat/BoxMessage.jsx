@@ -72,8 +72,10 @@ renderRow.propTypes = {
   style: PropTypes.object.isRequired,
 };
 
+
 const BoxMessage = ({ messages, className, ...rest }) => {
   const classes = useStyles();
+
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent className={classes.box}>
@@ -84,7 +86,7 @@ const BoxMessage = ({ messages, className, ...rest }) => {
                 height={height}
                 width={width}
                 itemSize={80}
-                itemCount={messages.length}
+                itemCount={messages?.length}
                 itemData={messages}
                 justify-content={"flex-end"}
               >

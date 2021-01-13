@@ -33,6 +33,7 @@ const Toolbar = (props,{ className, ...rest }) => {
     if (event.key === 'Enter')
     {
       props.onClick({keyword});
+      console.log('==ENTER')
     }
   }
 

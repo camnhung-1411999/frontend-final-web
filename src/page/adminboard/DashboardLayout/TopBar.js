@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
+  Link,
   AppBar,
   Badge,
   Box,
@@ -39,9 +40,9 @@ const TopBar = ({
       {...rest}
     >
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
-        </RouterLink>
+        <Link style={{ color: "white" }} href="/adminboard/">
+          Caroro
+            </Link>
         <Box flexGrow={1} />
         <Hidden mdDown>
           <IconButton color="inherit">

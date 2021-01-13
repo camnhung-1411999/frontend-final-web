@@ -9,7 +9,8 @@ import {
   Divider,
   makeStyles,
 } from "@material-ui/core";
-import {ItemHistory} from './ItemHistory';
+//import {ItemHistory} from './ItemHistory';
+import {ItemHistory} from '../../../account/components/ItemHistory';
 import '../../../../assets/css/history.css';
 import { historyService } from '../../../../services';
 const useStyles = makeStyles(() => ({

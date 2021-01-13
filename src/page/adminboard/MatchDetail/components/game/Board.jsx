@@ -1,19 +1,29 @@
 import React from "react";
 import Square from "./Square";
-export default function Board(props) {
+
+const Board = ({result}) => {
   const renderSquares = (numbs) => {
-    return numbs.map((num) => (
+    const items = Array(20*20).fill(null);
+    if (result){
+      result.forEach((e)=> {
+        items[e.index] = e.value;
+      });
+    }
+    return numbs.map((num) => {
+
+      return(
       <Square
         key={num}
-        value={props.match.result[num]}
+        value={items[num]}
       />
-    ));
+    )})
+    ;
   };
   const getBoard = (nums) => {
     let content = [];
     for (let i = 0; i < nums; i++) {
       content.push(
-        <div key={i} className="board-row">
+        <div key={i} className="board-row-his">
           {" "}
           {renderSquares([
             i * 20,
@@ -43,5 +53,11 @@ export default function Board(props) {
     }
     return content;
   };
-  return <div>{getBoard(20)}</div>;
+  return <div>
+    {getBoard(20)}
+    <div style={{ color: 'green', marginLeft: '42%', marginTop: '5%'}}>
+    </div>
+    </div>;
 }
+
+export { Board } ;

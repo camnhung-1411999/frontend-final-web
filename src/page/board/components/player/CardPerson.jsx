@@ -41,9 +41,7 @@ const useStyles = makeStyles(() => ({
 
 const CardPerson = ({className, player, handleReady, ...rest}) => {
     const classes = useStyles();
-    const [avatar, setAvatar] = useState();
 
-    const [progress, setProgress] = useState(0);
 
 
     return (
@@ -55,12 +53,6 @@ const CardPerson = ({className, player, handleReady, ...rest}) => {
                                     onClick={handleReady}>
                             <GetAppIcon style={{fontSize: 100}}/>
                         </IconButton>}
-                    {/*<CircularProgress*/}
-                    {/*  variant="determinate"*/}
-                    {/*  size={120}*/}
-                    {/*  className={classes.fabProgress}*/}
-                    {/*  value={progress}*/}
-                    {/*/>*/}
                     <Typography
                         color="textPrimary"
                         gutterBottom

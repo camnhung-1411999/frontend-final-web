@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, Grid, makeStyles } from "@material-ui/core";
 import { Page } from "../../../components";
-import { Profile, ProfileDetails, Password } from "./components";
+import { Profile, ProfileDetails, Password } from "../../account/components";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../actions";
 const useStyles = makeStyles((theme) => ({

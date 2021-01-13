@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Grid,
   makeStyles
 } from '@material-ui/core';
 import {Page} from '../../../components';
-import {Game, TabChat, Player} from './components';
-
+import {Board, TabChat, Player} from './components';
+import { historyService } from '../../../services';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,14 +18,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const MatchDetail = () => {
+const MatchDetail = ({match}) => {
   const classes = useStyles();
-  const mock = [{
-    isExact:true,
-    params :{id:"1010"},
-    path: "/board/:id",
-    url: "/board/1011",
-  }]
+  const [history, setHistory] = useState();
+  useEffect(() => {
+    const getMatchHistory = async () => {
+      await historyService.adminGetById(match.params.id).then((response) => {
+        setHistory(response?.data);
+      })
+    };
+    getMatchHistory();
+  }, [])
+  if(!history){
+    return (<>......loading</>)
+  }
   return (
     <Page
       className={classes.root}
@@ -44,7 +50,8 @@ const MatchDetail = () => {
             xl={3}
             xs={12}
           >
-            <Player/>
+            
+            <Player history = { history }/>
           </Grid>
           <Grid
             item
@@ -53,7 +60,7 @@ const MatchDetail = () => {
             xl={6}
             xs={12}
           >
-            <Game />
+            <Board result = {history?.result} />
           </Grid>
           <Grid
             item
@@ -62,7 +69,7 @@ const MatchDetail = () => {
             xl={3}
             xs={12}
           >
-            <TabChat id={1} />
+            <TabChat roomId = {history?.roomId} />
           </Grid>
          
         </Grid>

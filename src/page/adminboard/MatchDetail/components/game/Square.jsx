@@ -1,8 +1,10 @@
 import React from 'react'
-export default function Square({ value }) {
+// import './square.css'
+
+export default function Square({value}) {
     return (
-        <button className={`square`}>
+        <div className='square-his' style={{color: `${(value === 'X')? 'green' : 'gray' }`}}>
             {value}
-        </button>
+        </div>
     );
 }

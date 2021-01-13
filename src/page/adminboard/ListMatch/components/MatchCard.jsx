@@ -10,13 +10,10 @@ import {
   Divider,
   Grid,
   Typography,
-  Button,
   makeStyles,
 } from "@material-ui/core";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import GetAppIcon from "@material-ui/icons/GetApp";
 import logo from "../../../../assets/image/match.png";
-import { colors } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -46,7 +43,7 @@ const MatchCard = ({ className, product, ...rest }) => {
   const classes = useStyles();
   const history = useHistory();
   const handleClick = () => {
-  history.push(`/adminboard/1/match`);
+  history.push(`/adminboard/${product._id}/match`);
   };
 
   return (

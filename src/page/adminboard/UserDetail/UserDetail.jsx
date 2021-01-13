@@ -1,9 +1,8 @@
-import React, { useState,useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Container, Grid, makeStyles } from "@material-ui/core";
 import {  Page } from "../../../components";
 import { Profile, ProfileDetails, History } from "./components";
-import { userService } from "../../../services";
 
 const useStyles = makeStyles((theme) => ({
   root: {

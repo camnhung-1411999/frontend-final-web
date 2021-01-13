@@ -5,12 +5,10 @@ import {
   Avatar,
   Box,
   Card,
-  CardActions,
   CardContent,
   Divider,
   Typography,
   makeStyles,
-  CircularProgress,
 } from "@material-ui/core";
 
 import { green } from "@material-ui/core/colors";
@@ -46,34 +44,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CardPerson = ({ className, ...rest }) => {
+const CardPerson = ({ className,player,status, ...rest }) => {
   const classes = useStyles();
-  const [avatar, setAvatar] = useState();
-
-  const [progress, setProgress] = useState(0);
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress >= 100 ? 0 : prevProgress + 3
-      );
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
 
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent>
         <Box alignItems="center" display="flex" flexDirection="column">
-          <Avatar className={classes.avatar} src={user.avatar} />
-          <CircularProgress
-            variant="determinate"
-            size={120}
-            className={classes.fabProgress}
-            value={progress}
-          />
+          <h2>{status}</h2>
           <Typography
             color="textPrimary"
             gutterBottom
@@ -81,7 +59,7 @@ const CardPerson = ({ className, ...rest }) => {
             component = "div"
             style={{ marginTop: "40px" }}
           >
-            {user.name}
+            {player}
           </Typography>
         </Box>
       </CardContent>

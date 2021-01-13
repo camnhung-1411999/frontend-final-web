@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from "react";
+import React from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {
@@ -15,15 +15,16 @@ import {
 } from "@material-ui/core";
 import "emoji-mart/css/emoji-mart.css";
 import BoxMessage from "./BoxMessage";
+
 const useStyles = makeStyles(() => ({
   root: {
     height: "100%",
   },
 }));
 
-const ChatOnline = () => {
+const ChatOnline = ({messages}) => {
   const classes = useStyles();
-  const chat = [{username:"nhi",message:"hii"},{username:"nhung",message:"hello"}];
+
   return (
     <Card className={clsx(classes.root)}>
       <Divider />
@@ -38,7 +39,7 @@ const ChatOnline = () => {
         >
             <BoxMessage
               style={{ height: "450px", border: "1px solid blue" }}
-              messages={chat}
+              messages={messages}
             />
 
         </Box>

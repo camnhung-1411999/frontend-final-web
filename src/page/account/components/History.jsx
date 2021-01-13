@@ -17,35 +17,6 @@ const useStyles = makeStyles(() => ({
     width: '100%'
   },
 }));
-const data = [{
-  winner: 'Nhung',
-  loser: 'Nhi',
-  createdAt: '3:25 20/12/2020',
-  match: [
-    [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-      null,null,null,null,null,null,null,null,null,null,null,null,
-      null,null,null,null,null,null,null,null,null,
-      'X','O',null,'O', null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,'X',null,null,'O', null,null,null,
-      null,null,null,null,null,'O','X','O', null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-      null,null,null,null,null,null,'X','O','X','O', null,null,null,null,null,'X',null,'O', null,null,null,null,null,
-      null,null,'X','O',null,'O', null,null, null, null, null, 'X','0',null,'O', null,null,'O', null,null, null, null, null, null,null, 'X','0',null,'O', null,null,null,null,
-       null, null, null, null,null,'0',null,'O', null,null,null,null,
-        null, null, null, 'O',null,'X',null,'O', null],
-    [],
-    [],
-    [],
-  ],
-  messages: [
-    {message: "Hello", ownl: true},
-    {message: "How are u", ownl: true},
-    {message: "1111", ownl: false},
-    {message: "1111", ownl: true},
-    {message: "Nothing", ownl: false},
-    {message: "1111", ownl: true},
-    {message: "Hihi", ownl: false},
-    {message: "1111", ownl: true},
-  ],
-}]
 const History = ({ username, className, ...rest }) => {
   const classes = useStyles();
   const [histories, setHistories] = React.useState();
