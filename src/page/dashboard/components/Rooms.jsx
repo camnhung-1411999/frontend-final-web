@@ -141,8 +141,22 @@ const Rooms = ({ className, ...rest }) => {
     socket.on("createRoom", (room)=>{
       dispatch(roomActions.addRoom(room));
     });
-  },[])
+  },[]);
 
+
+  const handlePlayNow = () => {
+    let checkRoom = false;
+    rooms.items.forEach(e => {
+      if(!e.player2 && !e.password ){
+        dispatch(roomActions.getRoom(e.idroom));
+        checkRoom = true;
+        return;
+      }
+    })
+    if(!checkRoom){
+      dispatch(roomActions.create(false, null));
+    }
+  }
   return (
     <>
       <Card className="room" {...rest}>
@@ -171,15 +185,12 @@ const Rooms = ({ className, ...rest }) => {
                 >
                   <SearchIcon style={{ fontSize: 30, color: "white" }} />
                 </IconButton>
-                
               </div>
- 
               <IconButton
                 style={{ padding: "6px" }}
                 aria-label="new room"
                 onClick={handleClickOpen}
               >
-                
               </IconButton>
             </>
           }
@@ -205,8 +216,7 @@ const Rooms = ({ className, ...rest }) => {
             md={6}
             xl={3}
             xs={12}>
-           <div className='start-btn'>PLAY NOW</div>
-           {/* <AddIcon style={{ fontSize: 30, color: "white" }} */}
+           <div className='start-btn' onClick ={handlePlayNow}>PLAY NOW</div>
            <div className='start-btn' onClick={handleClickOpen} > CREATE ROOM</div>
            <div className='start-btn' onClick={() => {
              history.push("/rank");

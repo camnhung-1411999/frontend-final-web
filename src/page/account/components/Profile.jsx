@@ -56,7 +56,7 @@ const Profile = ({ className, ...rest }) => {
       title: "Rate win",
       icon: ThumbUpIcon,
       color: colors.indigo[500],
-      value: user?.win  ? (user?.win / user.totalMatch)*0.1*100 + '%' : 0 + '%',
+      value: user?.wins  ? (user?.wins / user.totalMatch)*1.1*100 + '%' : 0 + '%',
     },
     {
       title: "Total match",

@@ -21,4 +21,4 @@ class HistoryService {
     }
 }
 
-export default HistoryService;
+export default new HistoryService();

@@ -37,6 +37,7 @@ const Account = () => {
   const [index, setIndex] = React.useState(1);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.users.iprofile);
+  const iuser = useSelector((state) => state.users.profile);
   useEffect(() => {
     dispatch(userActions.profile());
   }, [user]);
@@ -48,7 +49,7 @@ const Account = () => {
       )
     }
     if(index === 2) {
-      return (<History/>)
+      return (<History username = {iuser.user}/>)
     }
     return (
       <>

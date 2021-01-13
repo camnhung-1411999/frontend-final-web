@@ -1,16 +1,20 @@
 import React from "react";
 import Square from "./Square";
-import NavigateBeforeIcon from '@material-ui/icons/NavigateBefore';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 
 export default function Board({result}) {
-  const renderSquares = (index, numbs) => {
+  const renderSquares = (numbs) => {
+    const items = Array(20*20).fill(null);
+    if (result){
+      result.forEach((e)=> {
+        items[e.index] = e.value;
+      });
+    }
     return numbs.map((num) => {
 
       return(
       <Square
         key={num}
-        value={result[0][num]}
+        value={items[num]}
       />
     )})
     ;
@@ -21,7 +25,7 @@ export default function Board({result}) {
       content.push(
         <div key={i} className="board-row-his">
           {" "}
-          {renderSquares(i, [
+          {renderSquares([
             i * 20,
             i * 20 + 1,
             i * 20 + 2,
@@ -52,8 +56,6 @@ export default function Board({result}) {
   return <div>
     {getBoard(20)}
     <div style={{ color: 'green', marginLeft: '42%', marginTop: '5%'}}>
-    <NavigateBeforeIcon/> 
-    <NavigateNextIcon style={{marginLeft: '3%'}}/>
     </div>
     </div>;
 }
