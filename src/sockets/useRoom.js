@@ -1,11 +1,13 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {socket} from "../helpers";
 import {useSelector} from "react-redux";
 
 const PLAYGAME = "playGame";
 const JOINROOM = "joinRoom";
 const READY = "ready";
-const ENDGAME = "endGame";
+const ENDGAME = "endGame"
+const NEWGAME = "newGame";
+const CREATEBOARD = "createBoard";
 
 const useRoom = (roomId) => {
     const user = useSelector(state => state.users.profile);
@@ -20,7 +22,19 @@ const useRoom = (roomId) => {
         if (user) {
             socket.emit(JOINROOM, {roomId, user});
             socket.on(PLAYGAME, (data) => {
+                console.log("vao day 2");
                 setPlay(true);
+                setOpenNewGame(false)
+            });
+            socket.on(CREATEBOARD, (data) => {
+                if (!data.playing) {
+                    setOpen(user?.user === data.player1);
+                }
+            })
+            socket.on(NEWGAME, (data) => {
+                console.log("vao day 3");
+                setPlay(true);
+                setOpenNewGame(false)
             });
             socket.on(JOINROOM, (room) => {
                 setPlay(room.player1 && room.player2 && (room.player1?.username === user.user || room.player2?.username === user.user))
@@ -63,7 +77,7 @@ const useRoom = (roomId) => {
     const newGame = () => {
         setOpenNewGame(false);
         setPlay(true);
-        socket.emit("newGame", {roomId});
+        socket.emit(NEWGAME, {roomId});
     }
     return {player, isPlay, open, setOpen, openNewGame, winner, newGame, setReadyPlayer, playGame, isInvite};
 };

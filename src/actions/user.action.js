@@ -38,7 +38,7 @@ function login(data, from) {
       },
       (error) => {
         dispatch(failure(error.toString()));
-        if (error.response.status === 404) {
+        if (error.response?.status === 404) {
           dispatch(alertActions.error("User not found!!!"));
         } else {
           dispatch(alertActions.error("Password not match!!!"));
