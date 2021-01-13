@@ -88,8 +88,8 @@ class UserService {
     return axiosApiInstance.get(API_URL);
   }
 
-  async getUserById(id) {
-    return await axiosApiInstance.get(API_URL+`/getUserById/${id}`);
+  async getUserById(user) {
+    return await axiosApiInstance.get(API_URL+`getUserById/${user}`);
   }
 
   async getAllUser() {

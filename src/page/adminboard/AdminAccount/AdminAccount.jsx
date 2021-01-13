@@ -20,7 +20,6 @@ const AdminAccount = () => {
   useEffect(() => {
     dispatch(userActions.profile());
   }, [user]);
-
   return (
     <Page className={classes.root} title="Profile">
       <Container maxWidth="lg">

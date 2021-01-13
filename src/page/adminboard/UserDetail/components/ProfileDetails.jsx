@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
   root: {},
 }));
 
-const ProfileDetails = ({ className,id,  ...rest }) => {
+const ProfileDetails = ({ className,username,  ...rest }) => {
   const classes = useStyles();
   const initProfile = {
     "user": "",
@@ -34,7 +34,7 @@ const ProfileDetails = ({ className,id,  ...rest }) => {
 
   const [user, setUser] = useState(initProfile);
   useEffect(() => {
-    userService.getUserById(id).then(function (response) {
+    userService.getUserById(username).then(function (response) {
       setUser(response.data);
       setState({checkedBlock: response.data.block})
     });

@@ -24,7 +24,7 @@ axiosApiInstance.interceptors.response.use((response) => {
   return response
 }, async function (error) {
   const originalRequest = error.config;
-  if (error.response.status === 401 && !originalRequest._retry) {
+  if (error.response?.status === 401 && !originalRequest._retry) {
     originalRequest._retry = true;
     const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
     const token = await axios.get(`${API_URL}refresh`, {

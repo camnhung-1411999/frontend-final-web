@@ -89,8 +89,8 @@ const Results = ({ className, customers, ...rest }) => {
   };
 
   const history = useHistory();
-  const handleViewUser = (id) => {
-    history.push(`/adminboard/user/${id}`);
+  const handleViewUser = (user) => {
+    history.push(`/adminboard/user/${user}`);
   }
 
   return (
@@ -175,7 +175,7 @@ const Results = ({ className, customers, ...rest }) => {
                     { getStatus(customer.status)}
                   </TableCell>
                   <TableCell>
-                  <Button variant="contained" color="primary" onClick={()=>handleViewUser(customer._id)}>
+                  <Button variant="contained" color="primary" onClick={()=>handleViewUser(customer.user)}>
                   View
                 </Button>
                   </TableCell>
