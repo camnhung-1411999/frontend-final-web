@@ -10,16 +10,8 @@ import {
   Button,
   Link,
   makeStyles,
-  Drawer,
-  List,
-  Divider,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  useTheme,
 } from "@material-ui/core";
 import {
-  Menu as MenuIcon,
   AccountCircle,
   MoreVert as MoreIcon,
 } from "@material-ui/icons";
@@ -27,9 +19,6 @@ import { useHistory } from "react-router-dom";
 import { userActions } from "../actions";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { useDispatch } from "react-redux";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 
 const drawerWidth = 150;
 
@@ -83,9 +72,8 @@ function Header() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();
   const dispatch = useDispatch();
-  const theme = useTheme();
 
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
   const handelProfile = (event) => {
     return history.push("/profile");
@@ -165,15 +153,14 @@ function Header() {
     <div className={classes.grow}>
       <AppBar position="static" style={{backgroundColor: "rgba(0, 0, 0, 0.719)"}}>
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
             onClick={() => setOpen(!open)}
           >
-            <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography className={classes.title} component = "div" variant="h6" noWrap>
             <Link style={{ color: "white" }} href="/home">
               Caroro

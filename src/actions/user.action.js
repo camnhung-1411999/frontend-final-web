@@ -2,7 +2,6 @@ import { userConstants } from "../constants";
 import { userService } from "../services";
 import { alertActions } from ".";
 import { history, socket } from "../helpers";
-import { ContactSupportOutlined } from "@material-ui/icons";
 
 export const userActions = {
   login,
@@ -188,10 +187,10 @@ function getUserOnline() {
   }
 }
 
-function userOnline(user) {
+function userOnline(iuser) {
   return (dispatch) => {
     dispatch(request());
-    dispatch(success(user));
+    dispatch(success(iuser));
   };
 
   function request() {
@@ -203,10 +202,10 @@ function userOnline(user) {
   }
 }
 
-function userOffline(user) {
+function userOffline(iuser) {
   return (dispatch) => {
     dispatch(request());
-    dispatch(success(user));
+    dispatch(success(iuser));
   };
 
   function request() {
@@ -247,7 +246,7 @@ function update(data) {
     dispatch(request());
     userService.update(data).then(
       (user) => {
-        // dispatch(success(user.data));
+        dispatch(success(user.data));
         dispatch(alertActions.success("Update success."));
       },
       (error) => {

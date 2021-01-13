@@ -11,6 +11,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { userActions } from '../../../actions';
+import { alertActions } from "../../../actions";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -50,19 +51,23 @@ function SignUp() {
 
   useEffect(() => {
     socket.on('success', () => {
-      window.alert('CONFIRM EMAIL SUCCESS')
+      window.alert('Confirm email success')
     })
   }, [])
 
   function handelPassword() {
     if (password !== repeat_password) {
-      setStatus("Mật khẩu không trùng khớp");
+      setStatus("Password not match!");
       return false;
     }
     return true;
   }
 
   async function handleButton() {
+    if(!firstName || !lastName || !username || !password || !repeat_password) {
+      alertActions.error('Fields must not be empty!');
+      return;
+    }
     if (handelPassword()) {
       const data = {
         firstName:firstName,

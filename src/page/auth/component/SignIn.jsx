@@ -17,6 +17,8 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../../actions";
 import ForgotPwd from "./ForgotPwd";
+import { alertActions } from "../../../actions";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -47,11 +49,14 @@ function SignIn() {
  
 
   function handleButton() {
+    if (!username || !password) {
+      alertActions.error('Fields must not be empty');
+      return;
+    }
     const data = {
       user: username,
       password: password,
     };
-
     if (username && password) {
       const { from } = location.state || { from: { pathname: "/home" } };
       dispatch(userActions.login(data, from));
@@ -137,7 +142,7 @@ function SignIn() {
         </form>
         <ForgotPwd/>
           <GoogleLogin
-            clientId="928943518451-hh0kebio5mu156lkiv7t00ims91k8eek.apps.googleusercontent.com"
+            clientId="188207156980-eb6drg36uns7clqveg0nduiq5ckgt4a3.apps.googleusercontent.com"
             className="btnGoogle"
             icon={false}
             onSuccess={responseGoogle}
