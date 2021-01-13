@@ -114,7 +114,7 @@ function ConfirmationDialogRaw(props) {
     );
 }
 
-const Player = ({isFlag, timer, setTimer, player, handleReady, isInvite, inviteTo, endTime, drawTo}) => {
+const Player = ({isFlag, timer, setTimer, player, handleReady, isInvite, inviteTo, endTime, drawTo, outRoom}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [userOnline, setUserOnline] = useState([]);
@@ -144,7 +144,7 @@ const Player = ({isFlag, timer, setTimer, player, handleReady, isInvite, inviteT
     }, [timer]);
 
     const handleOutRoom = () => {
-
+        outRoom()
     }
 
     const handleDraw = () => {

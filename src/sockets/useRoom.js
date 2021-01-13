@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {socket} from "../helpers";
+import {history, socket} from "../helpers";
 import {useSelector} from "react-redux";
 
 const PLAYGAME = "playGame";
@@ -32,9 +32,18 @@ const useRoom = (roomId) => {
             socket.emit(JOINROOM, {roomId, user});
             socket.on(PLAYGAME, (data) => {
                 setGame(data)
-                setPlay(true);
+                setPlay(user.user === data.player1 || user.user === data.player2);
                 setTimer(30);
                 setOpenNewGame(false)
+            });
+            socket.on("outRoom", (data) => {
+                if (data) {
+                    setPlayer({player1: data.player1, player2: data?.player2});
+                    setInvite(true);
+
+                } else {
+                    history.push("/home");
+                }
             });
             socket.on("resetTime", (data) => {
                 setNext(data.user === user.user);
@@ -44,7 +53,6 @@ const useRoom = (roomId) => {
                 setGame(data);
                 if (data.playing) {
                     const between = Math.floor((new Date().getTime() - new Date(data.datetime).getTime()) / 1000);
-                    console.log(between);
                     if (between < 30) {
                         setTimer(30 - between)
                     } else
@@ -56,7 +64,7 @@ const useRoom = (roomId) => {
                 }
             })
             socket.on(NEWGAME, (data) => {
-                setPlay(true);
+                setPlay(user.user === data.player1 || user.user === data.player2);
                 setNext(data.player1 === user.user);
                 setOpenNewGame(false)
             });
@@ -77,10 +85,11 @@ const useRoom = (roomId) => {
                 setWinner(data.winnerName);
                 if (data.admin !== user.user) {
                     setPlay(false)
+                } else {
+                    setPlay(true)
                 }
             })
             socket.on("draw", (data) => {
-                console.log(data)
                 setOpenNewGame(true);
                 setTimer(0);
                 setWinner("");
@@ -128,8 +137,9 @@ const useRoom = (roomId) => {
         socket.emit("endTime", {roomId, user, game, play});
     }
 
-    const handleOutRoom = () => {
-
+    const outRoom = () => {
+        socket.emit("outRoom", {roomId, user, game});
+        history.push("/home");
     };
 
     const handleDraw = () => {
@@ -164,7 +174,8 @@ const useRoom = (roomId) => {
         inviteTo,
         endTimeTo,
         handleDraw,
-        confirmDraw
+        confirmDraw,
+        outRoom
     };
 };
 

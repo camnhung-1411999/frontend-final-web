@@ -50,7 +50,8 @@ const ChessBoard = ({match}) => {
         inviteTo,
         endTimeTo,
         handleDraw,
-        confirmDraw
+        confirmDraw,
+        outRoom
     } = useRoom(id);
 
     const handleReady = () => {
@@ -86,7 +87,7 @@ const ChessBoard = ({match}) => {
                 <Grid container spacing={3}>
                     <Grid item lg={3} sm={12} md={12} xl={3} xs={12}>
                         <Player isFlag = {isNext && isPlay} timer={timer} setTimer={setTimer} player={player} handleReady={() => handleReady()} endTime = {endTime}
-                                isInvite={isInvite} inviteTo={inviteTo} drawTo={drawTo}/>
+                                isInvite={isInvite} inviteTo={inviteTo} drawTo={drawTo} outRoom = {outRoom}/>
                     </Grid>
                     <Grid item lg={6} sm={12} md={12} xl={6} xs={12}>
                         <Game isPlay={isPlay}/>

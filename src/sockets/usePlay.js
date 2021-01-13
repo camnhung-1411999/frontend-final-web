@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-import {socket} from "../helpers";
+import {history, socket} from "../helpers";
 import {useSelector} from "react-redux";
 import {userActions} from "../actions";
 
@@ -26,6 +26,17 @@ const usePlay = (roomId) => {
                 setValue("")
                 if (data.player1 === user.user) {
                     setNext(true);
+                }
+                else {
+                    setNext(false)
+                }
+            });
+            socket.on("outRoom", (data) => {
+                if (data) {
+                    setBoards(Array(20 * 20).fill(null))
+                    setNext(false);
+                } else {
+                    history.push("/home");
                 }
             });
             socket.on(CREATEBOARD, (data) => {

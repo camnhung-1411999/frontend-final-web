@@ -65,7 +65,7 @@ function TabChat({ id }) {
           aria-label="simple tabs example"
         >
           <Tab label="Chat" {...a11yProps(0)} />
-          <Tab label="Viewer" {...a11yProps(1)} />
+          {/*<Tab label="Viewer" {...a11yProps(1)} />*/}
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
