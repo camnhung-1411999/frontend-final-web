@@ -35,7 +35,7 @@ const ListUser = () => {
   }, [])
 
   const handleSearch = (keyword,listUser) => {
-    const filter= listUser.filter(item => item.user.includes(keyword.keyword));
+    const filter= listUser.filter(item => item?.user?.includes(keyword.keyword));
     setUsers(filter);
 
   }

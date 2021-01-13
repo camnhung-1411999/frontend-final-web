@@ -52,26 +52,6 @@ const Profile = ({ className, ...rest }) => {
     dispatch(userActions.update(data));
   };
 
-  const parameter = [
-    {
-      title: "Victory",
-      icon: SentimentVerySatisfiedIcon,
-      color: colors.indigo[500],
-      value: 100,
-    },
-    {
-      title: "Defeat",
-      icon: SentimentDissatisfiedIcon,
-      color: colors.black,
-      value: 100,
-    },
-    {
-      title: "Cups",
-      icon: EmojiEventsIcon,
-      color: colors.orange[600],
-      value: 100,
-    },
-  ];
 
   return (
     <Card className={clsx(classes.profile, className)} {...rest}>
@@ -120,31 +100,6 @@ const Profile = ({ className, ...rest }) => {
         </Box>
       </CardContent>
       <Divider />
-      <CardActions>
-        <Box className={classes.box} justifyContent="center" mt={2}>
-          {parameter.map(({ color, icon: Icon, title, value }) => (
-            <Box
-              key={title}
-              p={1}
-              textAlign="center"
-              style={{ margin: "0px 10px 0px 10px" }}
-            >
-              <Icon style={{ color, fontSize: "40" }} color="action" />
-              <Typography
-                color="textPrimary"
-                component="div"
-                variant="body1"
-                style={{ color }}
-              >
-                {title}
-              </Typography>
-              <Typography style={{ color }} component="div" variant="h5">
-                {value}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
-      </CardActions>
     </Card>
   );
 };

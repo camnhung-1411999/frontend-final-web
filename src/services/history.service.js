@@ -5,7 +5,7 @@ const API_URL = urlConstants.API_URL + "history/";
 
 class HistoryService {
     adminGetByUser (user){
-        return axiosApiInstance.get(API_URL+ 'history/' + user);
+        return axiosApiInstance.get(API_URL+ 'detail/' + user);
     }
 
     adminGetById(id) {
@@ -21,4 +21,4 @@ class HistoryService {
     }
 }
 
-export default HistoryService;
+export default new HistoryService();

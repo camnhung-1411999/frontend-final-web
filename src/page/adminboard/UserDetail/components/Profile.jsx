@@ -12,41 +12,16 @@ import {
   Divider,
   Typography,
   makeStyles,
+  IconButton,
   colors,
+  Badge,
 } from "@material-ui/core";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
-import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
-import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import BeenhereIcon from '@material-ui/icons/Beenhere';
 
-const user = {
-  avatar: "/static/images/avatars/avatar_6.png",
-  city: "Los Angeles",
-  country: "USA",
-  jobTitle: "Senior Developer",
-  name: "Katarina Smith",
-  timezone: "GTM-7",
-};
 
-const parameter = [
-  {
-    title: "Victory",
-    icon: SentimentVerySatisfiedIcon,
-    color: colors.indigo[500],
-    value: 100,
-  },
-  {
-    title: "Defeat",
-    icon: SentimentDissatisfiedIcon,
-    color: colors.black,
-    value: 100,
-  },
-  {
-    title: "Cups",
-    icon: EmojiEventsIcon,
-    color: colors.orange[600],
-    value: 100,
-  },
-];
 
 const useStyles = makeStyles(() => ({
   profile: {},
@@ -66,7 +41,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Profile = ({ className,id, ...rest }) => {
+const Profile = ({ className,username, ...rest }) => {
   const classes = useStyles();
   const initProfile = {
     "user": "",
@@ -81,21 +56,45 @@ const Profile = ({ className,id, ...rest }) => {
 
   const [user, setUser] = useState(initProfile);
   useEffect(() => {
-    userService.getUserById(id).then(function (response) {
-      setUser(response.data);
-    });
+    const getUser = async() => {
+      await userService.getUserById(username).then(function (response) {
+        setUser(response.data);
+      });
+    }
+    getUser();
   }, [])
+
+  const parameter = [
+    {
+      title: "Rate win",
+      icon: ThumbUpIcon,
+      color: colors.indigo[500],
+      value: user?.win  ? (user?.win / user.totalMatch)*0.1*100 + '%' : 0 + '%',
+    },
+    {
+      title: "Total match",
+      icon: BeenhereIcon,
+      color: colors.black,
+      value: user?.totalMatch ? user.totalMatch : 0,
+    },
+    {
+      title: "Cups",
+      icon: EmojiEventsIcon,
+      color: colors.orange[600],
+      value: user?.cups ? user.cups : 0,
+    },
+  ];
   return (
     <Card className={clsx(classes.root, className)} {...rest}>
       <CardContent>
         <Box alignItems="center" display="flex" flexDirection="column">
-          <Avatar className={classes.avatar} src={user.avatar} />
+          <Avatar className={classes.avatar} src={user.image} />
           <Typography color="textPrimary" gutterBottom variant="h3">
             {user.name}
           </Typography>
          
           <Typography
-            className={classes.dateText}
+            className={classes.datetime}
             color="textSecondary"
             variant="body1"
           >

@@ -23,13 +23,8 @@ import {
   Users as UsersIcon
 } from 'react-feather';
 import NavItem from './NavItem';
-
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
-};
-
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "../../../../actions";
 const items = [
 
   {
@@ -67,15 +62,12 @@ const useStyles = makeStyles(() => ({
 
 const NavBar = ({ onMobileClose, openMobile }) => {
   const classes = useStyles();
-  const location = useLocation();
-
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.profile);
   useEffect(() => {
-    if (openMobile && onMobileClose) {
-      onMobileClose();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
-
+    dispatch(userActions.profile());
+  }, []);
+  console.log("===userr",user);
   const content = (
     <Box
       height="100%"
@@ -91,7 +83,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         <Avatar
           className={classes.avatar}
           component={RouterLink}
-          src={user.avatar}
+          src={user?.image ? user.image : null}
           to="/app/account"
         />
         <Typography
@@ -100,14 +92,14 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           variant="h5"
           component = "div"
         >
-          {user.name}
+          {user?.name}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
           component = "div"
         >
-          {user.jobTitle}
+          ADMIN
         </Typography>
       </Box>
       <Divider />

@@ -4,7 +4,8 @@ import { Pagination } from "@material-ui/lab";
 import { Page } from "../../../components/Page";
 import Toolbar from "./components/Toolbar";
 import MatchCard from "./components/MatchCard";
-import data from "./components/data";
+import { historyService } from "../../../services";
+//import data from "./components/data";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,15 +19,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const ListMatch = () => {
   const classes = useStyles();
-  const [matches, setMatches] = useState(data);
-  const [listMatches, setListMatches] = useState();
+  const init = [
+    {
+      "roomId":"",
+      "result": null,
+      "winner":"",
+      "loser":"",
+      "createdAt":"",
+      "draw": false,
+    },
+  ]
+  const [matches, setMatches] = useState(init);
+  const [listMatches, setListMatches] = useState(init);
+    useEffect(() => {
+      const getListHistory = async() => {
+        await historyService.adminGetAll().then(function (response) {
+          setMatches(response.data);
+          setListMatches(response.data);
+        });
+      }
+      getListHistory();
+    }, [])
 
-  useEffect(() => {
-    setMatches(data);
-    setListMatches(data);
-  }, [])
+
 
   const handleSearch = (keyword,listMatches) => {
     const filter= listMatches.filter(item => item.winner.includes(keyword.keyword)||item.loser.includes(keyword.keyword));

@@ -2,8 +2,8 @@ import React, { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Grid, makeStyles } from "@material-ui/core";
 import {  Page } from "../../../components";
-import { Profile, ProfileDetails, MatchHistory } from "./components";
-import { userService } from "../../../services/index";
+import { Profile, ProfileDetails, History } from "./components";
+import { userService } from "../../../services";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,23 +16,22 @@ const useStyles = makeStyles((theme) => ({
 
 const UserDetail = () => {
   const classes = useStyles();
-  const id = useParams().id;
-
+  const username = useParams().id;
   return (
     <Page className={classes.root} title="Profile">
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item lg={4} md={6} xs={12}>
-            <Profile id ={id}/>
+            <Profile username = {username}/>
           </Grid>
           <Grid item lg={8} md={6} xs={12}>
-            <ProfileDetails id ={id}/>
+            <ProfileDetails username = {username}/>
           </Grid>
         </Grid>
         <Grid container spacing={3}>
           <Grid item lg={4} md={6} xs={12}></Grid>
           <Grid item lg={8} md={6} xs={12}>
-            <MatchHistory />
+            <History username = {username} />
           </Grid>
         </Grid>
       </Container>
