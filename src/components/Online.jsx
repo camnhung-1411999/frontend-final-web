@@ -24,6 +24,10 @@ import { useDispatch, useSelector } from "react-redux";
 const useStyles = makeStyles(() => ({
   online: {
     height: "85vh",
+    backgroundColor: 'rgba(184, 180, 180, 0.521)',
+    color: 'white',
+    fontWeight: 'bold',
+    border: '1px solid  rgb(216, 176, 102)'
   },
   box: {
     height: "100%",
@@ -113,7 +117,7 @@ const Online = ({ className, ...rest }) => {
 
   return (
     <Card className={clsx(classes.online, className)} {...rest}>
-      <CardHeader title="Online" style={{ color: "#31a24c" }} />
+      <CardHeader title="Online" style={{ color: "white" }} />
       <Divider />
       <CardContent className={classes.box}>
         <Box className={classes.box} position="relative">

@@ -65,8 +65,12 @@ function SignUp() {
 
   async function handleButton() {
     if(!firstName || !lastName || !username || !password || !repeat_password) {
-      alertActions.error('Fields must not be empty!');
+      dispatch(alertActions.error('Fields must not be empty!'));
       return;
+    }
+    if(username.indexOf('@') === -1) {
+      dispatch(alertActions.error('Email invalid!'));
+      return ;
     }
     if (handelPassword()) {
       const data = {

@@ -134,7 +134,7 @@ function SignIn() {
         </form>
         <ForgotPwd />
         <GoogleLogin
-          clientId="188207156980-eb6drg36uns7clqveg0nduiq5ckgt4a3.apps.googleusercontent.com"
+          clientId="428605288080-isorsmi41thagu8mo2gn8bbai1e06r04.apps.googleusercontent.com"
           className="btnGoogle"
           icon={false}
           onSuccess={responseGoogle}
