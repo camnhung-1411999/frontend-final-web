@@ -66,7 +66,10 @@ function loginSocial(data, from) {
     await userService.loginSocial(data).then(
       async (user) => {
         dispatch(success(user));
-        await socket.emit("online");
+        socket.emit("online", {
+          body: { username: user.user, name: user.name, image: user.image },
+          senderId: socket.id,
+        });
         history.push(from);
       },
       (error) => {
